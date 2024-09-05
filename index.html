@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 10</title>
+    <title>GoblinSoft Calculamator Alpha 11</title>
 </head>
 <body>
     <label for="body">Body:</label>
@@ -38,15 +38,16 @@ function calculamate() {
   const mindin = document.getElementById("mind").value.trim();
   const bodyin = document.getElementById("body").value.trim();
   const soulin = document.getElementById("soul").value.trim();
-  const wspeed = document.getElementById("wepspeed").value.trim();
-  const wdamage = document.getElementById("wepdamage").value.trim();
+  const wspeedin = document.getElementById("wepspeed").value.trim();
+  const wdamagein = document.getElementById("wepdamage").value.trim();
   const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin);
-  const blingoSet = new Set([mindin, bodyin, soulin, wspeed, wdamage]);
+  const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein]);
 
   // Function checks if given values are valid
-  const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value));
+  const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
+  console.log(parseNumber(wdamagein));
 
-  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeed) || doesItGob(wdamage) || blingoSet.has("")) { 
+  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || blingoSet.has("")) { 
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
         document.getElementById("error").style.color = "red";
         document.getElementById("strength").innerHTML = "";
@@ -79,8 +80,8 @@ function calculamate() {
         const mind = parseNumber(mindin);
         const body = parseNumber(bodyin);
         const soul = parseNumber(soulin);
-        const speed = parseNumber(wspeed);
-        const damage = parseNumber(wdamage);
+        const speed = parseNumber(wspeedin);
+        const damage = parseNumber(wdamagein);
         const level = mind + body + soul;
         const soulcon = (1 + (0.03 * level)) * soul;
         const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon;
@@ -92,8 +93,8 @@ function calculamate() {
         const totalhealth = basehealth + (5 * stamina);
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
         const totalmana = basemana + (5 * wisdom);
-        const bAD = (0.4 + (0.007 * level) + (0.12 * strength) + 1);
-        const mAD = bAD * (1 + (0.05 * body) * (0.45 * speed));
+        const bAD = (0.4 + 0.007 * level) * level + (0.12 * strength) + 1;
+        const mAD = (bAD) * (1 + (0.05 * body) * (0.45 * speed));
         const atdam = (mAD + damage) + (0.28 * agility);
         console.log(atdam)
 
