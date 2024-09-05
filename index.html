@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 2</title>
+    <title>GoblinSoft Calculamator Alpha 3</title>
 </head>
 <body>
+    <label for="level">Level:</label>
+    <input type="text" id="level"><br>
     <label for="body">Body:</label>
     <input type="text" id="body"><br>
     <label for="mind">Mind:</label>
@@ -14,6 +16,7 @@
     <div id="results">
         <p id="error"></p>
         <p id="damage"></p>
+        <p id="leveltotal"></p>
     </div>
     <button onclick="calculateDamage()">OK</button>
 </body>
@@ -27,19 +30,21 @@ function calculateDamage() {
     var mind = parseNumber(document.getElementById("mind").value);
     var spiritin = document.getElementById("spirit").value;
     var spirit = parseNumber(document.getElementById("spirit").value);
+    var level = parseNumber(document.getElementById("level").value);
+    var levelin = document.getElementById("level").value;
+    var totallevel = body + mind + spirit;
 
-    if (CheckErrorV.test(bodyin) == true || isNaN(body) || CheckErrorV.test(mindin) == true || isNaN(mind) || CheckErrorV.test(spiritin) == true || isNaN(spirit)) {
-        console.log(CheckErrorV.test(bodyin))
-        console.log(CheckErrorV.test(mindin))
-        console.log(CheckErrorV.test(spiritin))
+    if (CheckErrorV.test(bodyin) == true || isNaN(body) || CheckErrorV.test(mindin) == true || isNaN(mind) || CheckErrorV.test(spiritin) == true || isNaN(spirit) || CheckErrorV.test(levelin) == true || isNaN(level)) {
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
         document.getElementById("error").style.color = "red";
         document.getElementById("damage").innerHTML = "";
     } else {
-        var damage = (body * mind) * spirit * 0.10;
+        var damage = (body * mind) * spirit * 0.10 * (0.025 * level) * totallevel;
         document.getElementById("error").innerHTML = "";
         document.getElementById("damage").innerHTML = "Damage: " + damage.toLocaleString();
         document.getElementById("damage").style.color = "black";
+        document.getElementById("leveltotal").innerHTML = "Total Level: " + totallevel.toLocaleString();
+        document.getElementById("leveltotal").style.color = "black";
     }
 }
 
@@ -53,12 +58,11 @@ function parseNumber(value) {
     value = value.replace(/,/g, "");
 
     // Check for multiplier -- only works with flat 100k, 100m and not combinations like 100m100k
-    const match = value.match(/(\d+)([km])/i);
+    const match = value.match(/(\d+(\.+\d+)?)([km])/i);
 
     if (match) {
-        return parseFloat(match[1]) * multipliers[match[2].toLowerCase()];
+        return parseFloat(match[1]) * multipliers[match[3].toLowerCase()];
     }
-
     return parseFloat(value);
 }
 
