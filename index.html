@@ -110,7 +110,7 @@ function calculamate() {
         const agility = (0.5 + (0.015 * level)) * body + soulcon + profbonus;
         const wisdom = (0.5 + (0.015 * level)) * mind + soulcon + profbonus;
         const intellect = (1.5 + (0.05 * level)) * mind + soulcon + profbonus;
-        const basehealth = (0.15 * level + 10) * level * (1 + 0.015 * soul);
+        const basehealth = (0.15 * level + 14) * level * (1 + 0.011 * soul);
         const totalhealth = basehealth + (5 * stamina);
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
         const totalmana = basemana + (5 * wisdom);
