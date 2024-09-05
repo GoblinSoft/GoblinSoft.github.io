@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 11</title>
+    <title>GoblinSoft Calculamator Alpha 12</title>
 </head>
 <body>
     <label for="body">Body:</label>
@@ -116,11 +116,11 @@ function calculamate() {
         document.getElementById("totalhealth").style.color = "green";
         document.getElementById("totalmana").innerHTML = "Total Mana: " + Math.round(totalmana).toLocaleString() + " (" + totalmana.toFixed(2).toLocaleString() + ")";
         document.getElementById("totalmana").style.color = "blue";
-        document.getElementById("baseattack").innerHTML = "Base Attack Damage (bAD): " + Math.round(bAD).toLocaleString() + " (" + bAD.toFixed(3).toLocaleString() + ")";
+        document.getElementById("baseattack").innerHTML = "Base Attack Damage (bAD): " + Math.round(bAD).toLocaleString() + " (" + bAD.toFixed(3) + ")";
         document.getElementById("baseattack").style.color = "red";
-        document.getElementById("modattack").innerHTML = "Modified Attack Damage (mAD): " + Math.round(mAD).toLocaleString() + " (" + mAD.toFixed(3).toLocaleString() + ")";
+        document.getElementById("modattack").innerHTML = "Modified Attack Damage (mAD): " + Math.round(mAD).toLocaleString() + " (" + mAD.toFixed(3) + ")";
         document.getElementById("modattack").style.color = "red";
-        document.getElementById("attackdam").innerHTML = "Attack Damage (AD): " + Math.round(atdam).toLocaleString() + " (" + atdam.toFixed(3).toLocaleString() + ")";
+        document.getElementById("attackdam").innerHTML = "Attack Damage (AD): " + Math.round(atdam).toLocaleString() + " (" + atdam.toFixed(3) + ")";
         document.getElementById("attackdam").style.color = "red";
 
     }
