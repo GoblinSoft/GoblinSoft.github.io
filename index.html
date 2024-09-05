@@ -94,7 +94,7 @@ function calculamate() {
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
         const totalmana = basemana + (5 * wisdom);
         const bAD = (0.4 + 0.007 * level) * level + (0.12 * strength) + 1;
-        const mAD = (bAD) * (1 + (0.05 * body) * (0.45 * speed));
+        const mAD = (bAD) * (1 + (0.05 * body)) * (0.45 * speed);
         const atdam = (mAD + damage) + (0.28 * agility);
         console.log(atdam)
 
@@ -116,11 +116,11 @@ function calculamate() {
         document.getElementById("totalhealth").style.color = "green";
         document.getElementById("totalmana").innerHTML = "Total Mana: " + Math.round(totalmana).toLocaleString() + " (" + totalmana.toFixed(2).toLocaleString() + ")";
         document.getElementById("totalmana").style.color = "blue";
-        document.getElementById("baseattack").innerHTML = "Base Attack Damage (bAD): " + Math.round(bAD).toLocaleString() + " (" + bAD.toFixed(2).toLocaleString() + ")";
+        document.getElementById("baseattack").innerHTML = "Base Attack Damage (bAD): " + Math.round(bAD).toLocaleString() + " (" + bAD.toFixed(3).toLocaleString() + ")";
         document.getElementById("baseattack").style.color = "red";
-        document.getElementById("modattack").innerHTML = "Modified Attack Damage (mAD): " + Math.round(mAD).toLocaleString() + " (" + mAD.toFixed(2).toLocaleString() + ")";
+        document.getElementById("modattack").innerHTML = "Modified Attack Damage (mAD): " + Math.round(mAD).toLocaleString() + " (" + mAD.toFixed(3).toLocaleString() + ")";
         document.getElementById("modattack").style.color = "red";
-        document.getElementById("attackdam").innerHTML = "Attack Damage (AD): " + Math.round(atdam).toLocaleString() + " (" + atdam.toFixed(2).toLocaleString() + ")";
+        document.getElementById("attackdam").innerHTML = "Attack Damage (AD): " + Math.round(atdam).toLocaleString() + " (" + atdam.toFixed(3).toLocaleString() + ")";
         document.getElementById("attackdam").style.color = "red";
 
     }
