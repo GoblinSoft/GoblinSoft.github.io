@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 50</title>
+    <title>GoblinSoft Calculamator Alpha 55</title>
 </head>
 <body>
     <label for="body">Body:</label>
@@ -53,11 +53,13 @@ function calculamate() {
   const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin) + parseNumber(profin);
   const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein, wspellin, profin]);
 
-  // Function checks if given values are valid
+  // Check if input contains illegal characters
   const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
   console.log(parseNumber(wdamagein));
 
   if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || doesItGob(wspellin) || doesItGob(profin) || blingoSet.has("")) { 
+
+        // Output logic (illegal character)
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
         document.getElementById("error").style.color = "red";
         document.getElementById("strength").innerHTML = "";
@@ -76,6 +78,8 @@ function calculamate() {
         document.getElementById("spelldam").innerHTML = "";
         document.getElementById("profbon").innerHTML = "";
     } else if (blingoGob > 100) {
+
+        // Output logic (Level's too high)
         document.getElementById("error").innerHTML = "Error detected! Goblins can only calculate levels up to 100.";
         document.getElementById("error").style.color = "red";
         document.getElementById("strength").innerHTML = "";
@@ -95,6 +99,8 @@ function calculamate() {
         document.getElementById("spelldam").innerHTML = "";
         document.getElementById("profbon").innerHTML = "";
     } else {
+
+        // Output logic (True)
         const mind = parseNumber(mindin);
         const body = parseNumber(bodyin);
         const soul = parseNumber(soulin);
@@ -120,8 +126,6 @@ function calculamate() {
         const bSP = (0.5 + 0.008 * level) * level + (0.18 * intellect) + 1;
         const mSP = (bSP) * (1 + (0.05 * mind)) * (0.45 * speed);
         const spdam = (mSP + wepdamage) + (0.38 * wisdom);
-        console.log(atdam)
-
 
         document.getElementById("error").innerHTML = "";
         document.getElementById("strength").innerHTML = "Strength: " + Math.round(strength.toLocaleString()) + " (" + strength.toFixed(2).toLocaleString() + ")";
