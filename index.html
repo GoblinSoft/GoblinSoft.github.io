@@ -16,6 +16,8 @@
     <input type="text" id="wepdamage"><br>
     <label for="wepspell">Weapon Spell:</label>
     <input type="text" id="wepspell"><br>
+    <label for="prof">Profession Level:</label>
+    <input type="text" id="prof"><br>
     <hr>
     <div id="results">
         <p id="error"></p>
@@ -33,6 +35,7 @@
         <p id="basespell"></p>
         <p id="modspell"></p>
         <p id="spelldam"></p>
+        <p id="profbon"></p>
     </div>
     <button onclick="calculamate()">OK</button>
 </body>
@@ -46,14 +49,15 @@ function calculamate() {
   const wspeedin = document.getElementById("wepspeed").value.trim();
   const wdamagein = document.getElementById("wepdamage").value.trim();
   const wspellin = document.getElementById("wepspell").value.trim();
-  const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin);
-  const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein, wspellin]);
+  const profin = document.getElementById("prof").value.trim();
+  const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin) + parseNumber(profin);
+  const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein, wspellin, profin]);
 
   // Function checks if given values are valid
   const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
   console.log(parseNumber(wdamagein));
 
-  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || doesItGob(wspellin) || blingoSet.has("")) { 
+  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || doesItGob(wspellin) || doesItGob(profin) || blingoSet.has("")) { 
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
         document.getElementById("error").style.color = "red";
         document.getElementById("strength").innerHTML = "";
@@ -94,14 +98,16 @@ function calculamate() {
         const soul = parseNumber(soulin);
         const speed = parseNumber(wspeedin);
         const damage = parseNumber(wdamagein);
-        const wepdamage = parseNumber (wspellin)
+        const wepdamage = parseNumber (wspellin);
+        const prof = parseNumber(profin);
         const level = mind + body + soul;
         const soulcon = (1 + (0.03 * level)) * soul;
-        const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon;
-        const strength = (1.5 + (0.05 * level)) * body + soulcon;
-        const agility = (0.5 + (0.015 * level)) * body + soulcon;
-        const wisdom = (0.5 + (0.015 * level)) * mind + soulcon;
-        const intellect = (1.5 + (0.05 * level)) * mind + soulcon;
+        const profbonus = (0.7 + (0.02 * level)) * prof;
+        const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus;
+        const strength = (1.5 + (0.05 * level)) * body + soulcon + profbonus;
+        const agility = (0.5 + (0.015 * level)) * body + soulcon + profbonus;
+        const wisdom = (0.5 + (0.015 * level)) * mind + soulcon + profbonus;
+        const intellect = (1.5 + (0.05 * level)) * mind + soulcon + profbonus;
         const basehealth = (0.15 * level + 10) * level * (1 + 0.015 * soul);
         const totalhealth = basehealth + (5 * stamina);
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
@@ -144,6 +150,8 @@ function calculamate() {
         document.getElementById("modspell").style.color = "blue";
         document.getElementById("spelldam").innerHTML = "Spell Damage (SP): " + Math.round(spdam).toLocaleString() + " (" + spdam.toFixed(3) + ")";
         document.getElementById("spelldam").style.color = "blue";
+        document.getElementById("profbon").innerHTML = "Profession Bonus: " + Math.round(profbonus).toLocaleString() + " (" + profbonus.toFixed(3) + ")";
+        document.getElementById("profbon").style.color = "aquamarine";
 
     }
 }
