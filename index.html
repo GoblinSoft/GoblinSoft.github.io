@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GoblinSoft Calculamator Alpha 2</title>
+</head>
+<body>
+    <label for="body">Body:</label>
+    <input type="text" id="body"><br>
+    <label for="mind">Mind:</label>
+    <input type="text" id="mind"><br>
+    <label for="spirit">Spirit:</label>
+    <input type="text" id="spirit"><br>
+    <hr>
+    <div id="results">
+        <p id="error"></p>
+        <p id="damage"></p>
+    </div>
+    <button onclick="calculateDamage()">OK</button>
+</body>
+<script>
+
+function calculateDamage() {
+    const CheckErrorV = /[^\d,km.]/;
+    var bodyin = document.getElementById("body").value;
+    var body = parseNumber(document.getElementById("body").value);
+    var mindin = document.getElementById("mind").value;
+    var mind = parseNumber(document.getElementById("mind").value);
+    var spiritin = document.getElementById("spirit").value;
+    var spirit = parseNumber(document.getElementById("spirit").value);
+
+    if (CheckErrorV.test(bodyin) == true || isNaN(body) || CheckErrorV.test(mindin) == true || isNaN(mind) || CheckErrorV.test(spiritin) == true || isNaN(spirit)) {
+        console.log(CheckErrorV.test(bodyin))
+        console.log(CheckErrorV.test(mindin))
+        console.log(CheckErrorV.test(spiritin))
+        document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
+        document.getElementById("error").style.color = "red";
+        document.getElementById("damage").innerHTML = "";
+    } else {
+        var damage = (body * mind) * spirit * 0.10;
+        document.getElementById("error").innerHTML = "";
+        document.getElementById("damage").innerHTML = "Damage: " + damage.toLocaleString();
+        document.getElementById("damage").style.color = "black";
+    }
+}
+
+function parseNumber(value) {
+    const multipliers = {
+        k: 1000,
+        m: 1000000,
+    };
+
+    // Removes commas from user input (if any) for calculation purposes
+    value = value.replace(/,/g, "");
+
+    // Check for multiplier -- only works with flat 100k, 100m and not combinations like 100m100k
+    const match = value.match(/(\d+)([km])/i);
+
+    if (match) {
+        return parseFloat(match[1]) * multipliers[match[2].toLowerCase()];
+    }
+
+    return parseFloat(value);
+}
+
+</script>
+</html>
