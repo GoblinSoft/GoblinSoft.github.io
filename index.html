@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 12</title>
+    <title>GoblinSoft Calculamator Alpha 13</title>
 </head>
 <body>
     <label for="body">Body:</label>
@@ -28,6 +28,9 @@
         <p id="baseattack"></p>
         <p id="modattack"></p>
         <p id="attackdam"></p>
+        <p id="basespell"></p>
+        <p id="modspell"></p>
+        <p id="spelldam"></p>
     </div>
     <button onclick="calculamate()">OK</button>
 </body>
@@ -61,6 +64,9 @@ function calculamate() {
         document.getElementById("baseattack").innerHTML = "";
         document.getElementById("modattack").innerHTML = "";
         document.getElementById("attackdam").innerHTML = "";
+        document.getElementById("basespell").innerHTML = "";
+        document.getElementById("modspell").innerHTML = "";
+        document.getElementById("spelldam").innerHTML = "";
     } else if (blingoGob > 100) {
         document.getElementById("error").innerHTML = "Error detected! Goblins can only calculate levels up to 100.";
         document.getElementById("error").style.color = "red";
@@ -76,6 +82,9 @@ function calculamate() {
         document.getElementById("baseattack").innerHTML = "";
         document.getElementById("modattack").innerHTML = "";
         document.getElementById("attackdam").innerHTML = "";
+        document.getElementById("basespell").innerHTML = "";
+        document.getElementById("modspell").innerHTML = "";
+        document.getElementById("spelldam").innerHTML = "";
     } else {
         const mind = parseNumber(mindin);
         const body = parseNumber(bodyin);
@@ -96,6 +105,9 @@ function calculamate() {
         const bAD = (0.4 + 0.007 * level) * level + (0.12 * strength) + 1;
         const mAD = (bAD) * (1 + (0.05 * body)) * (0.45 * speed);
         const atdam = (mAD + damage) + (0.28 * agility);
+        const bSP = (0.5 + 0.008 * level) * level + (0.18 * intellect) + 1;
+        const mSP = (bSP) * (1 + (0.05 * mind)) * (0.45 * speed);
+        const spdam = (mSP + damage) + (0.38 * wisdom);
         console.log(atdam)
 
 
@@ -122,6 +134,12 @@ function calculamate() {
         document.getElementById("modattack").style.color = "red";
         document.getElementById("attackdam").innerHTML = "Attack Damage (AD): " + Math.round(atdam).toLocaleString() + " (" + atdam.toFixed(3) + ")";
         document.getElementById("attackdam").style.color = "red";
+        document.getElementById("basespell").innerHTML = "Base Spell Damage (bSP): " + Math.round(bSP).toLocaleString() + " (" + bSP.toFixed(3) + ")";
+        document.getElementById("basespell").style.color = "blue";
+        document.getElementById("modspell").innerHTML = "Modified Spell Damage (mSP): " + Math.round(mSP).toLocaleString() + " (" + mSP.toFixed(3) + ")";
+        document.getElementById("modspell").style.color = "blue";
+        document.getElementById("spelldam").innerHTML = "Spell Damage (SP): " + Math.round(spdam).toLocaleString() + " (" + spdam.toFixed(3) + ")";
+        document.getElementById("spelldam").style.color = "blue";
 
     }
 }
