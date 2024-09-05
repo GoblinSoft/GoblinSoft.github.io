@@ -1,22 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 5</title>
+    <title>GoblinSoft Calculamator Alpha 7</title>
 </head>
 <body>
-    <label for="level">Level:</label>
-    <input type="text" id="level"><br>
     <label for="body">Body:</label>
     <input type="text" id="body"><br>
     <label for="mind">Mind:</label>
     <input type="text" id="mind"><br>
-    <label for="spirit">Spirit:</label>
-    <input type="text" id="spirit"><br>
+    <label for="soul">Soul:</label>
+    <input type="text" id="soul"><br>
     <hr>
     <div id="results">
         <p id="error"></p>
-        <p id="damage"></p>
-        <p id="leveltotal"></p>
+        <p id="level"></p>
+        <p id="stamina"></p>
+        <p id="strength"></p>
+        <p id="agility"></p>
+        <p id="intellect"></p>
+        <p id="wisdom"></p>
+        <p id="totalhealth"></p>
+        <p id="totalmana"></p>
     </div>
     <button onclick="calculamate()">OK</button>
 </body>
@@ -24,39 +28,59 @@
 
 function calculamate() {
   const ErrorGoblin = /[^\d,km.]/;
-  const bodyin = document.getElementById("body").value;
   const mindin = document.getElementById("mind").value;
-  const spiritin = document.getElementById("spirit").value;
-  const levelin = document.getElementById("level").value;
+  const bodyin = document.getElementById("body").value;
+  const soulin = document.getElementById("soul").value;
 
   // Function checks if given values are valid
   const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value));
 
-  if (doesItGob(bodyin) || doesItGob(mindin) || doesItGob(spiritin) || doesItGob(levelin)) { 
+  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin)) { 
 
         // Error handling
         // Check to see if it doesn't fit True for both parameters of doesItGob
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
         document.getElementById("error").style.color = "red";
-        document.getElementById("damage").innerHTML = "";
     } else {
 
         // Print damage formula if no issues, first defining parses variables 
-        const body = parseNumber(bodyin);
         const mind = parseNumber(mindin);
-        const spirit = parseNumber(spiritin);
-        const level = parseNumber(levelin);
-        const totallevel = mind + body + spirit + level;
+        const body = parseNumber(bodyin);
+        const soul = parseNumber(soulin);
+        const level = mind + body + soul;
+        const soulcon = (1 + (0.03 * level)) * soul; // r
+        const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon; // r
+        const strength = (1.5 + (0.05 * level)) * body + soulcon;  // r
+        const agility = (0.5 + (0.015 * level)) * body + soulcon;
+        const wisdom = (0.5 + (0.015 * level)) * mind + soulcon;
+        const intellect = (1.5 + (0.05 * level)) * mind + soulcon;
+        const basehealth = (0.15 * level + 10) * level * (1 + 0.015 * soul);
+        const totalhealth = basehealth + (5 * stamina);
+        const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
+        const totalmana = basemana + (5 * wisdom);
 
         // The formula/e proper
-        var damage = (body * mind) * spirit * 0.10 * (0.025 * level) * totallevel; 
+        var stamshow = stamina;
 
         // User-displayed output handling for "damage" return
         document.getElementById("error").innerHTML = "";
-        document.getElementById("damage").innerHTML = "Damage: " + damage.toLocaleString();
-        document.getElementById("damage").style.color = "black";
-        document.getElementById("leveltotal").innerHTML = "Total Level: " + totallevel.toLocaleString();
-        document.getElementById("leveltotal").style.color = "black";
+        document.getElementById("strength").innerHTML = "Strength: " + strength.toLocaleString();
+        document.getElementById("strength").style.color = "black";
+        document.getElementById("stamina").innerHTML = "Stamina: " + stamina.toLocaleString();
+        document.getElementById("stamina").style.color = "black";
+        document.getElementById("agility").innerHTML = "Agility: " + agility.toLocaleString();
+        document.getElementById("agility").style.color = "black";
+        document.getElementById("intellect").innerHTML = "Intellect: " + intellect.toLocaleString();
+        document.getElementById("intellect").style.color = "black";
+        document.getElementById("wisdom").innerHTML = "Wisdom: " + wisdom.toLocaleString();
+        document.getElementById("wisdom").style.color = "black";
+        document.getElementById("level").innerHTML = "Level: " + level.toLocaleString();
+        document.getElementById("level").style.color = "black";
+        document.getElementById("totalhealth").innerHTML = "Total Health: " + totalhealth.toLocaleString();
+        document.getElementById("totalhealth").style.color = "green";
+        document.getElementById("totalmana").innerHTML = "Total Mana: " + totalmana.toLocaleString();
+        document.getElementById("totalmana").style.color = "blue";
+
     }
 }
 
