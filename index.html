@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 13</title>
+    <title>GoblinSoft Calculamator Alpha 14</title>
 </head>
 <body>
     <label for="body">Body:</label>
@@ -14,6 +14,8 @@
     <input type="text" id="wepspeed"><br>
     <label for="wepdamage">Weapon Damage:</label>
     <input type="text" id="wepdamage"><br>
+    <label for="wepspell">Weapon Spell:</label>
+    <input type="text" id="wepspell"><br>
     <hr>
     <div id="results">
         <p id="error"></p>
@@ -43,14 +45,15 @@ function calculamate() {
   const soulin = document.getElementById("soul").value.trim();
   const wspeedin = document.getElementById("wepspeed").value.trim();
   const wdamagein = document.getElementById("wepdamage").value.trim();
+  const wspellin = document.getElementById("wepspell").value.trim();
   const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin);
-  const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein]);
+  const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein, wspellin]);
 
   // Function checks if given values are valid
   const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
   console.log(parseNumber(wdamagein));
 
-  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || blingoSet.has("")) { 
+  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || doesItGob(wspellin) || blingoSet.has("")) { 
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
         document.getElementById("error").style.color = "red";
         document.getElementById("strength").innerHTML = "";
@@ -91,6 +94,7 @@ function calculamate() {
         const soul = parseNumber(soulin);
         const speed = parseNumber(wspeedin);
         const damage = parseNumber(wdamagein);
+        const wepdamage = parseNumber (wspellin)
         const level = mind + body + soul;
         const soulcon = (1 + (0.03 * level)) * soul;
         const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon;
@@ -107,7 +111,7 @@ function calculamate() {
         const atdam = (mAD + damage) + (0.28 * agility);
         const bSP = (0.5 + 0.008 * level) * level + (0.18 * intellect) + 1;
         const mSP = (bSP) * (1 + (0.05 * mind)) * (0.45 * speed);
-        const spdam = (mSP + damage) + (0.38 * wisdom);
+        const spdam = (mSP + wepdamage) + (0.38 * wisdom);
         console.log(atdam)
 
 
