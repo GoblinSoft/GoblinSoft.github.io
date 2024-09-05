@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 3</title>
+    <title>GoblinSoft Calculamator Alpha 5</title>
 </head>
 <body>
     <label for="level">Level:</label>
@@ -18,28 +18,40 @@
         <p id="damage"></p>
         <p id="leveltotal"></p>
     </div>
-    <button onclick="calculateDamage()">OK</button>
+    <button onclick="calculamate()">OK</button>
 </body>
 <script>
 
-function calculateDamage() {
-    const CheckErrorV = /[^\d,km.]/;
-    var bodyin = document.getElementById("body").value;
-    var body = parseNumber(document.getElementById("body").value);
-    var mindin = document.getElementById("mind").value;
-    var mind = parseNumber(document.getElementById("mind").value);
-    var spiritin = document.getElementById("spirit").value;
-    var spirit = parseNumber(document.getElementById("spirit").value);
-    var level = parseNumber(document.getElementById("level").value);
-    var levelin = document.getElementById("level").value;
-    var totallevel = body + mind + spirit;
+function calculamate() {
+  const ErrorGoblin = /[^\d,km.]/;
+  const bodyin = document.getElementById("body").value;
+  const mindin = document.getElementById("mind").value;
+  const spiritin = document.getElementById("spirit").value;
+  const levelin = document.getElementById("level").value;
 
-    if (CheckErrorV.test(bodyin) == true || isNaN(body) || CheckErrorV.test(mindin) == true || isNaN(mind) || CheckErrorV.test(spiritin) == true || isNaN(spirit) || CheckErrorV.test(levelin) == true || isNaN(level)) {
+  // Function checks if given values are valid
+  const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value));
+
+  if (doesItGob(bodyin) || doesItGob(mindin) || doesItGob(spiritin) || doesItGob(levelin)) { 
+
+        // Error handling
+        // Check to see if it doesn't fit True for both parameters of doesItGob
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
         document.getElementById("error").style.color = "red";
         document.getElementById("damage").innerHTML = "";
     } else {
-        var damage = (body * mind) * spirit * 0.10 * (0.025 * level) * totallevel;
+
+        // Print damage formula if no issues, first defining parses variables 
+        const body = parseNumber(bodyin);
+        const mind = parseNumber(mindin);
+        const spirit = parseNumber(spiritin);
+        const level = parseNumber(levelin);
+        const totallevel = mind + body + spirit + level;
+
+        // The formula/e proper
+        var damage = (body * mind) * spirit * 0.10 * (0.025 * level) * totallevel; 
+
+        // User-displayed output handling for "damage" return
         document.getElementById("error").innerHTML = "";
         document.getElementById("damage").innerHTML = "Damage: " + damage.toLocaleString();
         document.getElementById("damage").style.color = "black";
@@ -60,10 +72,14 @@ function parseNumber(value) {
     // Check for multiplier -- only works with flat 100k, 100m and not combinations like 100m100k
     const match = value.match(/(\d+(\.+\d+)?)([km])/i);
 
-    if (match) {
-        return parseFloat(match[1]) * multipliers[match[3].toLowerCase()];
-    }
-    return parseFloat(value);
+  if (match) {
+    const number = parseFloat(match[1]);
+    let multiplier = 1;
+    if (match[3]) multiplier *= multipliers[match[3].toLowerCase()];
+    return number * multiplier;
+  }
+
+  return parseFloat(value);
 }
 
 </script>
