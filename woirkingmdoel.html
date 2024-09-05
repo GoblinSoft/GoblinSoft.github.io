@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 8</title>
+    <title>GoblinSoft Calculamator Alpha 10</title>
 </head>
 <body>
     <label for="body">Body:</label>
@@ -10,6 +10,10 @@
     <input type="text" id="mind"><br>
     <label for="soul">Soul:</label>
     <input type="text" id="soul"><br>
+    <label for="wepspeed">Weapon Speed:</label>
+    <input type="text" id="wepspeed"><br>
+    <label for="wepdamage">Weapon Damage:</label>
+    <input type="text" id="wepdamage"><br>
     <hr>
     <div id="results">
         <p id="error"></p>
@@ -21,6 +25,9 @@
         <p id="wisdom"></p>
         <p id="totalhealth"></p>
         <p id="totalmana"></p>
+        <p id="baseattack"></p>
+        <p id="modattack"></p>
+        <p id="attackdam"></p>
     </div>
     <button onclick="calculamate()">OK</button>
 </body>
@@ -28,15 +35,18 @@
 
 function calculamate() {
   const ErrorGoblin = /[^\d,km.]/;
-  const mindin = document.getElementById("mind").value;
-  const bodyin = document.getElementById("body").value;
-  const soulin = document.getElementById("soul").value;
+  const mindin = document.getElementById("mind").value.trim();
+  const bodyin = document.getElementById("body").value.trim();
+  const soulin = document.getElementById("soul").value.trim();
+  const wspeed = document.getElementById("wepspeed").value.trim();
+  const wdamage = document.getElementById("wepdamage").value.trim();
   const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin);
+  const blingoSet = new Set([mindin, bodyin, soulin, wspeed, wdamage]);
 
   // Function checks if given values are valid
   const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value));
 
-  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin)) { 
+  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeed) || doesItGob(wdamage) || blingoSet.has("")) { 
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
         document.getElementById("error").style.color = "red";
         document.getElementById("strength").innerHTML = "";
@@ -47,6 +57,9 @@ function calculamate() {
         document.getElementById("level").innerHTML = "";
         document.getElementById("totalhealth").innerHTML = "";
         document.getElementById("totalmana").innerHTML = "";
+        document.getElementById("baseattack").innerHTML = "";
+        document.getElementById("modattack").innerHTML = "";
+        document.getElementById("attackdam").innerHTML = "";
     } else if (blingoGob > 100) {
         document.getElementById("error").innerHTML = "Error detected! Goblins can only calculate levels up to 100.";
         document.getElementById("error").style.color = "red";
@@ -59,10 +72,15 @@ function calculamate() {
         document.getElementById("level").style.color = "red";
         document.getElementById("totalhealth").innerHTML = "";
         document.getElementById("totalmana").innerHTML = "";
+        document.getElementById("baseattack").innerHTML = "";
+        document.getElementById("modattack").innerHTML = "";
+        document.getElementById("attackdam").innerHTML = "";
     } else {
         const mind = parseNumber(mindin);
         const body = parseNumber(bodyin);
         const soul = parseNumber(soulin);
+        const speed = parseNumber(wspeed);
+        const damage = parseNumber(wdamage);
         const level = mind + body + soul;
         const soulcon = (1 + (0.03 * level)) * soul;
         const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon;
@@ -74,24 +92,35 @@ function calculamate() {
         const totalhealth = basehealth + (5 * stamina);
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
         const totalmana = basemana + (5 * wisdom);
+        const bAD = (0.4 + (0.007 * level) + (0.12 * strength) + 1);
+        const mAD = bAD * (1 + (0.05 * body) * (0.45 * speed));
+        const atdam = (mAD + damage) + (0.28 * agility);
+        console.log(atdam)
+
 
         document.getElementById("error").innerHTML = "";
-        document.getElementById("strength").innerHTML = "Strength: " + Math.round(strength.toLocaleString()) + " (" + strength.toLocaleString() + ")";
+        document.getElementById("strength").innerHTML = "Strength: " + Math.round(strength.toLocaleString()) + " (" + strength.toFixed(2).toLocaleString() + ")";
         document.getElementById("strength").style.color = "black";
-        document.getElementById("stamina").innerHTML = "Stamina: " + Math.round(stamina.toLocaleString()) + " (" + stamina.toLocaleString() + ")";
+        document.getElementById("stamina").innerHTML = "Stamina: " + Math.round(stamina.toLocaleString()) + " (" + stamina.toFixed(2).toLocaleString() + ")";
         document.getElementById("stamina").style.color = "black";
-        document.getElementById("agility").innerHTML = "Agility: " + Math.round(agility.toLocaleString()) + " (" + agility.toLocaleString() + ")";
+        document.getElementById("agility").innerHTML = "Agility: " + Math.round(agility.toLocaleString()) + " (" + agility.toFixed(2).toLocaleString() + ")";
         document.getElementById("agility").style.color = "black";
-        document.getElementById("intellect").innerHTML = "Intellect: " + Math.round(intellect.toLocaleString()) + " (" + intellect.toLocaleString() + ")";
+        document.getElementById("intellect").innerHTML = "Intellect: " + Math.round(intellect.toLocaleString()) + " (" + intellect.toFixed(2).toLocaleString() + ")";
         document.getElementById("intellect").style.color = "black";
-        document.getElementById("wisdom").innerHTML = "Wisdom: " + Math.round(wisdom.toLocaleString()) + " (" + wisdom.toLocaleString() + ")";
+        document.getElementById("wisdom").innerHTML = "Wisdom: " + Math.round(wisdom.toLocaleString()) + " (" + wisdom.toFixed(2).toLocaleString() + ")";
         document.getElementById("wisdom").style.color = "black";
         document.getElementById("level").innerHTML = "Level: " + level.toLocaleString();
         document.getElementById("level").style.color = "black";
-        document.getElementById("totalhealth").innerHTML = "Total Health: " + Math.round(totalhealth).toLocaleString() + " (" + totalhealth.toLocaleString() + ")";
+        document.getElementById("totalhealth").innerHTML = "Total Health: " + Math.round(totalhealth).toLocaleString() + " (" + totalhealth.toFixed(2).toLocaleString() + ")";
         document.getElementById("totalhealth").style.color = "green";
-        document.getElementById("totalmana").innerHTML = "Total Mana: " + Math.round(totalmana).toLocaleString() + " (" + totalmana.toLocaleString() + ")";
+        document.getElementById("totalmana").innerHTML = "Total Mana: " + Math.round(totalmana).toLocaleString() + " (" + totalmana.toFixed(2).toLocaleString() + ")";
         document.getElementById("totalmana").style.color = "blue";
+        document.getElementById("baseattack").innerHTML = "Base Attack Damage (bAD): " + Math.round(bAD).toLocaleString() + " (" + bAD.toFixed(2).toLocaleString() + ")";
+        document.getElementById("baseattack").style.color = "red";
+        document.getElementById("modattack").innerHTML = "Modified Attack Damage (mAD): " + Math.round(mAD).toLocaleString() + " (" + mAD.toFixed(2).toLocaleString() + ")";
+        document.getElementById("modattack").style.color = "red";
+        document.getElementById("attackdam").innerHTML = "Attack Damage (AD): " + Math.round(atdam).toLocaleString() + " (" + atdam.toFixed(2).toLocaleString() + ")";
+        document.getElementById("attackdam").style.color = "red";
 
     }
 }
