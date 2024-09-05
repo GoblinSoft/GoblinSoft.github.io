@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 14</title>
+    <title>GoblinSoft Calculamator Alpha 50</title>
 </head>
 <body>
     <label for="body">Body:</label>
@@ -102,7 +102,7 @@ function calculamate() {
         const damage = parseNumber(wdamagein);
         const wepdamage = parseNumber (wspellin);
         const prof = parseNumber(profin);
-        const level = mind + body + soul;
+        const level = mind + body + soul + prof;
         const soulcon = (1 + (0.03 * level)) * soul;
         const profbonus = (0.7 + (0.02 * level)) * prof;
         const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus;
