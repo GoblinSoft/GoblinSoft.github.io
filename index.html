@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 63</title>
+    <title>GoblinSoft Calculamator Alpha 64</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -27,7 +27,7 @@
     </select>
     <hr>
     <div id="results">
-        <button onclick="calculamate()">OK</button><br>
+        <button id="button" onclick="calculamate()">OK</button><br>
         <p id="error"></p>
         <p id="level"></p>
         <p id="exp"></p>
@@ -139,11 +139,11 @@ function calculamate() {
         const totalhealth = basehealth + (5 * stamina);
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
         const totalmana = basemana + (5 * wisdom);
-        const bAD = (0.4 + 0.004 * level) * level + (0.12 * strength);
-        const mAD = (bAD) * (1 + (0.05 * body)) * (0.45 * speed);
+        const bAD = (0.4 + 0.002 * level) * level + (0.12 * strength);
+        const mAD = (bAD) * (1 + (0.05 * body)) * (0.41 * speed);
         const atdam = (mAD + damage) + (0.28 * agility);
-        const bSP = (0.5 + 0.005 * level) * level + (0.18 * intellect);
-        const mSP = (bSP) * (1 + (0.05 * mind)) * (0.45 * speed);
+        const bSP = (0.5 + 0.0026 * level) * level + (0.18 * intellect);
+        const mSP = (bSP) * (1 + (0.05 * mind)) * (0.41 * speed);
         const spdam = (mSP + wepdamage) + (0.38 * wisdom);
 
         document.getElementById("error").innerHTML = "";
@@ -203,6 +203,13 @@ function parseNumber(value) {
   }
 
   return parseFloat(value);
+}
+
+window.addEventListener("keydown", checkEnter, false)
+function checkEnter(event) {
+    if (event.keyCode == 13) {
+    document.getElementById("button").click();
+    }
 }
 
 </script>
