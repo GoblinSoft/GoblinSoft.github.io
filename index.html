@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 60</title>
+    <title>GoblinSoft Calculamator Alpha 61</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -30,6 +30,7 @@
         <button onclick="calculamate()">OK</button><br>
         <p id="error"></p>
         <p id="level"></p>
+        <p id="exp"></p>
         <p id="stamina"></p>
         <p id="strength"></p>
         <p id="agility"></p>
@@ -75,6 +76,7 @@ function calculamate() {
         document.getElementById("intellect").innerHTML = "";
         document.getElementById("wisdom").innerHTML = "";
         document.getElementById("level").innerHTML = "";
+        document.getElementById("exp").innerHTML = "";
         document.getElementById("totalhealth").innerHTML = "";
         document.getElementById("totalmana").innerHTML = "";
         document.getElementById("baseattack").innerHTML = "";
@@ -96,6 +98,7 @@ function calculamate() {
         document.getElementById("wisdom").innerHTML = "";
         document.getElementById("level").innerHTML = "Level: " + blingoGob.toLocaleString();
         document.getElementById("level").style.color = "red";
+        document.getElementById("exp").innerHTML = "Experience: " + exp.toLcaleString();
         document.getElementById("totalhealth").innerHTML = "";
         document.getElementById("totalmana").innerHTML = "";
         document.getElementById("baseattack").innerHTML = "";
@@ -116,6 +119,7 @@ function calculamate() {
         const wepdamage = parseNumber (wspellin);
         const prof = parseNumber(profin);
         const level = mind + body + soul + prof;
+        var xp = (level * level * level) * (1 + (0.02 * level));
         const soulcon = (1 + (0.03 * level)) * soul;
         const profbonus = (0.7 + (0.02 * level)) * prof;
         if (racein == "human") {
@@ -155,6 +159,8 @@ function calculamate() {
         document.getElementById("wisdom").style.color = "black";
         document.getElementById("level").innerHTML = "Level: " + level.toLocaleString();
         document.getElementById("level").style.color = "black";
+        document.getElementById("exp").innerHTML = "Experience: " + xp.toLocaleString();
+        document.getElementById("exp").style.color = "black";
         document.getElementById("totalhealth").innerHTML = "Total Health: " + Math.round(totalhealth).toLocaleString() + " (" + totalhealth.toFixed(2).toLocaleString() + ")";
         document.getElementById("totalhealth").style.color = "green";
         document.getElementById("totalmana").innerHTML = "Total Mana: " + Math.round(totalmana).toLocaleString() + " (" + totalmana.toFixed(2).toLocaleString() + ")";
