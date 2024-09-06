@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 61</title>
+    <title>GoblinSoft Calculamator Alpha 62</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -159,7 +159,7 @@ function calculamate() {
         document.getElementById("wisdom").style.color = "black";
         document.getElementById("level").innerHTML = "Level: " + level.toLocaleString();
         document.getElementById("level").style.color = "black";
-        document.getElementById("exp").innerHTML = "Experience: " + xp.toLocaleString();
+        document.getElementById("exp").innerHTML = "Experience: " + Math.round(xp).toLocaleString() + " (" + xp.toFixed(2).toLocaleString() + ")";
         document.getElementById("exp").style.color = "black";
         document.getElementById("totalhealth").innerHTML = "Total Health: " + Math.round(totalhealth).toLocaleString() + " (" + totalhealth.toFixed(2).toLocaleString() + ")";
         document.getElementById("totalhealth").style.color = "green";
