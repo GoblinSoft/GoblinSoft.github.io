@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 57</title>
+    <title>GoblinSoft Calculamator Alpha 58</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -19,6 +19,11 @@
     <input type="text" id="wepspell"><br>
     <label for="prof">Profession Level:</label>
     <input type="text" id="prof"><br>
+    <label for="racestart">Race:</label>
+    <select name="racestart" id="racestart">
+    <option value="human">Human</option>
+    <option value="goblin">Goblin</option>
+    </select>
     <hr>
     <div id="results">
         <p id="error"></p>
@@ -51,6 +56,7 @@ function calculamate() {
   const wdamagein = document.getElementById("wepdamage").value.trim();
   const wspellin = document.getElementById("wepspell").value.trim();
   const profin = document.getElementById("prof").value.trim();
+  const racein = document.getElementById("racestart").value;
   const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin) + parseNumber(profin);
   const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein, wspellin, profin]);
 
@@ -111,11 +117,17 @@ function calculamate() {
         const level = mind + body + soul + prof;
         const soulcon = (1 + (0.03 * level)) * soul;
         const profbonus = (0.7 + (0.02 * level)) * prof;
-        const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus;
-        const strength = (1.5 + (0.05 * level)) * body + soulcon + profbonus;
-        const agility = (0.5 + (0.015 * level)) * body + soulcon + profbonus;
-        const wisdom = (0.5 + (0.015 * level)) * mind + soulcon + profbonus;
-        const intellect = (1.5 + (0.05 * level)) * mind + soulcon + profbonus;
+        if (racein == "human") {
+        var racebonus = (3 + (0.3 + (0.007 * level)) * level);
+    } else {
+        var racebonus = (122 + (0.02 * level)) * prof;
+    }
+    console.log(racein)        
+        const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus + racebonus;
+        const strength = (1.5 + (0.05 * level)) * body + soulcon + profbonus + racebonus;
+        const agility = (0.5 + (0.015 * level)) * body + soulcon + profbonus + racebonus;
+        const wisdom = (0.5 + (0.015 * level)) * mind + soulcon + profbonus + racebonus;
+        const intellect = (1.5 + (0.05 * level)) * mind + soulcon + profbonus + racebonus;
         const basehealth = (0.15 * level + 14) * level * (1 + 0.011 * soul);
         const totalhealth = basehealth + (5 * stamina);
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
