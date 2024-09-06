@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 58</title>
+    <title>GoblinSoft Calculamator Alpha 59</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -23,9 +23,11 @@
     <select name="racestart" id="racestart">
     <option value="human">Human</option>
     <option value="goblin">Goblin</option>
+    <option value="none">None</option>
     </select>
     <hr>
     <div id="results">
+        <button onclick="calculamate()">OK</button><br>
         <p id="error"></p>
         <p id="level"></p>
         <p id="stamina"></p>
@@ -43,7 +45,6 @@
         <p id="spelldam"></p>
         <p id="profbon"></p>
     </div>
-    <button onclick="calculamate()">OK</button>
 </body>
 <script>
 
@@ -119,8 +120,10 @@ function calculamate() {
         const profbonus = (0.7 + (0.02 * level)) * prof;
         if (racein == "human") {
         var racebonus = (3 + (0.3 + (0.007 * level)) * level);
-    } else {
+    } else if (racein == "goblin") {
         var racebonus = (122 + (0.02 * level)) * prof;
+    } else {
+        var racebonus = 0;
     }
     console.log(racein)        
         const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus + racebonus;
