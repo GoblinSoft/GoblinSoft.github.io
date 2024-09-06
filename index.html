@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 59</title>
+    <title>GoblinSoft Calculamator Alpha 60</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -135,10 +135,10 @@ function calculamate() {
         const totalhealth = basehealth + (5 * stamina);
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
         const totalmana = basemana + (5 * wisdom);
-        const bAD = (0.4 + 0.007 * level) * level + (0.12 * strength) + 1;
+        const bAD = (0.4 + 0.007 * level) * level + (0.12 * strength);
         const mAD = (bAD) * (1 + (0.05 * body)) * (0.45 * speed);
         const atdam = (mAD + damage) + (0.28 * agility);
-        const bSP = (0.5 + 0.008 * level) * level + (0.18 * intellect) + 1;
+        const bSP = (0.5 + 0.008 * level) * level + (0.18 * intellect);
         const mSP = (bSP) * (1 + (0.05 * mind)) * (0.45 * speed);
         const spdam = (mSP + wepdamage) + (0.38 * wisdom);
 
