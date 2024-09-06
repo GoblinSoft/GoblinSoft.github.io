@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 62</title>
+    <title>GoblinSoft Calculamator Alpha 63</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
@@ -123,13 +123,13 @@ function calculamate() {
         const soulcon = (1 + (0.03 * level)) * soul;
         const profbonus = (0.7 + (0.02 * level)) * prof;
         if (racein == "human") {
-        var racebonus = (3 + (0.3 + (0.007 * level)) * level);
-    } else if (racein == "goblin") {
-        var racebonus = (122 + (0.02 * level)) * prof;
-    } else {
-        var racebonus = 0;
-    }
-    console.log(racein)        
+            var racebonus = (3 + (0.3 + (0.007 * level)) * level);
+        } else if (racein == "goblin") {
+            var racebonus = (122 + (0.02 * level)) * prof;
+        } else {
+            var racebonus = 0;
+        }
+        console.log(racein)        
         const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus + racebonus;
         const strength = (1.5 + (0.05 * level)) * body + soulcon + profbonus + racebonus;
         const agility = (0.5 + (0.015 * level)) * body + soulcon + profbonus + racebonus;
@@ -139,10 +139,10 @@ function calculamate() {
         const totalhealth = basehealth + (5 * stamina);
         const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
         const totalmana = basemana + (5 * wisdom);
-        const bAD = (0.4 + 0.007 * level) * level + (0.12 * strength);
+        const bAD = (0.4 + 0.004 * level) * level + (0.12 * strength);
         const mAD = (bAD) * (1 + (0.05 * body)) * (0.45 * speed);
         const atdam = (mAD + damage) + (0.28 * agility);
-        const bSP = (0.5 + 0.008 * level) * level + (0.18 * intellect);
+        const bSP = (0.5 + 0.005 * level) * level + (0.18 * intellect);
         const mSP = (bSP) * (1 + (0.05 * mind)) * (0.45 * speed);
         const spdam = (mSP + wepdamage) + (0.38 * wisdom);
 
