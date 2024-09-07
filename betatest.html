@@ -45,26 +45,26 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Alpha 73</title>
+    <title>GoblinSoft Calculamator Alpha 76</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
 <body style="background-color:silver;">
     <div class="border" id="player1">
     <label for="body">Body:</label>
-    <input type="text" id="body"><br>
+    <input type="text" id="body" autocomplete="off"><br>
     <label for="mind">Mind:</label>
-    <input type="text" id="mind"><br>
+    <input type="text" id="mind" autocomplete="off"><br>
     <label for="soul">Soul:</label>
-    <input type="text" id="soul"><br>
+    <input type="text" id="soul" autocomplete="off"><br>
     <label for="prof">Profession:</label>
-    <input type="text" id="prof"><br>
+    <input type="text" id="prof" autocomplete="off"><br>
     <label for="wepspeed">Weapon Speed:</label>
-    <input type="text" id="wepspeed"><br>
+    <input type="text" id="wepspeed" autocomplete="off"><br>
     <label for="wepdamage">Weapon Damage:</label>
-    <input type="text" id="wepdamage"><br>
+    <input type="text" id="wepdamage" autocomplete="off"><br>
     <label for="wepspell">Weapon Spell:</label>
-    <input type="text" id="wepspell"><br>
+    <input type="text" id="wepspell" autocomplete="off"><br>
     <label for="racestart">Race:</label>
     <select name="racestart" id="racestart">
     <option value="human">Human</option>
@@ -74,19 +74,19 @@
     </div>
     <div class="test" id="player2" style="display:none;">
     <label for="body2">Body:</label>
-    <input type="text" id="body2"><br>
+    <input type="text" id="body2" autocomplete="off"><br>
     <label for="mind2">Mind:</label>
-    <input type="text" id="mind2"><br>
+    <input type="text" id="mind2" autocomplete="off"><br>
     <label for="soul2">Soul:</label>
-    <input type="text" id="soul2"><br>
+    <input type="text" id="soul2" autocomplete="off"><br>
     <label for="prof2">Profession:</label>
-    <input type="text" id="prof2"><br>
+    <input type="text" id="prof2" autocomplete="off"><br>
     <label for="wepspeed2">Weapon Speed:</label>
-    <input type="text" id="wepspeed2"><br>
+    <input type="text" id="wepspeed2" autocomplete="off"><br>
     <label for="wepdamage2">Weapon Damage:</label>
-    <input type="text" id="wepdamage2"><br>
+    <input type="text" id="wepdamage2" autocomplete="off"><br>
     <label for="wepspell">Weapon Spell:</label>
-    <input type="text" id="wepspell2"><br>
+    <input type="text" id="wepspell2" autocomplete="off"><br>
     <label for="racestart2">Race:</label>
     <select name="racestart2" id="racestart2">
     <option value="human2">Human</option>
@@ -96,7 +96,7 @@
     </div>
     <div class="clearfloat"></div>
         <label for="player2">2P?</label>
-        <select name="2p" id="2p" onchange="showDiv(this)">
+        <select name="2p" id="2p" onchange="showDivOnChange(this)">
         <option value="0">No</option>
         <option value="1">Yes</option>
         </select><br>
@@ -141,11 +141,15 @@
         <p id="profbon2"></p>
 </div>
 <div class="fgmark">
-Calculamater Alpha 73 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" />
+Calculamater Alpha 76 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" />
 </div>
 </body>
 
 <script type="text/javascript">
+// Define acceptable characters for error handling
+var ErrorGoblin = /[^\d,km.]/;
+var elementIds = ["mind", "body", "soul", "wepspeed","wepdamage","wepspell","prof"];
+var elementIds2 = ["mind2", "body2", "soul2", "wepspeed2", "wepdamage2", "wepspell2", "prof2"];
 
 // Set "2P?" selector default value to 0
 window.onload = function (){
@@ -154,15 +158,15 @@ document.getElementById("2p").value = 0;
 
 // EventListener to allow user to press Enter key anywhere on page for form submission
 window.addEventListener("keydown", checkEnter, false)
+
+// If Enter is pressed, click OK button
 function checkEnter(event) {
     if (event.keyCode == 13) {
     document.getElementById("button").click();
     }
 };
 
-var elementIds = ["mind", "body", "soul", "wepspeed","wepdamage","wepspell","prof"];
-var elementIds2 = ["mind2", "body2", "soul2", "wepspeed2", "wepdamage2", "wepspell2", "prof2"];
-
+// If any element is empty when button clicked, set that element to 0
 function zeroElements(elements) {
   elements.forEach(elementId => {
     const element = document.getElementById(elementId);
@@ -176,7 +180,8 @@ function zeroElements(elements) {
   );
 };
 
-function showDiv(select){
+// Show and hide player 2 divs on player state change
+function showDivOnChange(select){
    if(document.getElementById("2p").value == 0){
     document.getElementById('player2').style.display = "none";
     document.getElementById('results2').style.display = "none";
@@ -190,7 +195,8 @@ function showDiv(select){
 };
 };
 
-function testeroo(){
+// Show and hide player 2 divs on player state submission
+function showDivOnClick(){
     if (document.getElementById("2p").value == 1){
         document.getElementById('results').style.display = "inline-block";
         document.getElementById('results2').style.display = "inline-block";
@@ -200,24 +206,46 @@ function testeroo(){
     }
 };
 
+// Function to accept things like "k" and "m" as multipliers and parse the returned value as a float
+function parseNumber(value) {
+    const multipliers = {
+        k: 1000,
+        m: 1000000,
+    };
+
+    // Removes commas from user input (if any) for calculation purposes
+    value = value.replace(/,/g, "");
+
+    // Check for multiplier -- only works with flat 100k, 100m and not combinations like 100m100k
+    const match = value.match(/(\d+(\.+\d+)?)([km])/i);
+
+  if (match) {
+    const number = parseFloat(match[1]);
+    let multiplier = 1;
+    if (match[3]) multiplier *= multipliers[match[3].toLowerCase()];
+    return number * multiplier;
+  }
+
+  return parseFloat(value);
+};
+
+// Main combination function
 function calculamation() {
         if (document.getElementById('2p').value == 1){
             zeroElements(elementIds);
             zeroElements(elementIds2);
             calculamate();
             calculamate2();
-            testeroo();
+            showDivOnClick();
         } else {
             zeroElements(elementIds);
             calculamate();
-            testeroo();
+            showDivOnClick();
         }
 };
 
-
+// Calculator for Player 1
 function calculamate() {
-  // Define acceptable characters for error handling
-  const ErrorGoblin = /[^\d,km.]/;
   // Parse inputs as trimmed values
   const mindin = document.getElementById("mind").value.trim();
   const bodyin = document.getElementById("body").value.trim();
@@ -357,34 +385,11 @@ function calculamate() {
         document.getElementById("profbon").style.color = "aquamarine";
 
     }
-}
-
-// Function to accept things like "k" and "m" as multipliers and parse the returned value as a float
-function parseNumber(value) {
-    const multipliers = {
-        k: 1000,
-        m: 1000000,
-    };
-
-    // Removes commas from user input (if any) for calculation purposes
-    value = value.replace(/,/g, "");
-
-    // Check for multiplier -- only works with flat 100k, 100m and not combinations like 100m100k
-    const match = value.match(/(\d+(\.+\d+)?)([km])/i);
-
-  if (match) {
-    const number = parseFloat(match[1]);
-    let multiplier = 1;
-    if (match[3]) multiplier *= multipliers[match[3].toLowerCase()];
-    return number * multiplier;
-  }
-
-  return parseFloat(value);
 };
 
+
+// Calculator for Player 2
 function calculamate2(){
-  // Define acceptable characters for error handling
-  const ErrorGoblin2 = /[^\d,km.]/;
   // Parse inputs as trimmed values
   const mindin2 = document.getElementById("mind2").value.trim();
   const bodyin2 = document.getElementById("body2").value.trim();
@@ -396,11 +401,11 @@ function calculamate2(){
   // Capture race value from "racestart" dropdown as constant
   const racein2 = document.getElementById("racestart2").value;
   // Constant for total level value calculation that utilizes parseNumber to clean up colloquial notation
-  const blingoGob2 = parseNumber2(mindin2) + parseNumber2(bodyin2) + parseNumber2(soulin2) + parseNumber2(profin2);
+  const blingoGob2 = parseNumber(mindin2) + parseNumber(bodyin2) + parseNumber(soulin2) + parseNumber(profin2);
   // Set for checking if any of the text inputs contain an empty string
   const blingoSet2 = new Set([mindin2, bodyin2, soulin2, wspeedin2, wdamagein2, wspellin2, profin2]);
   // Check if any input contains illegal characters (gobs)
-  const doesItGob2 = (value) => ErrorGoblin2.test(value) && !isNaN(parseNumber2(value)) || isNaN(parseNumber2(value));
+  const doesItGob2 = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
   // Check if inputs gob or contain an empty string
   if (doesItGob2(mindin2) || doesItGob2(bodyin2) || doesItGob2(soulin2) || doesItGob2(wspeedin2) || doesItGob2(wdamagein2) || doesItGob2(wspellin2) || doesItGob2(profin2) || blingoSet2.has("")) { 
 
@@ -450,13 +455,13 @@ function calculamate2(){
     } else {
 
         // Input constants utilizing parseNumber for colloquial notation cleaning and calculation purposes
-        const mind2 = parseNumber2(mindin2);
-        const body2 = parseNumber2(bodyin2);
-        const soul2 = parseNumber2(soulin2);
-        const speed2 = parseNumber2(wspeedin2);
-        const damage2 = parseNumber2(wdamagein2);
-        const wepdamage2 = parseNumber2(wspellin2);
-        const prof2 = parseNumber2(profin2);
+        const mind2 = parseNumber(mindin2);
+        const body2 = parseNumber(bodyin2);
+        const soul2 = parseNumber(soulin2);
+        const speed2 = parseNumber(wspeedin2);
+        const damage2 = parseNumber(wdamagein2);
+        const wepdamage2 = parseNumber(wspellin2);
+        const prof2 = parseNumber(profin2);
         // Level and allstat multipliers
         const level2 = mind2 + body2 + soul2 + prof2;
         var xp2 = (level2 * level2 * level2) * (1 + (0.02 * level2));
@@ -524,28 +529,6 @@ function calculamate2(){
         document.getElementById("profbon2").style.color = "aquamarine";
 
     }
-};
-
-function parseNumber2(value) {
-    const multipliers = {
-        k: 1000,
-        m: 1000000,
-    };
-
-    // Removes commas from user input (if any) for calculation purposes
-    value = value.replace(/,/g, "");
-
-    // Check for multiplier -- only works with flat 100k, 100m and not combinations like 100m100k
-    const match = value.match(/(\d+(\.+\d+)?)([km])/i);
-
-  if (match) {
-    const number = parseFloat(match[1]);
-    let multiplier = 1;
-    if (match[3]) multiplier *= multipliers[match[3].toLowerCase()];
-    return number * multiplier;
-  }
-
-  return parseFloat(value);
 };
 
 </script>
