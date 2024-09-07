@@ -12,19 +12,33 @@
     div.test{
         float:left;
         border:1px solid black;
-        width:49%;
+        position:absolute;
+        left:50%;
+        width:50%;
         margin-left:-1px;
     }
     div.vl{
         border-left:1px solid green;
         position:absolute;
-        height:100%;
+        height:55%;
         left:50%;
+    }
+    div.results{
+        border:1px solid black;
+        float:left;
+        width:50%;
+    }
+        div.results2{
+        border:1px solid black;
+        float:left;
+        position:absolute;
+        left:50%;
+        width:50%;
     }
 </style>
 <html>
 <head>
-    <title>GoblinSoft Calculamator Alpha 69</title>
+    <title>GoblinSoft Calculamator Alpha 70</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
@@ -73,15 +87,15 @@
     <option value="none2">None</option>
     </select><br>
     </div>
-    <div class="clearfloat" id="results">
-            <label for="player2">2P?</label>
+    <div class="clearfloat"></div>
+        <label for="player2">2P?</label>
         <select name="2p" id="2p" onchange="showDiv(this)">
         <option value="0" selected>No</option>
         <option value="1">Yes</option>
         </select><br>
-        <button id="button" onclick="calculamate()">OK</button><br>
-        <hr>
-        <div class="vl" id="vl1" style="display:none;"></div>
+        <button id="button" onclick="calculamation()">OK</button><br>
+       <! <div class="vl" id="vl1" style="display:none;"></div>
+        <div class="results" id="results" style="display:none">
         <p id="error"></p>
         <p id="level"></p>
         <p id="exp"></p>
@@ -100,6 +114,25 @@
         <p id="spelldam"></p>
         <p id="profbon"></p>
     </div>
+    <div class=results2 id="results2" style="display:none">
+        <p id="error2"></p>
+        <p id="level2"></p>
+        <p id="exp2"></p>
+        <p id="stamina2"></p>
+        <p id="strength2"></p>
+        <p id="agility2"></p>
+        <p id="intellect2"></p>
+        <p id="wisdom2"></p>
+        <p id="totalhealth2"></p>
+        <p id="totalmana2"></p>
+        <p id="baseattack2"></p>
+        <p id="modattack2"></p>
+        <p id="attackdam2"></p>
+        <p id="basespell2"></p>
+        <p id="modspell2"></p>
+        <p id="spelldam2"></p>
+        <p id="profbon2"></p>
+</div>
 </body>
 <script>
     $(function(){
@@ -109,13 +142,201 @@
 <script type="text/javascript">
 function showDiv(select){
    if(select.value==1){
-    document.getElementById('vl1').style.display = "block";
+   // document.getElementById('vl1').style.display = "block";
     document.getElementById('player2').style.display = "inline-block";
    } else{
-    document.getElementById('vl1').style.display = "none";
+   // document.getElementById('vl1').style.display = "none";
     document.getElementById('player2').style.display = "none";
    }
-} 
+};
+function testeroo(){
+    if (document.getElementById('2p').value == 0){
+        document.getElementById('results').style.display = "inline-block";
+        document.getElementById('results2').style.display = "none";
+    } else {
+        document.getElementById('results').style.display = "inline-block";
+        document.getElementById('results2').style.display = "inline-block";
+    }
+};
+</script>
+<script type="text/javascript">
+    function calculamation() {
+        if (document.getElementById('2p').value == 1){
+            calculamate();
+            calculamate2();
+            testeroo();
+        } else {
+            calculamate();
+            testeroo();
+        }
+    };
+</script>
+<script type="text/javascript">
+    function calculamate2(){
+          // Define acceptable characters for error handling
+  const ErrorGoblin2 = /[^\d,km.]/;
+  // Parse inputs as trimmed values
+  const mindin2 = document.getElementById("mind2").value.trim();
+  const bodyin2 = document.getElementById("body2").value.trim();
+  const soulin2 = document.getElementById("soul2").value.trim();
+  const wspeedin2 = document.getElementById("wepspeed2").value.trim();
+  const wdamagein2 = document.getElementById("wepdamage2").value.trim();
+  const wspellin2 = document.getElementById("wepspell2").value.trim();
+  const profin2 = document.getElementById("prof2").value.trim();
+  // Capture race value from "racestart" dropdown as constant
+  const racein2 = document.getElementById("racestart2").value;
+  // Constant for total level value calculation that utilizes parseNumber to clean up colloquial notation
+  const blingoGob2 = parseNumber2(mindin2) + parseNumber2(bodyin2) + parseNumber2(soulin2) + parseNumber2(profin2);
+  // Set for checking if any of the text inputs contain an empty string
+  const blingoSet2 = new Set([mindin2, bodyin2, soulin2, wspeedin2, wdamagein2, wspellin2, profin2]);
+  // Check if any input contains illegal characters (gobs)
+  const doesItGob2 = (value) => ErrorGoblin2.test(value) && !isNaN(parseNumber2(value)) || isNaN(parseNumber2(value));
+  // Check if inputs gob or contain an empty string
+  if (doesItGob2(mindin2) || doesItGob2(bodyin2) || doesItGob2(soulin2) || doesItGob2(wspeedin2) || doesItGob2(wdamagein2) || doesItGob2(wspellin2) || doesItGob2(profin2) || blingoSet2.has("")) { 
+
+        // Output logic if input is found to gob by doesItGob(input)
+        document.getElementById("error2").innerHTML = "Error detected! There is a non-integer or special character.";
+        document.getElementById("error2").style.color = "red";
+        document.getElementById("strength2").innerHTML = "";
+        document.getElementById("stamina2").innerHTML = "";
+        document.getElementById("agility2").innerHTML = "";
+        document.getElementById("intellect2").innerHTML = "";
+        document.getElementById("wisdom2").innerHTML = "";
+        document.getElementById("level2").innerHTML = "";
+        document.getElementById("exp2").innerHTML = "";
+        document.getElementById("totalhealth2").innerHTML = "";
+        document.getElementById("totalmana2").innerHTML = "";
+        document.getElementById("baseattack2").innerHTML = "";
+        document.getElementById("modattack2").innerHTML = "";
+        document.getElementById("attackdam2").innerHTML = "";
+        document.getElementById("basespell2").innerHTML = "";
+        document.getElementById("modspell2").innerHTML = "";
+        document.getElementById("spelldam2").innerHTML = "";
+        document.getElementById("profbon2").innerHTML = "";
+
+    } else if (blingoGob2 > 100) {
+
+        // Output logic if level sum is above max
+        document.getElementById("error2").innerHTML = "Error detected! Goblins can only calculate levels up to 100.";
+        document.getElementById("error2").style.color = "red";
+        document.getElementById("strength2").innerHTML = "";
+        document.getElementById("stamina2").innerHTML = "";
+        document.getElementById("agility2").innerHTML = "";
+        document.getElementById("intellect2").innerHTML = "";
+        document.getElementById("wisdom2").innerHTML = "";
+        document.getElementById("level2").innerHTML = "Level: " + blingoGob2.toLocaleString();
+        document.getElementById("level2").style.color = "red";
+        document.getElementById("exp2").innerHTML = "";
+        document.getElementById("totalhealth2").innerHTML = "";
+        document.getElementById("totalmana2").innerHTML = "";
+        document.getElementById("baseattack2").innerHTML = "";
+        document.getElementById("modattack2").innerHTML = "";
+        document.getElementById("attackdam2").innerHTML = "";
+        document.getElementById("basespell2").innerHTML = "";
+        document.getElementById("modspell2").innerHTML = "";
+        document.getElementById("spelldam2").innerHTML = "";
+        document.getElementById("profbon2").innerHTML = "";
+
+    } else {
+
+        // Input constants utilizing parseNumber for colloquial notation cleaning and calculation purposes
+        const mind2 = parseNumber2(mindin2);
+        const body2 = parseNumber2(bodyin2);
+        const soul2 = parseNumber2(soulin2);
+        const speed2 = parseNumber2(wspeedin2);
+        const damage2 = parseNumber2(wdamagein2);
+        const wepdamage2 = parseNumber2(wspellin2);
+        const prof2 = parseNumber2(profin2);
+        // Level and allstat multipliers
+        const level2 = mind2 + body2 + soul2 + prof2;
+        var xp2 = (level2 * level2 * level2) * (1 + (0.02 * level2));
+        const soulcon2 = (1 + (0.03 * level2)) * soul2;
+        const profbonus2 = (0.7 + (0.02 * level2)) * prof2;
+        // Check race and apply appropriate modifiers
+        if (racein2 == "human2") {
+            var racebonus2 = (3 + (0.3 + (0.007 * level2)) * level2);
+        } else if (racein2 == "goblin2") {
+            var racebonus2 = (122 + (0.02 * level2)) * prof2;
+        } else {
+            var racebonus2 = 0;
+        }
+        // Stat formulas
+        const stamina2 = (0.5 + (0.015 * level2)) * (mind2 + body2) + soulcon2 + profbonus2 + racebonus2;
+        const strength2 = (1.5 + (0.05 * level2)) * body2 + soulcon2 + profbonus2 + racebonus2;
+        const agility2 = (0.5 + (0.015 * level2)) * body2 + soulcon2 + profbonus2 + racebonus2;
+        const wisdom2 = (0.5 + (0.015 * level2)) * mind2 + soulcon2 + profbonus2 + racebonus2;
+        const intellect2 = (1.5 + (0.05 * level2)) * mind2 + soulcon2 + profbonus2 + racebonus2;
+        const basehealth2 = (0.15 * level2 + 14) * level2 * (1 + 0.011 * soul2);
+        const totalhealth2 = basehealth2 + (5 * stamina2);
+        const basemana2 = (0.008 * level2 + 7) * level2 * (1 + 0.015 * mind2);
+        const totalmana2 = basemana2 + (5 * wisdom2);
+        // Attack and spell formulas
+        const bAD2 = (0.4 + 0.002 * level2) * level2 + (0.06 * strength2);
+        const mAD2 = (bAD2) * (1 + (0.05 * body2)) * (0.41 * speed2);
+        const atdam2 = (mAD2 + damage2) + (0.22 * agility2);
+        const bSP2 = (0.5 + 0.0026 * level2) * level2 + (0.18 * intellect2);
+        const mSP2 = (bSP2) * (1 + (0.05 * mind2)) * (0.41 * speed2);
+        const spdam2 = (mSP2 + wepdamage2) + (0.38 * wisdom2);
+
+        // Output logic for fully parsable result
+        document.getElementById("error2").innerHTML = "";
+        document.getElementById("strength2").innerHTML = "Strength: " + Math.round(strength2.toLocaleString()) + " (" + strength2.toFixed(2).toLocaleString() + ")";
+        document.getElementById("strength2").style.color = "black";
+        document.getElementById("stamina2").innerHTML = "Stamina: " + Math.round(stamina2.toLocaleString()) + " (" + stamina2.toFixed(2).toLocaleString() + ")";
+        document.getElementById("stamina2").style.color = "black";
+        document.getElementById("agility2").innerHTML = "Agility: " + Math.round(agility2.toLocaleString()) + " (" + agility2.toFixed(2).toLocaleString() + ")";
+        document.getElementById("agility2").style.color = "black";
+        document.getElementById("intellect2").innerHTML = "Intellect: " + Math.round(intellect2.toLocaleString()) + " (" + intellect2.toFixed(2).toLocaleString() + ")";
+        document.getElementById("intellect2").style.color = "black";
+        document.getElementById("wisdom2").innerHTML = "Wisdom: " + Math.round(wisdom2.toLocaleString()) + " (" + wisdom2.toFixed(2).toLocaleString() + ")";
+        document.getElementById("wisdom2").style.color = "black";
+        document.getElementById("level2").innerHTML = "Level: " + level2.toLocaleString();
+        document.getElementById("level2").style.color = "black";
+        document.getElementById("exp2").innerHTML = "Experience: " + Math.round(xp2).toLocaleString() + " (" + xp2.toFixed(2).toLocaleString() + ")";
+        document.getElementById("exp2").style.color = "black";
+        document.getElementById("totalhealth2").innerHTML = "Total Health: " + Math.round(totalhealth2).toLocaleString() + " (" + totalhealth2.toFixed(2).toLocaleString() + ")";
+        document.getElementById("totalhealth2").style.color = "green";
+        document.getElementById("totalmana2").innerHTML = "Total Mana: " + Math.round(totalmana2).toLocaleString() + " (" + totalmana2.toFixed(2).toLocaleString() + ")";
+        document.getElementById("totalmana2").style.color = "blue";
+        document.getElementById("baseattack2").innerHTML = "Base Attack Damage (bAD): " + Math.round(bAD2).toLocaleString() + " (" + bAD2.toFixed(3) + ")";
+        document.getElementById("baseattack2").style.color = "red";
+        document.getElementById("modattack2").innerHTML = "Modified Attack Damage (mAD): " + Math.round(mAD2).toLocaleString() + " (" + mAD2.toFixed(3) + ")";
+        document.getElementById("modattack2").style.color = "red";
+        document.getElementById("attackdam2").innerHTML = "Attack Damage (AD): " + Math.round(atdam2).toLocaleString() + " (" + atdam2.toFixed(3) + ")";
+        document.getElementById("attackdam2").style.color = "red";
+        document.getElementById("basespell2").innerHTML = "Base Spell Damage (bSP): " + Math.round(bSP2).toLocaleString() + " (" + bSP2.toFixed(3) + ")";
+        document.getElementById("basespell2").style.color = "blue";
+        document.getElementById("modspell2").innerHTML = "Modified Spell Damage (mSP): " + Math.round(mSP2).toLocaleString() + " (" + mSP2.toFixed(3) + ")";
+        document.getElementById("modspell2").style.color = "blue";
+        document.getElementById("spelldam2").innerHTML = "Spell Damage (SP): " + Math.round(spdam2).toLocaleString() + " (" + spdam2.toFixed(3) + ")";
+        document.getElementById("spelldam2").style.color = "blue";
+        document.getElementById("profbon2").innerHTML = "Profession Bonus: " + Math.round(profbonus2).toLocaleString() + " (" + profbonus2.toFixed(3) + ")";
+        document.getElementById("profbon2").style.color = "aquamarine";
+
+    }
+};
+
+function parseNumber2(value) {
+    const multipliers = {
+        k: 1000,
+        m: 1000000,
+    };
+
+    // Removes commas from user input (if any) for calculation purposes
+    value = value.replace(/,/g, "");
+
+    // Check for multiplier -- only works with flat 100k, 100m and not combinations like 100m100k
+    const match = value.match(/(\d+(\.+\d+)?)([km])/i);
+
+  if (match) {
+    const number = parseFloat(match[1]);
+    let multiplier = 1;
+    if (match[3]) multiplier *= multipliers[match[3].toLowerCase()];
+    return number * multiplier;
+  }
+
+  return parseFloat(value);
+}
 </script>
 <script>
 function calculamate() {
