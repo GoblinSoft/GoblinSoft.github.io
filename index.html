@@ -45,7 +45,7 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Alpha 73</title>
+    <title>GoblinSoft Calculamator Alpha 74</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
@@ -141,7 +141,7 @@
         <p id="profbon2"></p>
 </div>
 <div class="fgmark">
-Calculamater Alpha 73 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" />
+Calculamater Alpha 74 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" />
 </div>
 </body>
 
@@ -160,7 +160,8 @@ function checkEnter(event) {
     }
 };
 
-var elementIds = ["mind", "body", "soul", "wepspeed","wepdamage","wepspell","prof", "mind2", "body2", "soul2", "wepspeed2", "wepdamage2", "wepspell2", "prof2"];
+var elementIds = ["mind", "body", "soul", "wepspeed","wepdamage","wepspell","prof"];
+var elementIds2 = ["mind2", "body2", "soul2", "wepspeed2", "wepdamage2", "wepspell2", "prof2"];
 
 function zeroElements(elements) {
   elements.forEach(elementId => {
@@ -202,6 +203,7 @@ function testeroo(){
 function calculamation() {
         if (document.getElementById('2p').value == 1){
             zeroElements(elementIds);
+            zeroElements(elementIds2);
             calculamate();
             calculamate2();
             testeroo();
