@@ -1,16 +1,15 @@
 <!DOCTYPE html>
 <html>
 <style>
-    div.border{
+    /* Style for Player 1 Input div */
+    div.p1input{
         border:1px solid black;
         width:50%;
         float:left;
         margin-bottom:-1px;
     }
-    div.clearfloat{
-        clear:left;
-    }
-    div.test{
+    /* Style for Player 2 Input div */
+    div.p2input{
         float:left;
         border:1px solid black;
         position:absolute;
@@ -18,18 +17,18 @@
         width:49.5%;
         margin-left:-1px;
     }
-    div.vl{
-        border-left:1px solid green;
-        position:absolute;
-        height:55%;
-        left:50%;
+    /* Clears float left from Player Input divs */
+    div.clearfloat{
+        clear:left;
     }
+    /* Style for Player 1 Results div */
     div.results{
         border:1px solid black;
         float:left;
         width:50%;
         background-color:grey;
     }
+    /* Style for Player 2 Results div */
     div.results2{
         border:1px solid black;
         float:left;
@@ -38,6 +37,7 @@
         width:49.5%;
         background-color:grey;
     }
+    /* Style for GoblinSoft watermark and version information */
     div.fgmark{
         position:absolute;
         bottom:0px;
@@ -50,59 +50,64 @@
     <script src="jquery-3.7.1.min.js"></script>
 </head>
 <body style="background-color:silver;">
-    <div class="border" id="player1">
-    <label for="body">Body:</label>
-    <input type="text" id="body" autocomplete="off"><br>
-    <label for="mind">Mind:</label>
-    <input type="text" id="mind" autocomplete="off"><br>
-    <label for="soul">Soul:</label>
-    <input type="text" id="soul" autocomplete="off"><br>
-    <label for="prof">Profession:</label>
-    <input type="text" id="prof" autocomplete="off"><br>
-    <label for="wepspeed">Weapon Speed:</label>
-    <input type="text" id="wepspeed" autocomplete="off"><br>
-    <label for="wepdamage">Weapon Damage:</label>
-    <input type="text" id="wepdamage" autocomplete="off"><br>
-    <label for="wepspell">Weapon Spell:</label>
-    <input type="text" id="wepspell" autocomplete="off"><br>
-    <label for="racestart">Race:</label>
-    <select name="racestart" id="racestart">
-    <option value="human">Human</option>
-    <option value="goblin">Goblin</option>
-    <option value="none">None</option>
-    </select><br>
-    </div>
-    <div class="test" id="player2" style="display:none;">
-    <label for="body2">Body:</label>
-    <input type="text" id="body2" autocomplete="off"><br>
-    <label for="mind2">Mind:</label>
-    <input type="text" id="mind2" autocomplete="off"><br>
-    <label for="soul2">Soul:</label>
-    <input type="text" id="soul2" autocomplete="off"><br>
-    <label for="prof2">Profession:</label>
-    <input type="text" id="prof2" autocomplete="off"><br>
-    <label for="wepspeed2">Weapon Speed:</label>
-    <input type="text" id="wepspeed2" autocomplete="off"><br>
-    <label for="wepdamage2">Weapon Damage:</label>
-    <input type="text" id="wepdamage2" autocomplete="off"><br>
-    <label for="wepspell">Weapon Spell:</label>
-    <input type="text" id="wepspell2" autocomplete="off"><br>
-    <label for="racestart2">Race:</label>
-    <select name="racestart2" id="racestart2">
-    <option value="human2">Human</option>
-    <option value="goblin2">Goblin</option>
-    <option value="none2">None</option>
-    </select><br>
-    </div>
-    <div class="clearfloat"></div>
-        <label for="player2">2P?</label>
-        <select name="2p" id="2p" onchange="showDivOnChange(this)">
-        <option value="0">No</option>
-        <option value="1">Yes</option>
+    <!-- Player 1 input div -->
+    <div class="p1input" id="player1">
+        <label for="body">Body:</label>
+        <input type="text" id="body" autocomplete="off"><br>
+        <label for="mind">Mind:</label>
+        <input type="text" id="mind" autocomplete="off"><br>
+        <label for="soul">Soul:</label>
+        <input type="text" id="soul" autocomplete="off"><br>
+        <label for="prof">Profession:</label>
+        <input type="text" id="prof" autocomplete="off"><br>
+        <label for="wepspeed">Weapon Speed:</label>
+        <input type="text" id="wepspeed" autocomplete="off"><br>
+        <label for="wepdamage">Weapon Damage:</label>
+        <input type="text" id="wepdamage" autocomplete="off"><br>
+        <label for="wepspell">Weapon Spell:</label>
+        <input type="text" id="wepspell" autocomplete="off"><br>
+        <label for="racestart">Race:</label>
+        <select name="racestart" id="racestart">
+        <option value="human">Human</option>
+        <option value="goblin">Goblin</option>
+        <option value="none">None</option>
         </select><br>
-        <button id="button" onclick="calculamation()">OK</button><br>
-       <! <div class="vl" id="vl1" style="display:none;"></div>
-        <div class="results" id="results" style="display:none">
+    </div>
+    <!-- Player 2 input div -->
+    <div class="p2input" id="player2" style="display:none;">
+        <label for="body2">Body:</label>
+        <input type="text" id="body2" autocomplete="off"><br>
+        <label for="mind2">Mind:</label>
+        <input type="text" id="mind2" autocomplete="off"><br>
+        <label for="soul2">Soul:</label>
+        <input type="text" id="soul2" autocomplete="off"><br>
+        <label for="prof2">Profession:</label>
+        <input type="text" id="prof2" autocomplete="off"><br>
+        <label for="wepspeed2">Weapon Speed:</label>
+        <input type="text" id="wepspeed2" autocomplete="off"><br>
+        <label for="wepdamage2">Weapon Damage:</label>
+        <input type="text" id="wepdamage2" autocomplete="off"><br>
+        <label for="wepspell">Weapon Spell:</label>
+        <input type="text" id="wepspell2" autocomplete="off"><br>
+        <label for="racestart2">Race:</label>
+        <select name="racestart2" id="racestart2">
+        <option value="human2">Human</option>
+        <option value="goblin2">Goblin</option>
+        <option value="none2">None</option>
+        </select><br>
+    </div>
+    <!-- Clear Player Input div float -->
+    <div class="clearfloat"></div>
+    <!-- Multiple entity (player) option -->
+    <label for="player2">2P?</label>
+    <select name="2p" id="2p" onchange="showDivOnChange(this)">
+    <option value="0">No</option>
+    <option value="1">Yes</option>
+    </select><br>
+    <!-- Main functionality (Calculamate submission) -->
+    <button id="button" onclick="calculamation()">OK</button><br>
+    <!-- Player 1 Results div -->
+    <div class="results" id="results" style="display:none">
         <p id="error"></p>
         <p id="level"></p>
         <p id="exp"></p>
@@ -121,6 +126,7 @@
         <p id="spelldam"></p>
         <p id="profbon"></p>
     </div>
+    <!-- Player 2 Results div -->
     <div class=results2 id="results2" style="display:none">
         <p id="error2"></p>
         <p id="level2"></p>
@@ -139,10 +145,11 @@
         <p id="modspell2"></p>
         <p id="spelldam2"></p>
         <p id="profbon2"></p>
-</div>
-<div class="fgmark">
-Calculamater Alpha 76 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" />
-</div>
+    </div>
+    <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
+    <div class="fgmark">
+        <label for="fginfo">Calculamater Alpha 76 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+    </div>
 </body>
 
 <script type="text/javascript">
@@ -152,8 +159,8 @@ var elementIds = ["mind", "body", "soul", "wepspeed","wepdamage","wepspell","pro
 var elementIds2 = ["mind2", "body2", "soul2", "wepspeed2", "wepdamage2", "wepspell2", "prof2"];
 
 // Set "2P?" selector default value to 0
-window.onload = function (){
-document.getElementById("2p").value = 0;
+window.onload = function () {
+    document.getElementById("2p").value = 0;
 };
 
 // EventListener to allow user to press Enter key anywhere on page for form submission
@@ -162,42 +169,38 @@ window.addEventListener("keydown", checkEnter, false)
 // If Enter is pressed, click OK button
 function checkEnter(event) {
     if (event.keyCode == 13) {
-    document.getElementById("button").click();
+        document.getElementById("button").click();
     }
 };
 
 // If any element is empty when button clicked, set that element to 0
 function zeroElements(elements) {
-  elements.forEach(elementId => {
-    const element = document.getElementById(elementId);
-    if (document.getElementById(elementId).value == "") {
-      element.value = 0;
-    }
-     else if (element.value == 0)  {
-        ;
-     }
-  }
-  );
+    elements.forEach(elementId => {
+        const element = document.getElementById(elementId);
+        if (document.getElementById(elementId).value == "") {
+            element.value = 0;
+        } else if (element.value == 0) {
+            ;
+        }
+    });
 };
 
 // Show and hide player 2 divs on player state change
-function showDivOnChange(select){
-   if(document.getElementById("2p").value == 0){
-    document.getElementById('player2').style.display = "none";
-    document.getElementById('results2').style.display = "none";
-
-} else if (document.getElementById("2p").value == 1 && document.getElementById("level2").innerHTML == ""){
-    document.getElementById('player2').style.display = "inline-block";
-
-} else if (document.getElementById("2p").value == 1 && document.getElementById("level2").innerHTML != "") {
-    document.getElementById('results2').style.display = "inline-block";
-    document.getElementById('player2').style.display = "inline-block";
-};
+function showDivOnChange(select) {
+    if(document.getElementById("2p").value == 0) {
+        document.getElementById('player2').style.display = "none";
+        document.getElementById('results2').style.display = "none";
+    } else if (document.getElementById("2p").value == 1 && document.getElementById("level2").innerHTML == "") {
+        document.getElementById('player2').style.display = "inline-block";
+    } else if (document.getElementById("2p").value == 1 && document.getElementById("level2").innerHTML != "") {
+        document.getElementById('results2').style.display = "inline-block";
+        document.getElementById('player2').style.display = "inline-block";
+    };
 };
 
 // Show and hide player 2 divs on player state submission
-function showDivOnClick(){
-    if (document.getElementById("2p").value == 1){
+function showDivOnClick() {
+    if (document.getElementById("2p").value == 1) {
         document.getElementById('results').style.display = "inline-block";
         document.getElementById('results2').style.display = "inline-block";
     } else {
@@ -219,51 +222,50 @@ function parseNumber(value) {
     // Check for multiplier -- only works with flat 100k, 100m and not combinations like 100m100k
     const match = value.match(/(\d+(\.+\d+)?)([km])/i);
 
-  if (match) {
-    const number = parseFloat(match[1]);
-    let multiplier = 1;
-    if (match[3]) multiplier *= multipliers[match[3].toLowerCase()];
-    return number * multiplier;
-  }
-
+    if (match) {
+        const number = parseFloat(match[1]);
+        let multiplier = 1;
+        if (match[3]) multiplier *= multipliers[match[3].toLowerCase()];
+        return number * multiplier;
+    }
   return parseFloat(value);
 };
 
 // Main combination function
 function calculamation() {
-        if (document.getElementById('2p').value == 1){
-            zeroElements(elementIds);
-            zeroElements(elementIds2);
-            calculamate();
-            calculamate2();
-            showDivOnClick();
-        } else {
-            zeroElements(elementIds);
-            calculamate();
-            showDivOnClick();
-        }
+    if (document.getElementById('2p').value == 1) {
+        zeroElements(elementIds);
+        zeroElements(elementIds2);
+        calculamate();
+        calculamate2();
+        showDivOnClick();
+    } else {
+        zeroElements(elementIds);
+        calculamate();
+        showDivOnClick();
+    }
 };
 
 // Calculator for Player 1
 function calculamate() {
-  // Parse inputs as trimmed values
-  const mindin = document.getElementById("mind").value.trim();
-  const bodyin = document.getElementById("body").value.trim();
-  const soulin = document.getElementById("soul").value.trim();
-  const wspeedin = document.getElementById("wepspeed").value.trim();
-  const wdamagein = document.getElementById("wepdamage").value.trim();
-  const wspellin = document.getElementById("wepspell").value.trim();
-  const profin = document.getElementById("prof").value.trim();
-  // Capture race value from "racestart" dropdown as constant
-  const racein = document.getElementById("racestart").value;
-  // Constant for total level value calculation that utilizes parseNumber to clean up colloquial notation
-  const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin) + parseNumber(profin);
-  // Set for checking if any of the text inputs contain an empty string
-  const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein, wspellin, profin]);
-  // Check if any input contains illegal characters (gobs)
-  const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
-  // Check if inputs gob or contain an empty string
-  if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || doesItGob(wspellin) || doesItGob(profin) || blingoSet.has("")) { 
+    // Parse inputs as trimmed values
+    const mindin = document.getElementById("mind").value.trim();
+    const bodyin = document.getElementById("body").value.trim();
+    const soulin = document.getElementById("soul").value.trim();
+    const wspeedin = document.getElementById("wepspeed").value.trim();
+    const wdamagein = document.getElementById("wepdamage").value.trim();
+    const wspellin = document.getElementById("wepspell").value.trim();
+    const profin = document.getElementById("prof").value.trim();
+    // Capture race value from "racestart" dropdown as constant
+    const racein = document.getElementById("racestart").value;
+    // Constant for total level value calculation that utilizes parseNumber to clean up colloquial notation
+    const blingoGob = parseNumber(mindin) + parseNumber(bodyin) + parseNumber(soulin) + parseNumber(profin);
+    // Set for checking if any of the text inputs contain an empty string
+    const blingoSet = new Set([mindin, bodyin, soulin, wspeedin, wdamagein, wspellin, profin]);
+    // Check if any input contains illegal characters (gobs)
+    const doesItGob = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
+    // Check if inputs gob or contain an empty string
+    if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || doesItGob(wspellin) || doesItGob(profin) || blingoSet.has("")) { 
 
         // Output logic if input is found to gob by doesItGob(input)
         document.getElementById("error").innerHTML = "Error detected! There is a non-integer or special character.";
@@ -389,25 +391,25 @@ function calculamate() {
 
 
 // Calculator for Player 2
-function calculamate2(){
-  // Parse inputs as trimmed values
-  const mindin2 = document.getElementById("mind2").value.trim();
-  const bodyin2 = document.getElementById("body2").value.trim();
-  const soulin2 = document.getElementById("soul2").value.trim();
-  const wspeedin2 = document.getElementById("wepspeed2").value.trim();
-  const wdamagein2 = document.getElementById("wepdamage2").value.trim();
-  const wspellin2 = document.getElementById("wepspell2").value.trim();
-  const profin2 = document.getElementById("prof2").value.trim();
-  // Capture race value from "racestart" dropdown as constant
-  const racein2 = document.getElementById("racestart2").value;
-  // Constant for total level value calculation that utilizes parseNumber to clean up colloquial notation
-  const blingoGob2 = parseNumber(mindin2) + parseNumber(bodyin2) + parseNumber(soulin2) + parseNumber(profin2);
-  // Set for checking if any of the text inputs contain an empty string
-  const blingoSet2 = new Set([mindin2, bodyin2, soulin2, wspeedin2, wdamagein2, wspellin2, profin2]);
-  // Check if any input contains illegal characters (gobs)
-  const doesItGob2 = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
-  // Check if inputs gob or contain an empty string
-  if (doesItGob2(mindin2) || doesItGob2(bodyin2) || doesItGob2(soulin2) || doesItGob2(wspeedin2) || doesItGob2(wdamagein2) || doesItGob2(wspellin2) || doesItGob2(profin2) || blingoSet2.has("")) { 
+function calculamate2() {
+    // Parse inputs as trimmed values
+    const mindin2 = document.getElementById("mind2").value.trim();
+    const bodyin2 = document.getElementById("body2").value.trim();
+    const soulin2 = document.getElementById("soul2").value.trim();
+    const wspeedin2 = document.getElementById("wepspeed2").value.trim();
+    const wdamagein2 = document.getElementById("wepdamage2").value.trim();
+    const wspellin2 = document.getElementById("wepspell2").value.trim();
+    const profin2 = document.getElementById("prof2").value.trim();
+    // Capture race value from "racestart" dropdown as constant
+    const racein2 = document.getElementById("racestart2").value;
+    // Constant for total level value calculation that utilizes parseNumber to clean up colloquial notation
+    const blingoGob2 = parseNumber(mindin2) + parseNumber(bodyin2) + parseNumber(soulin2) + parseNumber(profin2);
+    // Set for checking if any of the text inputs contain an empty string
+    const blingoSet2 = new Set([mindin2, bodyin2, soulin2, wspeedin2, wdamagein2, wspellin2, profin2]);
+    // Check if any input contains illegal characters (gobs)
+    const doesItGob2 = (value) => ErrorGoblin.test(value) && !isNaN(parseNumber(value)) || isNaN(parseNumber(value));
+    // Check if inputs gob or contain an empty string
+    if (doesItGob2(mindin2) || doesItGob2(bodyin2) || doesItGob2(soulin2) || doesItGob2(wspeedin2) || doesItGob2(wdamagein2) || doesItGob2(wspellin2) || doesItGob2(profin2) || blingoSet2.has("")) { 
 
         // Output logic if input is found to gob by doesItGob(input)
         document.getElementById("error2").innerHTML = "Error detected! There is a non-integer or special character.";
