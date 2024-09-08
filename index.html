@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html>
 <style>
+    .button {
+        background-color:dimgrey;
+        border:none;
+    }
+
+    input[type="text"], textarea {
+        background-color : silver; 
+        border: none;
+    }
+
+    select {
+        border:none;
+        background-color: silver;
+    }
+
     /* Style for Player 1 Input div */
     div.p1input{
-        border:1px solid black;
+        border:1px solid silver;
         width:50%;
         float:left;
         margin-bottom:-1px;
+        color:lightslategrey;
     }
     /* Style for Player 2 Input div */
     div.p2input{
         float:left;
-        border:1px solid black;
+        border:1px solid silver;
         position:absolute;
         left:50%;
         width:49.5%;
-        margin-left:-1px;
+        color:lightslategrey;
     }
     /* Clears float left from Player Input divs */
     div.clearfloat{
@@ -23,19 +39,19 @@
     }
     /* Style for Player 1 Results div */
     div.results{
-        border:1px solid black;
+        border:1px solid silver;
         float:left;
         width:50%;
-        background-color:grey;
+        background-color:black;
     }
     /* Style for Player 2 Results div */
     div.results2{
-        border:1px solid black;
+        border:1px solid silver;
         float:left;
         position:absolute;
         left:50%;
         width:49.5%;
-        background-color:grey;
+        background-color:black;
     }
     /* Style for GoblinSoft watermark and version information */
     div.fgmark{
@@ -45,11 +61,11 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Alpha 76.1</title>
+    <title>GoblinSoft Calculamator Alpha 76.2</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
-<body style="background-color:silver;">
+<body style="background-color:black;">
     <!-- Player 1 input div -->
     <div class="p1input" id="player1">
         <label for="body">Body:</label>
@@ -66,7 +82,7 @@
         <input type="text" id="wepdamage" autocomplete="off"><br>
         <label for="wepspell">Weapon Spell:</label>
         <input type="text" id="wepspell" autocomplete="off"><br>
-        <label for="racestart">Race:</label>
+        <label for="racestart">Race:</label>  
         <select name="racestart" id="racestart">
         <option value="human">Human</option>
         <option value="goblin">Goblin</option>
@@ -99,13 +115,13 @@
     <!-- Clear Player Input div float -->
     <div class="clearfloat"></div>
     <!-- Multiple entity (player) option -->
-    <label for="player2">2P?</label>
+    <label for="player2" style="color:lightslategrey;">2P?</label>
     <select name="2p" id="2p" onchange="showDivOnChange(this)">
     <option value="0">No</option>
     <option value="1">Yes</option>
     </select><br>
     <!-- Main functionality (Calculamate submission) -->
-    <button id="button" onclick="calculamation()">OK</button><br>
+    <button id="button" class="button" onclick="calculamation()">OK</button><br>
     <!-- Player 1 Results div -->
     <div class="results" id="results" style="display:none">
         <p id="error"></p>
@@ -148,7 +164,7 @@
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
-        <label for="fginfo">Calculamater Alpha 76.1 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Alpha 76.2 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
     </div>
 </body>
 
@@ -158,7 +174,7 @@ var ErrorGoblin = /[^\d,km.]/;
 var elementIds = ["mind", "body", "soul", "wepspeed","wepdamage","wepspell","prof"];
 var elementIds2 = ["mind2", "body2", "soul2", "wepspeed2", "wepdamage2", "wepspell2", "prof2"];
 
-// Set "2P?" selector default value to 0
+// Turn off multiple entities on load
 window.onload = function () {
     document.getElementById("2p").value = 0;
 };
@@ -354,19 +370,19 @@ function calculamate() {
         // Output logic for fully parsable result
         document.getElementById("error").innerHTML = "";
         document.getElementById("strength").innerHTML = "Strength: " + Math.round(strength.toLocaleString()) + " (" + strength.toFixed(2).toLocaleString() + ")";
-        document.getElementById("strength").style.color = "black";
+        document.getElementById("strength").style.color = "lightslategrey";
         document.getElementById("stamina").innerHTML = "Stamina: " + Math.round(stamina.toLocaleString()) + " (" + stamina.toFixed(2).toLocaleString() + ")";
-        document.getElementById("stamina").style.color = "black";
+        document.getElementById("stamina").style.color = "lightslategrey";
         document.getElementById("agility").innerHTML = "Agility: " + Math.round(agility.toLocaleString()) + " (" + agility.toFixed(2).toLocaleString() + ")";
-        document.getElementById("agility").style.color = "black";
+        document.getElementById("agility").style.color = "lightslategrey";
         document.getElementById("intellect").innerHTML = "Intellect: " + Math.round(intellect.toLocaleString()) + " (" + intellect.toFixed(2).toLocaleString() + ")";
-        document.getElementById("intellect").style.color = "black";
+        document.getElementById("intellect").style.color = "lightslategrey";
         document.getElementById("wisdom").innerHTML = "Wisdom: " + Math.round(wisdom.toLocaleString()) + " (" + wisdom.toFixed(2).toLocaleString() + ")";
-        document.getElementById("wisdom").style.color = "black";
+        document.getElementById("wisdom").style.color = "lightslategrey";
         document.getElementById("level").innerHTML = "Level: " + level.toLocaleString();
-        document.getElementById("level").style.color = "black";
+        document.getElementById("level").style.color = "lightslategrey";
         document.getElementById("exp").innerHTML = "Experience: " + Math.round(xp).toLocaleString() + " (" + xp.toFixed(2).toLocaleString() + ")";
-        document.getElementById("exp").style.color = "black";
+        document.getElementById("exp").style.color = "lightslategrey";
         document.getElementById("totalhealth").innerHTML = "Total Health: " + Math.round(totalhealth).toLocaleString() + " (" + totalhealth.toFixed(2).toLocaleString() + ")";
         document.getElementById("totalhealth").style.color = "green";
         document.getElementById("totalmana").innerHTML = "Total Mana: " + Math.round(totalmana).toLocaleString() + " (" + totalmana.toFixed(2).toLocaleString() + ")";
@@ -498,19 +514,19 @@ function calculamate2() {
         // Output logic for fully parsable result
         document.getElementById("error2").innerHTML = "";
         document.getElementById("strength2").innerHTML = "Strength: " + Math.round(strength2.toLocaleString()) + " (" + strength2.toFixed(2).toLocaleString() + ")";
-        document.getElementById("strength2").style.color = "black";
+        document.getElementById("strength2").style.color = "lightslategrey";
         document.getElementById("stamina2").innerHTML = "Stamina: " + Math.round(stamina2.toLocaleString()) + " (" + stamina2.toFixed(2).toLocaleString() + ")";
-        document.getElementById("stamina2").style.color = "black";
+        document.getElementById("stamina2").style.color = "lightslategrey";
         document.getElementById("agility2").innerHTML = "Agility: " + Math.round(agility2.toLocaleString()) + " (" + agility2.toFixed(2).toLocaleString() + ")";
-        document.getElementById("agility2").style.color = "black";
+        document.getElementById("agility2").style.color = "lightslategrey";
         document.getElementById("intellect2").innerHTML = "Intellect: " + Math.round(intellect2.toLocaleString()) + " (" + intellect2.toFixed(2).toLocaleString() + ")";
-        document.getElementById("intellect2").style.color = "black";
+        document.getElementById("intellect2").style.color = "lightslategrey";
         document.getElementById("wisdom2").innerHTML = "Wisdom: " + Math.round(wisdom2.toLocaleString()) + " (" + wisdom2.toFixed(2).toLocaleString() + ")";
-        document.getElementById("wisdom2").style.color = "black";
+        document.getElementById("wisdom2").style.color = "lightslategrey";
         document.getElementById("level2").innerHTML = "Level: " + level2.toLocaleString();
-        document.getElementById("level2").style.color = "black";
+        document.getElementById("level2").style.color = "lightslategrey";
         document.getElementById("exp2").innerHTML = "Experience: " + Math.round(xp2).toLocaleString() + " (" + xp2.toFixed(2).toLocaleString() + ")";
-        document.getElementById("exp2").style.color = "black";
+        document.getElementById("exp2").style.color = "lightslategrey";
         document.getElementById("totalhealth2").innerHTML = "Total Health: " + Math.round(totalhealth2).toLocaleString() + " (" + totalhealth2.toFixed(2).toLocaleString() + ")";
         document.getElementById("totalhealth2").style.color = "green";
         document.getElementById("totalmana2").innerHTML = "Total Mana: " + Math.round(totalmana2).toLocaleString() + " (" + totalmana2.toFixed(2).toLocaleString() + ")";
