@@ -28,7 +28,7 @@
     div.p1input{
         border:1px solid silver;
         width:25%;
-        height:144px;
+        height:162px;
         float:left;
         margin-bottom:-1px;
         color:lightslategrey;
@@ -40,7 +40,7 @@
         position:absolute;
         left:75%;
         width:24.9%;
-        height:144px;
+        height:162px;
         color:lightslategrey;
     }
     div.p1item{
@@ -48,7 +48,7 @@
         border:1px solid silver;
         position:absolute;
         left:25%;
-        height:144px;
+        height:162px;
         width:25%;
         color:lightslategrey;
     }
@@ -57,7 +57,7 @@
         border:1px solid silver;
         position:absolute;
         left:50%;
-        height:144px;
+        height:162px;
         width:25%;
         color:lightslategrey;
     }
@@ -115,7 +115,12 @@
                 <option value="human">Human</option>
                 <option value="goblin">Goblin</option>
                 <option value="none">None</option>
-            </select>
+            </select><br>
+                <label style="color:lightslategrey;">Item?</label>
+        <select name="itemcheck" id="itemcheck" onchange="showItemsOnChange(this)">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
         <br>
 </div>
     <div class="p1item" id="p1item" style="display:none">Player 1 Item Input (WIP)</div>
@@ -143,17 +148,17 @@
                 <option value="none2">None</option>
             </select>
         <br>
+            <label style="color:lightslategrey;">Item?</label>
+        <select name="itemcheck2" id="itemcheck2" onchange="showItemsOnChange2(this)">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
     </div>
     <!-- Clear Player Input div float -->
     <div class="clearfloat"></div>
     <!-- Multiple entity (player) option -->
     <label for="player2" style="color:lightslategrey;">2P?</label>
         <select name="2p" id="2p" onchange="showDivOnChange(this)">
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-        </select>
-    <label style="color:lightslategrey;">Item?</label>
-        <select name="itemcheck" id="itemcheck" onchange="showItemsOnChange(this)">
             <option value="0">No</option>
             <option value="1">Yes</option>
         </select>
@@ -216,7 +221,8 @@
     // Turn off multiple entities on load
     window.onload = function () {
         document.getElementById("2p").value = 0;
-        document.getElementById("itemcheck").value =0;
+        document.getElementById("itemcheck").value = 0;
+        document.getElementById("itemcheck2").value = 0;
     };
 
     // EventListener to allow user to press Enter key anywhere on page for form submission
@@ -245,25 +251,34 @@
     function showDivOnChange(select) {
         if(document.getElementById("2p").value == 0) {
             document.getElementById('player2').style.display = "none";
-            document.getElementById('p2item').style.display = "none";
             document.getElementById('results2').style.display = "none";
+            document.getElementById('p2item').style.display = "none";
         } else if (document.getElementById("2p").value == 1 && document.getElementById("level2").innerHTML == "") {
             document.getElementById('player2').style.display = "inline-block";
-            document.getElementById('p2item').style.display = "inline-block";
         } else if (document.getElementById("2p").value == 1 && document.getElementById("level2").innerHTML != "") {
             document.getElementById('results2').style.display = "inline-block";
-            document.getElementById('p2item').style.display = "inline-block";
             document.getElementById('player2').style.display = "inline-block";
+        };
+        if(document.getElementById('itemcheck2').value == 0 && document.getElementById("2p").value == 1) {
+            document.getElementById('p2item').style.display = "none";
+        }; 
+        if(document.getElementById('itemcheck2').value == 1 && document.getElementById("2p").value == 1) {
+            document.getElementById('p2item').style.display ="inline-block";
         };
     };
     function showItemsOnChange(select) {
         if(document.getElementById("itemcheck").value == 0) {
             document.getElementById('p1item').style.display = "none";
+        } else if (document.getElementById("itemcheck").value == 1) {
+            document.getElementById('p1item').style.display = "inline-block";
+        };
+    };
+        function showItemsOnChange2(select) {
+        if(document.getElementById("itemcheck2").value == 0) {
             document.getElementById('p2item').style.display = "none";
-        } else if (document.getElementById("itemcheck").value == 1 && document.getElementById("2p").value == 0) {
-            document.getElementById('p1item').style.display = "inline-block";
-        } else if (document.getElementById("itemcheck").value == 1 && document.getElementById("2p").value == 1) {
-            document.getElementById('p1item').style.display = "inline-block";
+        } else if (document.getElementById("itemcheck2").value == 1 && document.getElementById("2p").value == 0) {
+            document.getElementById('p2item').style.display = "none";
+        } else if (document.getElementById("itemcheck2").value == 1 && document.getElementById("2p").value == 1) {
             document.getElementById('p2item').style.display = "inline-block";
         };
     };
