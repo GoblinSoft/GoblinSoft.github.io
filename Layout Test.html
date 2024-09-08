@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<style>
+    .colorit {
+        color:lightslategrey;
+    }
+    /* Style for buttons */
+    .button {
+        background-color:dimgrey;
+        border:none;
+    }
+    /* Style for all textarea input */
+    input[type="text"], textarea {
+        background-color : silver; 
+        border: none;
+        width:33px;
+    }
+    /* Style for dropdowns */
+    select {
+        border:none;
+        background-color: silver;
+    }
+    /* Style for Player 1 Input div */
+div.p1input {
+    border: 1px solid silver;
+    width: 50%;
+    height:20vh;
+    margin-bottom: -1px;
+    color: lightslategrey;
+    float: left;
+    overflow-x: hidden; /* Prevent horizontal overflow */
+}
+    div.p1input1{
+        border:1px solid silver;
+        right:0;
+        top:0;
+        position:absolute;
+        color:lightslategrey;
+    }
+    /* Style for Player 2 Input div */
+    div.p2input{
+        float:left;
+        border:1px solid silver;
+        position:absolute;
+        left:50%;
+        width:49.5%;
+        color:lightslategrey;
+    }
+    /* Clears float left from Player Input divs */
+    div.clearfloat{
+        clear:left;
+    }
+    /* Style for Player 1 Results div */
+    div.results{
+        border:1px solid silver;
+        float:left;
+        width:50%;
+        background-color:black;
+    }
+    /* Style for Player 2 Results div */
+    div.results2{
+        border:1px solid silver;
+        float:left;
+        position:absolute;
+        left:50%;
+        width:49.5%;
+        background-color:black;
+    }
+    /* Style for GoblinSoft mascot and version information */
+    div.fgmark{
+        position:absolute;
+        bottom:0px;
+        right:0px;
+    }
+     /* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons that are used to open the tab content */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  color: lightslategrey;
+} 
+</style>
+<head>
+	<title>GoblinSoft Layout Tester Alpha 1</title>
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <script src="jquery-3.7.1.min.js"></script>
+</head>
+<body style="background-color:black;">
+    <!-- Player 1 input div -->
+<div class="tab">
+  <button class="tablinks" onclick="openCity1(event, 'London')">Stats</button>
+  <button class="tablinks" onclick="openCity2(event, 'Paris')">Item Stats</button>
+</div>
+
+<!-- Tab content -->
+
+
+</div>
+    <div class="p1input" id="London">
+        <label for="body">Body: </label> 
+            <input type="text" id="body" autocomplete="off">                       Item Level: <input type="text" id="body" autocomplete="off">   <br>
+        <label for="mind">Mind:</label>
+            <input type="text" id="mind" autocomplete="off"> Type: <select>Stat Formula<option value="test">Plate</option></select>   <br>
+        <label for="soul">Soul:</label>
+            <input type="text" id="soul" autocomplete="off"> Slot: <select>Stat Formula<option value="test">Helm</option></select>   <br>
+        <label for="prof">Profession:</label>
+            <input type="text" id="prof" autocomplete="off"> Base Armor: <input type="text" id="body" autocomplete="off"><br>
+        <label for="wepspeed">Weapon Speed:</label>
+            <input type="text" id="wepspeed" autocomplete="off"> Spend Points? <input type="checkbox" id="body" autocomplete="off"><br>
+        <label for="wepdamage">Weapon Damage:</label>
+            <input type="text" id="wepdamage" autocomplete="off"><br>
+        <label for="wepspell">Weapon Spell:</label>
+            <input type="text" id="wepspell" autocomplete="off"><br>
+        <label for="racestart">Race:</label>  
+            <select name="racestart" id="racestart">
+                <option value="human">Human</option>
+                <option value="goblin">Goblin</option>
+                <option value="none">None</option>
+            </select><br>
+            Stat 1:<select>Stat Formula<option value="test">Stamina</option></select> Value: <input type="text"></input><br>
+            Stat 2:<select>Stat Formula<option value="test">Strength</option></select> Value: <input type="text"></input><br>
+            Stat 3:<select>Stat Formula<option value="test">Intellect</option></select> Value: <input type="text"></input><br>
+            asdfasdf<br>
+            asdfas<br>
+            asdf<br>
+            asdfasdf<br>
+            asdfas<br>
+            asdf<br>            asdfasdf<br>
+            asdfas<br>
+            asdf<br>            asdfasdf<br>
+            asdfas<br>
+            asdf<br>
+    </div>
+    <div id="Paris" class="p1input" style="display:none">
+  Level:<br>
+  Type Dropdown<br>
+  Slot Dropdown<br>
+  Base Armor:<br>
+  Spend Points? [x]<br>
+  <button>+</button>
+  <button>-</button> You have * points.<br>
+asdfa
+  <label>Stat 1:</label><select>Stat Formula<option value="test">1 Stat</option></select> Value: <input type="text"></input>
+
+
+</div>
+
+    <!-- Player 2 input div -->
+    <div class="p2input" id="player2" style="display:none;">
+        <label for="body2">Body:</label>
+            <input type="text" id="body2" autocomplete="off"><br>
+        <label for="mind2">Mind:</label>
+            <input type="text" id="mind2" autocomplete="off"><br>
+        <label for="soul2">Soul:</label>
+            <input type="text" id="soul2" autocomplete="off"><br>
+        <label for="prof2">Profession:</label>
+            <input type="text" id="prof2" autocomplete="off"><br>
+        <label for="wepspeed2">Weapon Speed:</label>
+            <input type="text" id="wepspeed2" autocomplete="off"><br>
+        <label for="wepdamage2">Weapon Damage:</label>
+            <input type="text" id="wepdamage2" autocomplete="off"><br>
+        <label for="wepspell">Weapon Spell:</label>
+            <input type="text" id="wepspell2" autocomplete="off"><br>
+        <label for="racestart2">Race:</label>
+            <select name="racestart2" id="racestart2">
+                <option value="human2">Human</option>
+                <option value="goblin2">Goblin</option>
+                <option value="none2">None</option>
+            </select>
+              <div  id="p1input1" class="p1input" style="display:none;">
+
+            <label for="itemlevel">Item Level:</label>
+
+                <input type="text" id="itemlevel" autocomplete="off"><br>
+
+        </div>
+        <br>
+    </div>
+    <!-- Clear Player Input div float -->
+    <div class="clearfloat"></div>
+    <!-- Multiple entity (player) option -->
+    <label for="player2" style="color:lightslategrey;">2P?</label>
+        <select name="2p" id="2p" onchange="showDivOnChange(this)">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+        <label class="colorit">Item?</label>
+        <select name="itemcheck" id="itemcheck" onchange="showDivOnChange2(this)">
+        	<option value="0">No</option>
+        	<option value="1">Yes</option>
+        </select>
+        <label style="color:lightslategrey">You have * points. </label><button>+</button><button>-</button> 
+    <br>
+    <!-- Main functionality (Calculamate submission) -->
+    <button id="button" class="button" onclick="calculamation()">OK</button><br>
+    <!-- Player 1 Results div -->
+    <div class="results" id="results" style="display:none">
+        <p id="error"></p>
+        <p id="level"></p>
+        <p id="exp"></p>
+        <p id="stamina"></p>
+        <p id="strength"></p>
+        <p id="agility"></p>
+        <p id="intellect"></p>
+        <p id="wisdom"></p>
+        <p id="totalhealth"></p>
+        <p id="totalmana"></p>
+        <p id="baseattack"></p>
+        <p id="modattack"></p>
+        <p id="attackdam"></p>
+        <p id="basespell"></p>
+        <p id="modspell"></p>
+        <p id="spelldam"></p>
+        <p id="profbon"></p>
+    </div>
+    <!-- Player 2 Results div -->
+    <div class=results2 id="results2" style="display:none">
+        <p id="error2"></p>
+        <p id="level2"></p>
+        <p id="exp2"></p>
+        <p id="stamina2"></p>
+        <p id="strength2"></p>
+        <p id="agility2"></p>
+        <p id="intellect2"></p>
+        <p id="wisdom2"></p>
+        <p id="totalhealth2"></p>
+        <p id="totalmana2"></p>
+        <p id="baseattack2"></p>
+        <p id="modattack2"></p>
+        <p id="attackdam2"></p>
+        <p id="basespell2"></p>
+        <p id="modspell2"></p>
+        <p id="spelldam2"></p>
+        <p id="profbon2"></p>
+    </div>
+    <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
+    <div class="fgmark">
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Alpha 76.2 © 2024 GoblinSoft [Ethan] <img src="favicon.ico" /></label>
+    </div>
+</body>
+<script type="text/javascript">
+    // Show and hide player 2 divs on player state change
+    function showDivOnChange(select) {
+        if(document.getElementById("2p").value == 0) {
+            document.getElementById('player2').style.display = "none";
+            document.getElementById('results2').style.display = "none";
+        } else if (document.getElementById("2p").value == 1 && document.getElementById("level2").innerHTML == "") {
+            document.getElementById('player2').style.display = "inline-block";
+        } else if (document.getElementById("2p").value == 1 && document.getElementById("level2").innerHTML != "") {
+            document.getElementById('results2').style.display = "inline-block";
+            document.getElementById('player2').style.display = "inline-block";
+        };
+    };
+
+    function showDivOnChange2(select) {
+        if(document.getElementById("itemcheck").value == 1) {
+            document.getElementById('p1input1').style.display = "inline-block";
+        } else {
+            document.getElementById('p1input1').style.display = "none";
+        };
+    };
+    function openCity1(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  document.getElementById("London").style.display = "inline-block";
+    document.getElementById("Paris").style.display = "none";
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+} 
+    function openCity2(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  document.getElementById("London").style.display = "none";
+  document.getElementById("Paris").style.display = "inline-block";
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+} 
+</script>
+</html>

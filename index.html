@@ -69,57 +69,60 @@
     <!-- Player 1 input div -->
     <div class="p1input" id="player1">
         <label for="body">Body:</label>
-        <input type="text" id="body" autocomplete="off"><br>
+            <input type="text" id="body" autocomplete="off"><br>
         <label for="mind">Mind:</label>
-        <input type="text" id="mind" autocomplete="off"><br>
+            <input type="text" id="mind" autocomplete="off"><br>
         <label for="soul">Soul:</label>
-        <input type="text" id="soul" autocomplete="off"><br>
+            <input type="text" id="soul" autocomplete="off"><br>
         <label for="prof">Profession:</label>
-        <input type="text" id="prof" autocomplete="off"><br>
+            <input type="text" id="prof" autocomplete="off"><br>
         <label for="wepspeed">Weapon Speed:</label>
-        <input type="text" id="wepspeed" autocomplete="off"><br>
+            <input type="text" id="wepspeed" autocomplete="off"><br>
         <label for="wepdamage">Weapon Damage:</label>
-        <input type="text" id="wepdamage" autocomplete="off"><br>
+            <input type="text" id="wepdamage" autocomplete="off"><br>
         <label for="wepspell">Weapon Spell:</label>
-        <input type="text" id="wepspell" autocomplete="off"><br>
+            <input type="text" id="wepspell" autocomplete="off"><br>
         <label for="racestart">Race:</label>  
-        <select name="racestart" id="racestart">
-        <option value="human">Human</option>
-        <option value="goblin">Goblin</option>
-        <option value="none">None</option>
-        </select><br>
+            <select name="racestart" id="racestart">
+                <option value="human">Human</option>
+                <option value="goblin">Goblin</option>
+                <option value="none">None</option>
+            </select>
+        <br>
     </div>
     <!-- Player 2 input div -->
     <div class="p2input" id="player2" style="display:none;">
         <label for="body2">Body:</label>
-        <input type="text" id="body2" autocomplete="off"><br>
+            <input type="text" id="body2" autocomplete="off"><br>
         <label for="mind2">Mind:</label>
-        <input type="text" id="mind2" autocomplete="off"><br>
+            <input type="text" id="mind2" autocomplete="off"><br>
         <label for="soul2">Soul:</label>
-        <input type="text" id="soul2" autocomplete="off"><br>
+            <input type="text" id="soul2" autocomplete="off"><br>
         <label for="prof2">Profession:</label>
-        <input type="text" id="prof2" autocomplete="off"><br>
+            <input type="text" id="prof2" autocomplete="off"><br>
         <label for="wepspeed2">Weapon Speed:</label>
-        <input type="text" id="wepspeed2" autocomplete="off"><br>
+            <input type="text" id="wepspeed2" autocomplete="off"><br>
         <label for="wepdamage2">Weapon Damage:</label>
-        <input type="text" id="wepdamage2" autocomplete="off"><br>
+            <input type="text" id="wepdamage2" autocomplete="off"><br>
         <label for="wepspell">Weapon Spell:</label>
-        <input type="text" id="wepspell2" autocomplete="off"><br>
+            <input type="text" id="wepspell2" autocomplete="off"><br>
         <label for="racestart2">Race:</label>
-        <select name="racestart2" id="racestart2">
-        <option value="human2">Human</option>
-        <option value="goblin2">Goblin</option>
-        <option value="none2">None</option>
-        </select><br>
+            <select name="racestart2" id="racestart2">
+                <option value="human2">Human</option>
+                <option value="goblin2">Goblin</option>
+                <option value="none2">None</option>
+            </select>
+        <br>
     </div>
     <!-- Clear Player Input div float -->
     <div class="clearfloat"></div>
     <!-- Multiple entity (player) option -->
     <label for="player2" style="color:lightslategrey;">2P?</label>
-    <select name="2p" id="2p" onchange="showDivOnChange(this)">
-    <option value="0">No</option>
-    <option value="1">Yes</option>
-    </select><br>
+        <select name="2p" id="2p" onchange="showDivOnChange(this)">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+    <br>
     <!-- Main functionality (Calculamate submission) -->
     <button id="button" class="button" onclick="calculamation()">OK</button><br>
     <!-- Player 1 Results div -->
