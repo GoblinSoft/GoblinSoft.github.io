@@ -124,7 +124,28 @@
         <br>
     </div>
     <!-- Player 1 item input div -->
-    <div class="p1item" id="p1item" style="display:none">Player 1 Item Input (WIP)</div>
+    <div class="p1item" id="p1item" style="display:none">
+        <label for="itemslot">Item Slot: </label>
+            <select name="itemslot" id="itemslot" onchange="showItemType()">
+                <option value="none">None</option>
+                <option value="head">Head</option>
+                <option value="boots">Boots</option>
+                <option value="1hweapon">1-Handed Weapon</option>
+            </select>
+            <br>
+        <label for="itemtype">Item Type: </label>
+            <select name="itemtype" id="itemtype">
+                <option value="none">None</option>
+                <option value="plate" class="arm" hidden>Plate</option>
+                <option value="cloth" class="arm" hidden>Cloth</option>
+                <option value="leather" class="arm" hidden>Leather</option>
+                <option value="tin" class="wep" hidden>Tin</option>
+                <option value="iron" class="wep" hidden>Iron</option>
+                <option value="mithril" class="wep" hidden>Mithril</option>
+            </select><br>
+            <label for="ilvlinput">Item Level: </label>
+                <input type="text" id="ilvlinput">
+    </div>
     <!-- Player 2 input div -->
     <div class="p2input" id="player2" style="display:none;">
         <label for="body2">Body:</label>
@@ -189,9 +210,6 @@
         <p id="spelldam"></p>
         <p id="profbon"></p>
     </div>
-    <div class="itemresults" id="itemresults">
-        test
-    </div>
     <!-- Player 2 Results div -->
     <div class=results2 id="results2" style="display:none">
         <p id="error2"></p>
@@ -212,6 +230,10 @@
         <p id="spelldam2"></p>
         <p id="profbon2"></p>
     </div>
+    <!-- Item results div -->
+    <div class="itemresults" id="itemresults">
+        <p id="itemlevelres"></p>
+    </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
         <label for="fginfo" style="color:lightslategrey;">Calculamater Alpha 76.3 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
@@ -230,6 +252,8 @@
     window.onload = function () {
         divvy("2p").value = 0;
         divvy("itemcheck").value = 0;
+        divvy("itemslot").value = "none";
+        divvy("itemtype").value = "none";
     };
 
     // EventListener to allow user to press Enter key anywhere on page for form submission
@@ -308,6 +332,34 @@
             divvy('results').style.display = "inline-block";
             divvy(p2divs[1]).style.display = "none";
         }
+    };
+
+    // Show appropriate item type on item slot change
+    function showItemType() {
+        const itemslotcheck = divvy("itemslot");
+
+        if (itemslotcheck.value == "head" || itemslotcheck.value == "boots") {
+            divvy("itemtype").value = "none";
+            $('.arm').prop('hidden', false);
+            $('.wep').prop('hidden', true);
+
+    } else if (itemslotcheck.value == "1hweapon") {
+        divvy("itemtype").value = "none";
+        $('.wep').prop('hidden', false);
+        $('.arm').prop('hidden', true);
+
+    }
+    };
+
+    function hideOptions(selectId, opts) {
+      const selectElement = divvy(selectId);
+
+      for (let i = 0; i < selectElement.options.length; i++) {
+        const option = selectElement.options[i];
+        if (opts.includes(option.value)) {
+          option.hidden = true;
+        }
+      }
     };
 
     // Function to accept things like "k" and "m" as multipliers and parse the returned value as a float
@@ -575,7 +627,21 @@
 
     // Calculamator for items.
     function itemcalc() {
-        divvy("itemresults").style.display = "inline-block";
+        divvy("itemresults").style.display = "block";
+        const ilvl = divvy("ilvlinput").value;
+        if (divvy("itemtype").value == "plate" || divvy("itemtype").value == "mithril") {
+            var typecon = 5;
+        };
+        if (divvy("itemtype").value == "leather" || divvy("itemtype").value == "iron") {
+            var typecon = 2;
+        };
+        if (divvy("itemtype").value == "cloth" || divvy("itemtype").value == "tin") {
+            var typecon = 1;
+        };
+    const levelcon = divvy("ilvlinput").value / 0.25
+
+        divvy("itemlevelres").innerHTML = typecon + " points from item type and " + levelcon + " points from level."
+ 
     }
 </script>
 </html>
