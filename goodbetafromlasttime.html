@@ -29,7 +29,7 @@
     div.p1input{
         border:1px solid silver;
         width:25%;
-        height:144px;
+        height:162px;
         float:left;
         margin-bottom:-1px;
         color:lightslategrey;
@@ -41,14 +41,30 @@
         position:absolute;
         left:75%;
         width:24.9%;
-        height:144px;
+        height:162px;
         color:lightslategrey;
     }
     /* Style for Player 1 item div */
     div.p1item{
         float:left;
         border:1px solid silver;
-        height:144px;
+        position:absolute;
+        height:162px;
+        width:25%;
+        color:lightslategrey;
+    }
+    .ificalc{
+        margin-top:163px;
+        position:absolute;
+        border: 1px solid black;
+    }
+    /* Style for Player 2 item div */
+    div.p2item{
+        float:left;
+        border:1px solid silver;
+        position:absolute;
+        left:50%;
+        height:162px;
         width:25%;
         color:lightslategrey;
     }
@@ -72,25 +88,11 @@
         width:49.5%;
         background-color:black;
     }
-    div.itemresults{
-        border:1px solid silver;
-        float:left;
-        height:528px;
-        width:50%;
-        background-color:black;
-        display:none;
-        color:lightslategrey;
-    }
     /* Style for GoblinSoft mascot and version information */
     div.fgmark{
         position:absolute;
         bottom:0px;
         right:0px;
-    }
-    div.testingman{
-        position:relative;
-        top:0;
-        left:0;
     }
 </style>
 <head>
@@ -124,7 +126,14 @@
         <br>
     </div>
     <!-- Player 1 item input div -->
-    <div class="p1item" id="p1item" style="display:none">Player 1 Item Input (WIP)</div>
+    <div class="p1item" id="p1item" style="display:none">
+    <!-- Player 2 item input div -->
+    <label for="p1ilvl">Item Level:</label>
+        <input type="text" id="p1ilvl"><br>
+    <label for="p1ispeed">Item Speed:</label>
+        <input type="text" id="p1ispeed"><br>
+        </div>
+    <div class="p2item" id="p2item" style="display:none">Player 2 Item Input (WIP)</div>
     <!-- Player 2 input div -->
     <div class="p2input" id="player2" style="display:none;">
         <label for="body2">Body:</label>
@@ -147,28 +156,32 @@
                 <option value="goblin2">Goblin</option>
                 <option value="none2">None</option>
             </select><br>
+        <!-- Player 2 item checker -->
+        <label style="color:lightslategrey;">Item?</label>
+            <select name="itemcheck2" id="itemcheck2" onchange="showItemsOnChange(this, p2item)">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
     </div>
     <!-- Clear Player Input div float -->
-        <div class="clearfloat"></div>
+    <div class="clearfloat"></div>
     <!-- Multiple entity (player) option -->
-    <div class="testingman">
-        <div id ="2pcheck" style="display:inline-block;">
+    <div id="bigups" class="ificalc">
     <label style="color:lightslategrey;">2P?</label>
         <select name="2p" id="2p" onchange="showDivOnChange(this)">
             <option value="0">No</option>
             <option value="1">Yes</option>
         </select>
-    </div>
-            <!-- Player 1 item checker -->
+                    <!-- Player 1 item checker -->
         <label style="color:lightslategrey;">Item?</label>
             <select name="itemcheck" id="itemcheck" onchange="showItemsOnChange(this, p1item)">
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </select>
+    </div>
     <br>
     <!-- Main functionality (Calculamate submission) -->
     <button id="button" class="button" onclick="calculamation()">OK</button><br>
-</div>
     <!-- Player 1 Results div -->
     <div class="results" id="results" style="display:none">
         <p id="error"></p>
@@ -188,9 +201,6 @@
         <p id="modspell"></p>
         <p id="spelldam"></p>
         <p id="profbon"></p>
-    </div>
-    <div class="itemresults" id="itemresults">
-        test
     </div>
     <!-- Player 2 Results div -->
     <div class=results2 id="results2" style="display:none">
@@ -224,13 +234,14 @@
     // Define elements to be checked against for zeroElements(elementIds || elementIds2)
     var elementIds = ["mind", "body", "soul", "wepspeed","wepdamage","wepspell","prof"];
     var elementIds2 = ["mind2", "body2", "soul2", "wepspeed2", "wepdamage2", "wepspell2", "prof2"];
-    var p2divs = ["player2", "results2"];
+    var p2divs = ["player2", "results2", "p2item"];
 
     // Turn off multiple entities and item checks on page load
     window.onload = function () {
         divvy("2p").value = 0;
         divvy("itemcheck").value = 0;
-    };
+        divvy("itemcheck2").value = 0;
+;    };
 
     // EventListener to allow user to press Enter key anywhere on page for form submission
     window.addEventListener("keydown", checkEnter, false)
@@ -240,6 +251,10 @@
         const diver = document.getElementById(div);
         return diver;
     };
+
+    function dstats(value, dig) {
+            return value.toLocaleString(undefined, { minimumFractionDigits: dig});
+        };
 
     // If Enter is pressed while window is active, click button to run calcumalate()
     function checkEnter(event) {
@@ -275,28 +290,22 @@
             divvy(p2divs[1]).style.display = "inline-block";
             divvy(p2divs[0]).style.display = "inline-block";
         };
-        if(divvy('itemcheck').value == 1) {}
+        if(divvy('itemcheck2').value == 0 && select.value == 1) {
+            divvy(p2divs[2]).style.display = "none";
+        }; 
+        if(divvy('itemcheck2').value == 1 && select.value == 1) {
+            divvy(p2divs[2]).style.display ="inline-block";
+        };
     };
 
     // Show and hide item divs on "Item?" dropdown change for either player
     function showItemsOnChange(select, item) {
         if(select.value == 0) {
             item.style.display = "none";
-            divvy("player1").style.display = "inline-block";
-            divvy("2pcheck").style.display = "inline-block";
-            divvy("itemresults").style.display = "none";
         } else {
             item.style.display = "inline-block";
-            divvy("player1").style.display ="none";
-            divvy("player2").style.display ="none";
-            divvy("2pcheck").style.display ="none";
-            divvy("2p").value = 0;
-            divvy("results").style.display = "none";
-            divvy("results2").style.display = "none";
+            divvy("player1").style.display = "none";
         };
-        if(select.value == 0 && divvy("level").innerHTML != "")
-            divvy("results").style.display ="inline-block";
-            divvy("itemresults").style.display = "none";
     };
 
     // Show and hide results divs based on player state submission
@@ -332,25 +341,9 @@
       return parseFloat(value);
     };
 
-            // Blanking subfunction
-        function blank(div) {
+            function blank(div) {
             div.innerHTML = "";
         };
-
-    // Rounds stats and converts to string
-    function rounder(stat) {
-        return Math.round(stat).toLocaleString();
-    };
-
-    // Returns digits from dec as max dec points, essentially making dec act as a toFixed
-    function dstats(stat, dec) {
-        return " (" + stat.toLocaleString({ maximumFractionDigits: dec }) + ")";
-    };
-
-    // See above, same for atks
-    function datk(stat, dec) {
-        return " (" + stat.toLocaleString({ maximumFractionDigits: dec }) + ")";
-    };
 
     // Check to see if there are multiple entities then perform calculamations
     function calculamation() {
@@ -360,8 +353,6 @@
             calculamate();
             calculamate2();
             showDivOnClick();
-        } else if (divvy("itemcheck").value ==1 ) {
-            itemcalc()
         } else {
             zeroElements(elementIds); //Calculamations for 1 player
             calculamate();
@@ -390,6 +381,7 @@
         // Check if inputs gob or contain an empty string
         if (doesItGob(mindin) || doesItGob(bodyin) || doesItGob(soulin) || doesItGob(wspeedin) || doesItGob(wdamagein) || doesItGob(wspellin) || doesItGob(profin) || blingoSet.has("")) { 
 
+
             const errorarray = ["strength", "stamina", "agility", "intellect", "wisdom", "level", "exp", "totalhealth", "totalmana", "baseattack", "modattack", "attackdam", "basespell", "modspell", "spelldam", "profbon"];
 
             // Output logic if input is found to gob by doesItGob(input)
@@ -398,6 +390,7 @@
             for (let i = 0; i < errorarray.length; i++) {
                 blank(divvy(errorarray[i]));
             }
+
 
         } else if (blingoGob > 100) {
 
@@ -411,7 +404,9 @@
             for (let i = 0; i < levelerrorarray.length; i++) {
                 blank(divvy(levelerrorarray[i]));
             }
+
         } else {
+
             // Input constants utilizing parseNumber for colloquial notation cleaning and calculation purposes
             const mind = parseNumber(mindin);
             const body = parseNumber(bodyin);
@@ -422,7 +417,7 @@
             const prof = parseNumber(profin);
             // Level and allstat multipliers
             const level = mind + body + soul + prof;
-            const xp = (level * level * level) * (1 + (0.02 * level));
+            var xp = (level * level * level) * (1 + (0.02 * level));
             const soulcon = (1 + (0.03 * level)) * soul;
             const profbonus = (0.7 + (0.02 * level)) * prof;
             // Check race and apply appropriate modifiers
@@ -451,22 +446,41 @@
             const mSP = (bSP) * (1 + (0.05 * mind)) * (0.41 * speed);
             const spdam = (mSP + wepdamage) + (0.38 * wisdom);
             // Space for item formulas
-            const attributes = ["strength", "stamina", "agility", "intellect", "wisdom", "level", "exp", "totalhealth", "totalmana", "baseattack", "modattack", "attackdam", "basespell", "modspell", "spelldam", "profbon"];
-            const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
-            const colors = ["lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "green", "blue", "red", "red", "red", "blue", "blue", "blue", "aquamarine"];
-            const values = [strength, stamina, agility, intellect, wisdom, level, xp, totalhealth, totalmana, bAD, mAD, atdam, bSP, mSP, spdam, profbonus];
-            const formatters = [rounder, rounder, rounder, rounder, rounder, null, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder];
-            const suffixFormatters = [dstats(strength, 2), dstats(stamina, 2), dstats(agility, 2), dstats(intellect, 2), dstats(wisdom, 2), "", dstats(xp, 2), dstats(totalhealth, 2), dstats(totalmana, 2), datk(bAD, 3), datk(mAD, 3), datk(atdam, 3), datk(bSP, 3), datk(mSP, 3), datk(spdam, 3), datk(profbonus, 3)];
 
             // Output logic for fully parsable result
-            console.log("Dtats XP:" + dstats(xp));
-            console.log(xp)
-            blank(divvy("error"));
-            for (let i = 0; i < attributes.length; i++) {
-                  const div = divvy(attributes[i]);
-                  div.innerHTML = `${labels[i]}: ${formatters[i] ? formatters[i](values[i]) : values[i]}${suffixFormatters[i]}`;
-                  div.style.color = colors[i];
-            }
+            divvy("error").innerHTML = "";
+            divvy("strength").innerHTML = "Strength: " + Math.round(strength.toLocaleString()) + " (" + dstats(strength, 2) + ")";
+            divvy("strength").style.color = "lightslategrey";
+            divvy("stamina").innerHTML = "Stamina: " + Math.round(stamina.toLocaleString()) + " (" + dstats(stamina, 2) + ")";
+            divvy("stamina").style.color = "lightslategrey";
+            divvy("agility").innerHTML = "Agility: " + Math.round(agility.toLocaleString()) + " (" + dstats(agility, 2) + ")";
+            divvy("agility").style.color = "lightslategrey";
+            divvy("intellect").innerHTML = "Intellect: " + Math.round(intellect.toLocaleString()) + " (" + dstats(intellect, 2) + ")";
+            divvy("intellect").style.color = "lightslategrey";
+            divvy("wisdom").innerHTML = "Wisdom: " + Math.round(wisdom.toLocaleString()) + " (" + dstats(wisdom, 2) + ")";
+            divvy("wisdom").style.color = "lightslategrey";
+            divvy("level").innerHTML = "Level: " + level.toLocaleString();
+            divvy("level").style.color = "lightslategrey";
+            divvy("exp").innerHTML = "Experience: " + Math.round(xp).toLocaleString() + " (" + dstats(xp, 2) + ")";
+            divvy("exp").style.color = "lightslategrey";
+            divvy("totalhealth").innerHTML = "Total Health: " + Math.round(totalhealth).toLocaleString() + " (" + dstats(totalhealth, 2) + ")";
+            divvy("totalhealth").style.color = "green";
+            divvy("totalmana").innerHTML = "Total Mana: " + Math.round(totalmana).toLocaleString() + " (" + dstats(totalmana, 2) + ")";
+            divvy("totalmana").style.color = "blue";
+            divvy("baseattack").innerHTML = "Base Attack Damage (bAD): " + Math.round(bAD).toLocaleString() + " (" + dstats(bAD, 3) + ")";
+            divvy("baseattack").style.color = "red";
+            divvy("modattack").innerHTML = "Modified Attack Damage (mAD): " + Math.round(mAD).toLocaleString() + " (" + dstats(mAD, 3) + ")";
+            divvy("modattack").style.color = "red";
+            divvy("attackdam").innerHTML = "Attack Damage (AD): " + Math.round(atdam).toLocaleString() + " (" + atdam.toFixed(3) + ")";
+            divvy("attackdam").style.color = "red";
+            divvy("basespell").innerHTML = "Base Spell Damage (bSP): " + Math.round(bSP).toLocaleString() + " (" + bSP.toFixed(3) + ")";
+            divvy("basespell").style.color = "blue";
+            divvy("modspell").innerHTML = "Modified Spell Damage (mSP): " + Math.round(mSP).toLocaleString() + " (" + mSP.toFixed(3) + ")";
+            divvy("modspell").style.color = "blue";
+            divvy("spelldam").innerHTML = "Spell Damage (SP): " + Math.round(spdam).toLocaleString() + " (" + spdam.toFixed(3) + ")";
+            divvy("spelldam").style.color = "blue";
+            divvy("profbon").innerHTML = "Profession Bonus: " + Math.round(profbonus).toLocaleString() + " (" + profbonus.toFixed(3) + ")";
+            divvy("profbon").style.color = "aquamarine";
 
         }
     };
@@ -554,28 +568,43 @@
             const bSP2 = (0.5 + 0.0026 * level2) * level2 + (0.18 * intellect2);
             const mSP2 = (bSP2) * (1 + (0.05 * mind2)) * (0.41 * speed2);
             const spdam2 = (mSP2 + wepdamage2) + (0.38 * wisdom2);
-            // Expandable arrays for filling out results
-            const attributes = ["strength2", "stamina2", "agility2", "intellect2", "wisdom2", "level2", "exp2", "totalhealth2", "totalmana2", "baseattack2", "modattack2", "attackdam2", "basespell2", "modspell2", "spelldam2", "profbon2"];
-            const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
-            const colors = ["lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "green", "blue", "red", "red", "red", "blue", "blue", "blue", "aquamarine"];
-            const values = [strength2, stamina2, agility2, intellect2, wisdom2, level2, xp2, totalhealth2, totalmana2, bAD2, mAD2, atdam2, bSP2, mSP2, spdam2, profbonus2];
-            const formatters = [rounder, rounder, rounder, rounder, rounder, null, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder];
-            const suffixFormatters = [dstats(strength2, 2), dstats(stamina2, 2), dstats(agility2, 2), dstats(intellect2, 2), dstats(wisdom2, 2), "", dstats(xp2, 2), dstats(totalhealth2, 2), dstats(totalmana2, 2), datk(bAD2, 3), datk(mAD2, 3), datk(atdam2, 3), datk(bSP2, 3), datk(mSP2, 3), datk(spdam2, 3), datk(profbonus2, 3)];
 
             // Output logic for fully parsable result
-            blank(divvy("error2"));
-            for (let i = 0; i < attributes.length; i++) {
-                  const div = divvy(attributes[i]);
-                  div.innerHTML = `${labels[i]}: ${formatters[i] ? formatters[i](values[i]) : values[i]}${suffixFormatters[i]}`;
-                  div.style.color = colors[i];
-            }
+            divvy("error2").innerHTML = "";
+            divvy("strength2").innerHTML = "Strength: " + Math.round(strength2.toLocaleString()) + " (" + strength2.toFixed(2).toLocaleString() + ")";
+            divvy("strength2").style.color = "lightslategrey";
+            divvy("stamina2").innerHTML = "Stamina: " + Math.round(stamina2.toLocaleString()) + " (" + stamina2.toFixed(2).toLocaleString() + ")";
+            divvy("stamina2").style.color = "lightslategrey";
+            divvy("agility2").innerHTML = "Agility: " + Math.round(agility2.toLocaleString()) + " (" + agility2.toFixed(2).toLocaleString() + ")";
+            divvy("agility2").style.color = "lightslategrey";
+            divvy("intellect2").innerHTML = "Intellect: " + Math.round(intellect2.toLocaleString()) + " (" + intellect2.toFixed(2).toLocaleString() + ")";
+            divvy("intellect2").style.color = "lightslategrey";
+            divvy("wisdom2").innerHTML = "Wisdom: " + Math.round(wisdom2.toLocaleString()) + " (" + wisdom2.toFixed(2).toLocaleString() + ")";
+            divvy("wisdom2").style.color = "lightslategrey";
+            divvy("level2").innerHTML = "Level: " + level2.toLocaleString();
+            divvy("level2").style.color = "lightslategrey";
+            divvy("exp2").innerHTML = "Experience: " + Math.round(xp2).toLocaleString() + " (" + xp2.toFixed(2).toLocaleString() + ")";
+            divvy("exp2").style.color = "lightslategrey";
+            divvy("totalhealth2").innerHTML = "Total Health: " + Math.round(totalhealth2).toLocaleString() + " (" + totalhealth2.toFixed(2).toLocaleString() + ")";
+            divvy("totalhealth2").style.color = "green";
+            divvy("totalmana2").innerHTML = "Total Mana: " + Math.round(totalmana2).toLocaleString() + " (" + totalmana2.toFixed(2).toLocaleString() + ")";
+            divvy("totalmana2").style.color = "blue";
+            divvy("baseattack2").innerHTML = "Base Attack Damage (bAD): " + Math.round(bAD2).toLocaleString() + " (" + bAD2.toFixed(3) + ")";
+            divvy("baseattack2").style.color = "red";
+            divvy("modattack2").innerHTML = "Modified Attack Damage (mAD): " + Math.round(mAD2).toLocaleString() + " (" + mAD2.toFixed(3) + ")";
+            divvy("modattack2").style.color = "red";
+            divvy("attackdam2").innerHTML = "Attack Damage (AD): " + Math.round(atdam2).toLocaleString() + " (" + atdam2.toFixed(3) + ")";
+            divvy("attackdam2").style.color = "red";
+            divvy("basespell2").innerHTML = "Base Spell Damage (bSP): " + Math.round(bSP2).toLocaleString() + " (" + bSP2.toFixed(3) + ")";
+            divvy("basespell2").style.color = "blue";
+            divvy("modspell2").innerHTML = "Modified Spell Damage (mSP): " + Math.round(mSP2).toLocaleString() + " (" + mSP2.toFixed(3) + ")";
+            divvy("modspell2").style.color = "blue";
+            divvy("spelldam2").innerHTML = "Spell Damage (SP): " + Math.round(spdam2).toLocaleString() + " (" + spdam2.toFixed(3) + ")";
+            divvy("spelldam2").style.color = "blue";
+            divvy("profbon2").innerHTML = "Profession Bonus: " + Math.round(profbonus2).toLocaleString() + " (" + profbonus2.toFixed(3) + ")";
+            divvy("profbon2").style.color = "aquamarine";
 
         }
     };
-
-    // Calculamator for items.
-    function itemcalc() {
-        divvy("itemresults").style.display = "inline-block";
-    }
 </script>
 </html>
