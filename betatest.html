@@ -51,6 +51,7 @@
         height:144px;
         width:25%;
         color:lightslategrey;
+        overflow:auto;
     }
     /* Clears float left from Player Input divs */
     div.clearfloat{
@@ -145,6 +146,11 @@
             </select><br>
             <label for="ilvlinput">Item Level: </label>
                 <input type="text" id="ilvlinput">
+            <label for="spendpoints"> Spend Points? </label>
+            <input type="checkbox" id="spendpoints"><br>
+            <div id="spendpointscheckbox">
+            </div>
+            <button id="addButton">+</button> <button id="removeButton">-</button>
     </div>
     <!-- Player 2 input div -->
     <div class="p2input" id="player2" style="display:none;">
@@ -233,6 +239,8 @@
     <!-- Item results div -->
     <div class="itemresults" id="itemresults">
         <p id="itemlevelres"></p>
+        <P id="itemstamina"></P>
+        <p id="itemstrength"></p>
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
@@ -242,6 +250,9 @@
 <script type="text/javascript">
     // Define acceptable characters for error handling
     var ErrorGoblin = /[^\d,km.]/;
+
+    let itemStrength = 0; // Initialize to 0
+    let itemStamina = 0;  // Initialize to 0
 
     // Define elements to be checked against for zeroElements(elementIds || elementIds2)
     var elementIds = ["mind", "body", "soul", "wepspeed","wepdamage","wepspell","prof"];
@@ -413,7 +424,9 @@
             calculamate2();
             showDivOnClick();
         } else if (divvy("itemcheck").value ==1 ) {
-            itemcalc()
+            calculateStats();
+            itemresults();
+            updateStats();
         } else {
             zeroElements(elementIds); //Calculamations for 1 player
             calculamate();
@@ -627,21 +640,119 @@
 
     // Calculamator for items.
     function itemcalc() {
-        divvy("itemresults").style.display = "block";
-        const ilvl = divvy("ilvlinput").value;
+        var ilvl = divvy("ilvlinput").value;
         if (divvy("itemtype").value == "plate" || divvy("itemtype").value == "mithril") {
-            var typecon = 5;
-        };
-        if (divvy("itemtype").value == "leather" || divvy("itemtype").value == "iron") {
-            var typecon = 2;
-        };
-        if (divvy("itemtype").value == "cloth" || divvy("itemtype").value == "tin") {
             var typecon = 1;
         };
-    const levelcon = divvy("ilvlinput").value / 0.25
+        if (divvy("itemtype").value == "leather" || divvy("itemtype").value == "iron") {
+            var typecon = 0.75;
+        };
+        if (divvy("itemtype").value == "cloth" || divvy("itemtype").value == "tin") {
+            var typecon = 0.5;
+        };
+        if (divvy("itemtype").value == "none") {
+            var typecon = 0;
+        }
 
-        divvy("itemlevelres").innerHTML = typecon + " points from item type and " + levelcon + " points from level."
- 
+        var levelcon = (divvy("ilvlinput").value * 0.25) + 1
+        var totalitempoints = typecon + levelcon
+        return {
+            typecon: typecon,
+            levelcon: levelcon,
+            totalitempoints: typecon + levelcon
+        };
+    };
+
+function updateStats() {
+  divvy("itemstrength").innerHTML = "Strength: " + itemStrength;
+  divvy("itemstamina").innerHTML = "Stamina: " + itemStamina;
+  // Update other stat displays as needed
+};
+
+function itemresults() {
+  divvy("itemresults").style.display = "block";
+
+  // Call itemcalc() to get the base item values
+  const itemCalcResults = itemcalc();
+
+
+  // Display the results
+  divvy("itemlevelres").innerHTML = `
+    ${Math.floor(itemCalcResults.typecon)} points from item type and
+    ${Math.floor(itemCalcResults.levelcon)} points from level.
+    ${itemCalcResults.totalitempoints}`;
+}
+const ilvlinput = divvy("ilvlinput");
+const addButton = divvy("addButton");
+const removeButton = divvy("removeButton");
+const targetDiv = divvy("spendpointscheckbox");
+let currentDivCount = 0; // Track the current number of divs
+let maxDivCount; // Store the calculated maximum div count
+
+// Calculate the maximum div count based on itemcalc
+function calculateMaxDivCount() {
+  const itemcalcResult = itemcalc().totalitempoints; // Assuming itemcalc returns the totalitempoints
+  maxDivCount = Math.floor(itemcalcResult); // Convert to integer
+}
+
+// Allow user to add stat add rows based on points total
+    addButton.addEventListener("click", () => {
+        calculateMaxDivCount()
+      if (currentDivCount >= maxDivCount) {
+        return; // Do nothing if max divs reached
+      }
+      if (divvy("spendpoints").value){
+      };
+        const newElement = document.createElement("div");
+        newElement.className = "element1";
+        newElement.textContent = `Stat Add ${currentDivCount + 1}`;
+        newElement.innerHTML = `
+        <label for="sppo">Stat Add ${currentDivCount + 1}</label>
+        <select class="stat-select">
+          <option value="Stamina">Stamina</option>
+          <option value="Strength">Strength</option>
+        </select>
+        <input type="text" id="itemstatinput${currentDivCount + 1}">
+        `;
+        targetDiv.appendChild(newElement);
+        currentDivCount++;
+});
+    // Allow user to remove stat add rows based on points total
+    removeButton.addEventListener("click", () => {
+        calculateMaxDivCount()
+      if (currentDivCount > 0) {
+        targetDiv.removeChild(targetDiv.lastChild);
+        currentDivCount--;
+      }
+});
+
+function calculateStats() {
+  itemStrength = 0;
+  itemStamina = 0;
+
+  // Get all input elements with IDs starting with "itemstatinput"
+  const inputElements = document.querySelectorAll("[id^='itemstatinput']");
+
+  // Iterate through each input element
+  for (const input of inputElements) {
+    const inputValue = parseInt(input.value);
+
+    // Check if input value is valid
+    if (isNaN(inputValue)) {
+      continue; // Skip invalid values
     }
+
+    // Get the corresponding select element
+    const selectElement = input.parentElement.querySelector(".stat-select");
+    const selectedStat = selectElement.value;
+
+    // Add the value to the appropriate stat variable
+    if (selectedStat === "Strength") {
+      itemStrength += inputValue;
+    } else if (selectedStat === "Stamina") {
+      itemStamina += inputValue;
+    }
+  }
+}
 </script>
 </html>
