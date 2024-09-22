@@ -17,7 +17,8 @@
     /* Style for all textarea input */
     input[type="text"], textarea {
         background-color : silver; 
-        border: none;
+        border:none;
+        margin:1px;
         width:32px;
     }
     /* Style for dropdowns */
@@ -29,10 +30,12 @@
     div.p1input{
         border:1px solid silver;
         width:25%;
-        height:144px;
+        height:160px;
         float:left;
         margin-bottom:-1px;
         color:lightslategrey;
+        overflow:auto;
+        font-size:14px;
     }
     /* Style for Player 2 Input div */
     div.p2input{
@@ -41,17 +44,20 @@
         position:absolute;
         left:75%;
         width:24.9%;
-        height:144px;
+        height:160px;
         color:lightslategrey;
+        overflow:auto;
+        font-size:14px;
     }
     /* Style for Player 1 item div */
     div.p1item{
         float:left;
         border:1px solid silver;
-        height:144px;
+        height:160px;
         width:25%;
         color:lightslategrey;
         overflow:auto;
+        font-size:14px;
     }
     /* Clears float left from Player Input divs */
     div.clearfloat{
@@ -95,7 +101,7 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Alpha 76.3</title>
+    <title>GoblinSoft Calculamator Pre-Beta 1.0</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
@@ -121,7 +127,7 @@
                 <option value="human">Human</option>
                 <option value="goblin">Goblin</option>
                 <option value="none">None</option>
-            </select><br>
+            </select>
         <br>
     </div>
     <!-- Player 1 item input div -->
@@ -239,12 +245,13 @@
     <!-- Item results div -->
     <div class="itemresults" id="itemresults">
         <p id="itemlevelres"></p>
+        <p id="itemerror"></p>
         <P id="itemstamina"></P>
         <p id="itemstrength"></p>
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
-        <label for="fginfo" style="color:lightslategrey;">Calculamater Alpha 76.3 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 1.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
     </div>
 </body>
 <script type="text/javascript">
@@ -423,10 +430,16 @@
             calculamate();
             calculamate2();
             showDivOnClick();
-        } else if (divvy("itemcheck").value ==1 ) {
+        } else if (divvy("itemcheck").value == 1) {
             calculateStats();
+            if((itemStrength + itemStamina) == 0) {
+                itemresults();
+             divvy("itemstrength").innerHTML = "No points were spent."   
+            } else {
             itemresults();
             updateStats();
+            lastupdatecheck();
+        }
         } else {
             zeroElements(elementIds); //Calculamations for 1 player
             calculamate();
@@ -664,9 +677,37 @@
     };
 
 function updateStats() {
-  divvy("itemstrength").innerHTML = "Strength: " + itemStrength;
-  divvy("itemstamina").innerHTML = "Stamina: " + itemStamina;
-  // Update other stat displays as needed
+  const totalItemPoints = itemcalc().totalitempoints;
+  let usedPoints = 0;
+
+  // Add non-null itemStrength and itemStamina to usedPoints
+  if (itemStrength !== null) {
+    usedPoints += itemStrength;
+  }
+  if (itemStamina !== null) {
+    usedPoints += itemStamina;
+  }
+
+  if (usedPoints > totalItemPoints) {
+    divvy("itemerror").innerHTML = "You entered too many points. You have " + totalItemPoints + " in total and used " + usedPoints + ".";
+    divvy("itemstamina").innerHTML = "";
+    divvy("itemstrength").innerHTML = "";
+  } else {
+    // Update stat displays
+    divvy("itemerror").innerHTML = ""
+    divvy("itemstrength").innerHTML = "Strength: " + (itemStrength !== null ? itemStrength : "");
+    divvy("itemstamina").innerHTML = "Stamina: " + (itemStamina !== null ? itemStamina : "");
+    // Update other stat displays as needed
+  }
+}
+
+function lastupdatecheck() {
+    if(itemStrength == 0) {
+    divvy("itemstrength").innerHTML = "";
+};
+if(itemStamina == 0) {
+    divvy("itemstamina").innerHTML = "";
+}
 };
 
 function itemresults() {
@@ -680,7 +721,7 @@ function itemresults() {
   divvy("itemlevelres").innerHTML = `
     ${Math.floor(itemCalcResults.typecon)} points from item type and
     ${Math.floor(itemCalcResults.levelcon)} points from level.
-    ${itemCalcResults.totalitempoints}`;
+    ${Math.floor(itemCalcResults.totalitempoints)}`;
 }
 const ilvlinput = divvy("ilvlinput");
 const addButton = divvy("addButton");
@@ -730,7 +771,7 @@ function calculateStats() {
   itemStrength = 0;
   itemStamina = 0;
 
-  // Get all input elements with IDs starting with "itemstatinput"
+  // Get all input elements with IDs starting with "itemstatinput"-- the ones created by addButton and related to MaxDivCount
   const inputElements = document.querySelectorAll("[id^='itemstatinput']");
 
   // Iterate through each input element
