@@ -519,13 +519,13 @@
             const intellect = (1.5 + (0.05 * level)) * mind + soulcon + profbonus + racebonus;
             const basehealth = (0.15 * level + 14) * level * (1 + 0.011 * soul);
             const totalhealth = basehealth + (5 * stamina);
-            const basemana = (0.008 * level + 7) * level * (1 + 0.015 * mind);
+            const basemana = (0.08 * level + 7) * level * (1 + 0.015 * mind);
             const totalmana = basemana + (5 * wisdom);
             // Attack and spell formulas
             const bAD = (0.4 + 0.002 * level) * level + (0.06 * strength);
             const mAD = (bAD) * (1 + (0.05 * body)) * (0.41 * speed);
             const atdam = (mAD + damage) + (0.22 * agility);
-            const bSP = (0.5 + 0.0026 * level) * level + (0.18 * intellect);
+            const bSP = (0.4 + 0.002 * level) * level + (0.05 * intellect);
             const mSP = (bSP) * (1 + (0.05 * mind)) * (0.41 * speed);
             const spdam = (mSP + wepdamage) + (0.38 * wisdom);
             // Space for item formulas
@@ -623,13 +623,13 @@
             const intellect2 = (1.5 + (0.05 * level2)) * mind2 + soulcon2 + profbonus2 + racebonus2;
             const basehealth2 = (0.15 * level2 + 14) * level2 * (1 + 0.011 * soul2);
             const totalhealth2 = basehealth2 + (5 * stamina2);
-            const basemana2 = (0.008 * level2 + 7) * level2 * (1 + 0.015 * mind2);
+            const basemana2 = (0.08 * level2 + 7) * level2 * (1 + 0.015 * mind2);
             const totalmana2 = basemana2 + (5 * wisdom2);
             // Attack and spell formulas
             const bAD2 = (0.4 + 0.002 * level2) * level2 + (0.06 * strength2);
             const mAD2 = (bAD2) * (1 + (0.05 * body2)) * (0.41 * speed2);
             const atdam2 = (mAD2 + damage2) + (0.22 * agility2);
-            const bSP2 = (0.5 + 0.0026 * level2) * level2 + (0.18 * intellect2);
+            const bSP2 = (0.4 + 0.002 * level2) * level2 + (0.05 * intellect2);
             const mSP2 = (bSP2) * (1 + (0.05 * mind2)) * (0.41 * speed2);
             const spdam2 = (mSP2 + wepdamage2) + (0.38 * wisdom2);
             // Expandable arrays for filling out results
@@ -734,7 +734,7 @@ let maxDivCount; // Store the calculated maximum div count
 function calculateMaxDivCount() {
   const itemcalcResult = itemcalc().totalitempoints; // Assuming itemcalc returns the totalitempoints
   maxDivCount = Math.floor(itemcalcResult); // Convert to integer
-}
+}n
 
 // Allow user to add stat add rows based on points total
     addButton.addEventListener("click", () => {
