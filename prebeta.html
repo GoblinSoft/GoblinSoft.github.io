@@ -101,7 +101,7 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Pre-Beta 1.0</title>
+    <title>GoblinSoft Calculamator Pre-Beta 2.0</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
@@ -124,11 +124,32 @@
             <input type="text" id="wepspell" autocomplete="off"><br>
         <label for="racestart">Race:</label>  
             <select name="racestart" id="racestart">
+                <option value="humanP">Human (Player)</option>
+                <option value="dwarfP">Dwarf (Player)</option>
+                <option value="gnomeP">Gnome (Player)</option>
+                <option value="elfP">Elf (Player)</option>
                 <option value="human">Human</option>
+                <option value="dwarf">Dwarf</option>
+                <option value="gnome">Gnome</option>
+                <option value="elf">Elf</option>
                 <option value="goblin">Goblin</option>
+                <option value="ratman">Ratman</option>
+                <option value="dogman">Dogman</option>
+                <option value="pigman">Pigman</option>
+                <option value="fairy">Fairy</option>
+                <option value="giant">Giant</option>
+                <option value="minotaur">Minotaur</option>
                 <option value="none">None</option>
             </select>
-        <br>
+        <label for="rankstart">Rank:</label>  
+            <select name="rankstart" id="rankstart">
+                <option value="normal">Normal</option>
+                <option value="tough">Tough *</option>
+                <option value="elite">Elite **</option>
+                <option value="champion">Champion ***</option>
+                <option value="boss">Boss X</option>
+            </select>
+            <br>
     </div>
     <!-- Player 1 item input div -->
     <div class="p1item" id="p1item" style="display:none">
@@ -176,10 +197,31 @@
             <input type="text" id="wepspell2" autocomplete="off"><br>
         <label for="racestart2">Race:</label>
             <select name="racestart2" id="racestart2">
+                <option value="humanP2">Human (Player)</option>
+                <option value="dwarfP2">Dwarf (Player)</option>
+                <option value="gnomeP2">Gnome (Player)</option>
+                <option value="elfP2">Elf (Player)</option>
                 <option value="human2">Human</option>
+                <option value="dwarf2">Dwarf</option>
+                <option value="gnome2">Gnome</option>
+                <option value="elf2">Elf</option>
                 <option value="goblin2">Goblin</option>
+                <option value="ratman2">Ratman</option>
+                <option value="dogman2">Dogman</option>
+                <option value="pigman2">Pigman</option>
+                <option value="fairy2">Fairy</option>
+                <option value="giant2">Giant</option>
+                <option value="minotaur2">Minotaur</option>
                 <option value="none2">None</option>
-            </select><br>
+            </select>
+                    <label for="rankstart">Rank:</label>  
+            <select name="rankstart" id="rankstart">
+                <option value="normal">Normal</option>
+                <option value="tough">Tough *</option>
+                <option value="elite">Elite **</option>
+                <option value="champion">Champion ***</option>
+                <option value="boss">Boss X</option>
+            </select>
     </div>
     <!-- Clear Player Input div float -->
         <div class="clearfloat"></div>
@@ -236,7 +278,7 @@
         <p id="totalmana2"></p>
         <p id="baseattack2"></p>
         <p id="modattack2"></p>
-        <p id="attackdam2"></p>
+        <p id="attackdam2"></p>file:///C:/Users/sneed/Desktop/GobST12%20(1).html
         <p id="basespell2"></p>
         <p id="modspell2"></p>
         <p id="spelldam2"></p>
@@ -251,7 +293,7 @@
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
-        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 1.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 2.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
     </div>
 </body>
 <script type="text/javascript">
@@ -504,19 +546,47 @@
             const soulcon = (1 + (0.03 * level)) * soul;
             const profbonus = (0.7 + (0.02 * level)) * prof;
             // Check race and apply appropriate modifiers
-            if (racein == "human") {
-                var racebonus = (3 + (0.3 + (0.007 * level)) * level);
-            } else if (racein == "goblin") {
-                var racebonus = (122 + (0.02 * level)) * prof;
-            } else {
-                var racebonus = 0;
-            }
+            const racelist = {
+                humanP: [1, 1, 1, 1, 1],
+                dwarfP: [1.1, 1.45, 0.8, 0.8, 1.15],
+                gnomeP: [0.75, 0.7, 1.25, 1.5, 1.1],
+                elfP: [1, 0.8, 1.35, 1.35, 0.9],
+                human: [1, 1, 1, 1, 1],
+                dwarf: [1.1, 1.45, 0.8, 0.8, 1.15],
+                gnome: [0.75, 0.7, 1.25, 1.5, 1.1],
+                elf: [0, 0.8, 1.35, 1.35, 0.9],
+                ratman: [0.7, 0.8, 1.15, 0.9, 0.9],
+                goblin: [0.8, 0.9, 1.25, 1.25, 1.1],
+                dogman: [1.25, 1.25, 1.1, 0.8, 0.7],
+                pigman: [1.35, 1.15, 0.8, 1.1, 0.7],
+                giant: [1.8, 1.45, 0.7, 0.7, 0.7],
+                minotaur: [1.4, 1.4, 0.9, 0.7, 0.7],
+                fairy: [0.65, 0.6, 1.1, 1.45, 1.45],
+                none: [1, 1, 1, 1, 1],
+            };
+            const pbasestat = (6 + (0.3 + (0.007 * level)) * level);
+            const mbasestat = (2 + (0.3 + (0.007 * level)) * level);
+            var racestam = pbasestat;
+            var racestr = pbasestat;
+            var racedex = pbasestat;
+            var raceint = pbasestat;
+            var racewis = pbasestat;
+
+            for (const [race, racebonus] of Object.entries(racelist)) {
+                if (racein === race) {
+                    racestam *= racebonus[0]
+                    racestr *= racebonus[1]
+                    racedex *= racebonus[2]
+                    raceint *= racebonus[3]
+                    racewis *= racebonus[4]
+                };
+            };
             // Stat formulas
-            const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus + racebonus;
-            const strength = (1.5 + (0.05 * level)) * body + soulcon + profbonus + racebonus;
-            const agility = (0.5 + (0.015 * level)) * body + soulcon + profbonus + racebonus;
-            const wisdom = (0.5 + (0.015 * level)) * mind + soulcon + profbonus + racebonus;
-            const intellect = (1.5 + (0.05 * level)) * mind + soulcon + profbonus + racebonus;
+            const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus + racestam;
+            const strength = (1.5 + (0.05 * level)) * body + soulcon + profbonus + racestr;
+            const agility = (0.5 + (0.015 * level)) * body + soulcon + profbonus + racedex;
+            const wisdom = (0.5 + (0.015 * level)) * mind + soulcon + profbonus + racewis;
+            const intellect = (1.5 + (0.05 * level)) * mind + soulcon + profbonus + raceint;
             const basehealth = (0.15 * level + 14) * level * (1 + 0.011 * soul);
             const totalhealth = basehealth + (5 * stamina);
             const basemana = (0.08 * level + 7) * level * (1 + 0.015 * mind);
@@ -607,20 +677,47 @@
             var xp2 = (level2 * level2 * level2) * (1 + (0.02 * level2));
             const soulcon2 = (1 + (0.03 * level2)) * soul2;
             const profbonus2 = (0.7 + (0.02 * level2)) * prof2;
-            // Check race and apply appropriate modifiers
-            if (racein2 == "human2") {
-                var racebonus2 = (3 + (0.3 + (0.007 * level2)) * level2);
-            } else if (racein2 == "goblin2") {
-                var racebonus2 = (122 + (0.02 * level2)) * prof2;
-            } else {
-                var racebonus2 = 0;
-            }
+            const racelist2 = {
+                humanP2: [1, 1, 1, 1, 1],
+                dwarfP2: [1.1, 1.45, 0.8, 0.8, 1.15],
+                gnomeP2: [0.75, 0.7, 1.25, 1.5, 1.1],
+                elfP2: [1, 0.8, 1.35, 1.35, 0.9],
+                human2: [1, 1, 1, 1, 1],
+                dwarf2: [1.1, 1.45, 0.8, 0.8, 1.15],
+                gnome2: [0.75, 0.7, 1.25, 1.5, 1.1],
+                elf2: [0, 0.8, 1.35, 1.35, 0.9],
+                ratman2: [0.7, 0.8, 1.15, 0.9, 0.9],
+                goblin2: [0.8, 0.9, 1.25, 1.25, 1.1],
+                dogman2: [1.25, 1.25, 1.1, 0.8, 0.7],
+                pigman2: [1.35, 1.15, 0.8, 1.1, 0.7],
+                giant2: [1.8, 1.45, 0.7, 0.7, 0.7],
+                minotaur2: [1.4, 1.4, 0.9, 0.7, 0.7],
+                fairy2: [0.65, 0.6, 1.1, 1.45, 1.45],
+                none2: [1, 1, 1, 1, 1],
+            };
+            const pbasestat2 = (6 + (0.3 + (0.007 * level2)) * level2);
+            const mbasestat2 = (2 + (0.3 + (0.007 * level2)) * level2);
+            var racestam2 = pbasestat2;
+            var racestr2 = pbasestat2;
+            var racedex2 = pbasestat2;
+            var raceint2 = pbasestat2;
+            var racewis2 = pbasestat2;
+
+            for (const [race2, racebonus2] of Object.entries(racelist2)) {
+                if (racein2 === race2) {
+                    racestam2 *= racebonus2[0]
+                    racestr2 *= racebonus2[1]
+                    racedex2 *= racebonus2[2]
+                    raceint2 *= racebonus2[3]
+                    racewis2 *= racebonus2[4]
+                };
+            };
             // Stat formulas
-            const stamina2 = (0.5 + (0.015 * level2)) * (mind2 + body2) + soulcon2 + profbonus2 + racebonus2;
-            const strength2 = (1.5 + (0.05 * level2)) * body2 + soulcon2 + profbonus2 + racebonus2;
-            const agility2 = (0.5 + (0.015 * level2)) * body2 + soulcon2 + profbonus2 + racebonus2;
-            const wisdom2 = (0.5 + (0.015 * level2)) * mind2 + soulcon2 + profbonus2 + racebonus2;
-            const intellect2 = (1.5 + (0.05 * level2)) * mind2 + soulcon2 + profbonus2 + racebonus2;
+            const stamina2 = (0.5 + (0.015 * level2)) * (mind2 + body2) + soulcon2 + profbonus2 + racestam2;
+            const strength2 = (1.5 + (0.05 * level2)) * body2 + soulcon2 + profbonus2 + racestr2;
+            const agility2 = (0.5 + (0.015 * level2)) * body2 + soulcon2 + profbonus2 + racedex2;
+            const wisdom2 = (0.5 + (0.015 * level2)) * mind2 + soulcon2 + profbonus2 + racewis2;
+            const intellect2 = (1.5 + (0.05 * level2)) * mind2 + soulcon2 + profbonus2 + raceint2;
             const basehealth2 = (0.15 * level2 + 14) * level2 * (1 + 0.011 * soul2);
             const totalhealth2 = basehealth2 + (5 * stamina2);
             const basemana2 = (0.08 * level2 + 7) * level2 * (1 + 0.015 * mind2);
@@ -734,7 +831,7 @@ let maxDivCount; // Store the calculated maximum div count
 function calculateMaxDivCount() {
   const itemcalcResult = itemcalc().totalitempoints; // Assuming itemcalc returns the totalitempoints
   maxDivCount = Math.floor(itemcalcResult); // Convert to integer
-}n
+}
 
 // Allow user to add stat add rows based on points total
     addButton.addEventListener("click", () => {
