@@ -26,88 +26,75 @@
         border:none;
         background-color: silver;
     }
-    /* Style for Player 1 Input div */
-    div.p1input{
+    .inputdivs {
         border:1px solid silver;
-        width:25%;
         height:160px;
-        float:left;
-        margin-bottom:-1px;
-        color:lightslategrey;
         overflow:auto;
         font-size:14px;
+        color:lightslategrey;
+        float:left;
+    }
+    /* Style for Player 1 Input div */
+    .p1input{
+        width:25%;
+        margin-bottom:-1px;
     }
     /* Style for Player 2 Input div */
-    div.p2input{
-        float:left;
-        border:1px solid silver;
+    .p2input{
         position:absolute;
         left:75%;
         width:24.9%;
         height:160px;
-        color:lightslategrey;
-        overflow:auto;
-        font-size:14px;
     }
     /* Style for Player 1 item div */
-    div.p1item{
-        float:left;
-        border:1px solid silver;
-        height:160px;
+    .p1item{
         width:25%;
-        color:lightslategrey;
-        overflow:auto;
-        font-size:14px;
     }
     /* Clears float left from Player Input divs */
-    div.clearfloat{
+    .clearfloat{
         clear:left;
     }
-    /* Style for Player 1 Results div */
-    div.results{
+
+    .resultdivs{
         border:1px solid silver;
         float:left;
-        width:50%;
         background-color:black;
     }
+    /* Style for Player 1 Results div */
+    .results{
+        width:50%;
+    }
     /* Style for Player 2 Results div */
-    div.results2{
-        border:1px solid silver;
-        float:left;
+    .results2{
         position:absolute;
         left:50%;
         width:49.5%;
-        background-color:black;
     }
-    div.itemresults{
-        border:1px solid silver;
-        float:left;
+    .itemresults{
         height:528px;
         width:50%;
-        background-color:black;
         display:none;
-        color:lightslategrey;
     }
     /* Style for GoblinSoft mascot and version information */
-    div.fgmark{
+    .fgmark{
         position:absolute;
         bottom:0px;
         right:0px;
     }
-    div.testingman{
+    .testingman{
         position:relative;
         top:0;
         left:0;
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Pre-Beta 3.0</title>
+    <title>GoblinSoft Calculamator Pre-Beta 4.0</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
 <body style="background-color:black;">
     <!-- Player 1 input div -->
-    <div class="p1input" id="player1">
+    <div class="p1input inputdivs" id="player1">
         <label for="body">Body:</label>
             <input type="text" id="body" autocomplete="off"><br>
         <label for="mind">Mind:</label>
@@ -124,10 +111,13 @@
             <input type="text" id="wepspell" autocomplete="off"><br>
         <label for="racestart">Race:</label>  
             <select name="racestart" id="racestart">
+                <optgroup label="Player Races">
                 <option value="humanP">Human (Player)</option>
                 <option value="dwarfP">Dwarf (Player)</option>
                 <option value="gnomeP">Gnome (Player)</option>
                 <option value="elfP">Elf (Player)</option>
+            </optgroup>
+            <optgroup label="Monster Races"> 
                 <option value="human">Human</option>
                 <option value="dwarf">Dwarf</option>
                 <option value="gnome">Gnome</option>
@@ -140,6 +130,7 @@
                 <option value="giant">Giant</option>
                 <option value="minotaur">Minotaur</option>
                 <option value="none">None</option>
+            </optgroup>
             </select>
         <label for="rankstart">Rank:</label>  
             <select name="rankstart" id="rankstart">
@@ -152,7 +143,7 @@
             <br>
     </div>
     <!-- Player 1 item input div -->
-    <div class="p1item" id="p1item" style="display:none">
+    <div class="p1item inputdivs" id="p1item" style="display:none">
         <label for="itemslot">Item Slot: </label>
             <select name="itemslot" id="itemslot" onchange="showItemType()">
                 <option value="none">None</option>
@@ -180,7 +171,7 @@
             <button id="addButton">+</button> <button id="removeButton">-</button>
     </div>
     <!-- Player 2 input div -->
-    <div class="p2input" id="player2" style="display:none;">
+    <div class="p2input inputdivs" id="player2" style="display:none;">
         <label for="body2">Body:</label>
             <input type="text" id="body2" autocomplete="off"><br>
         <label for="mind2">Mind:</label>
@@ -197,10 +188,13 @@
             <input type="text" id="wepspell2" autocomplete="off"><br>
         <label for="racestart2">Race:</label>
             <select name="racestart2" id="racestart2">
+                <optgroup label="Player Races">
                 <option value="humanP2">Human (Player)</option>
                 <option value="dwarfP2">Dwarf (Player)</option>
                 <option value="gnomeP2">Gnome (Player)</option>
                 <option value="elfP2">Elf (Player)</option>
+            </optgroup>
+                            <optgroup label="Monster Races">
                 <option value="human2">Human</option>
                 <option value="dwarf2">Dwarf</option>
                 <option value="gnome2">Gnome</option>
@@ -213,6 +207,7 @@
                 <option value="giant2">Giant</option>
                 <option value="minotaur2">Minotaur</option>
                 <option value="none2">None</option>
+            </optgroup>
             </select>
                     <label for="rankstart2">Rank:</label>  
             <select name="rankstart2" id="rankstart2">
@@ -245,7 +240,7 @@
     <button id="button" class="button" onclick="calculamation()">OK</button><br>
 </div>
     <!-- Player 1 Results div -->
-    <div class="results" id="results" style="display:none">
+    <div class="results resultdivs" id="results" style="display:none">
         <p id="error"></p>
         <p id="level"></p>
         <p id="exp"></p>
@@ -265,7 +260,7 @@
         <p id="profbon"></p>
     </div>
     <!-- Player 2 Results div -->
-    <div class=results2 id="results2" style="display:none">
+    <div class="results2 resultdivs" id="results2" style="display:none">
         <p id="error2"></p>
         <p id="level2"></p>
         <p id="exp2"></p>
@@ -285,7 +280,7 @@
         <p id="profbon2"></p>
     </div>
     <!-- Item results div -->
-    <div class="itemresults" id="itemresults">
+    <div class="itemresults resultdivs" id="itemresults">
         <p id="itemlevelres"></p>
         <p id="itemerror"></p>
         <P id="itemstamina"></P>
@@ -293,7 +288,7 @@
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
-        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 3.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 4.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
     </div>
 </body>
 <script type="text/javascript">
