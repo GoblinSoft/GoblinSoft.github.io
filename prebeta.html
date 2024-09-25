@@ -101,7 +101,7 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Pre-Beta 2.0</title>
+    <title>GoblinSoft Calculamator Pre-Beta 3.0</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
@@ -214,13 +214,13 @@
                 <option value="minotaur2">Minotaur</option>
                 <option value="none2">None</option>
             </select>
-                    <label for="rankstart">Rank:</label>  
-            <select name="rankstart" id="rankstart">
-                <option value="normal">Normal</option>
-                <option value="tough">Tough *</option>
-                <option value="elite">Elite **</option>
-                <option value="champion">Champion ***</option>
-                <option value="boss">Boss X</option>
+                    <label for="rankstart2">Rank:</label>  
+            <select name="rankstart2" id="rankstart2">
+                <option value="normal2">Normal</option>
+                <option value="tough2">Tough *</option>
+                <option value="elite2">Elite **</option>
+                <option value="champion2">Champion ***</option>
+                <option value="boss2">Boss X</option>
             </select>
     </div>
     <!-- Clear Player Input div float -->
@@ -293,7 +293,7 @@
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
-        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 2.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 3.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
     </div>
 </body>
 <script type="text/javascript">
@@ -571,7 +571,6 @@
             var racedex = pbasestat;
             var raceint = pbasestat;
             var racewis = pbasestat;
-
             for (const [race, racebonus] of Object.entries(racelist)) {
                 if (racein === race) {
                     racestam *= racebonus[0]
@@ -581,23 +580,44 @@
                     racewis *= racebonus[4]
                 };
             };
+            // Rank handling
+            const rankin = divvy("rankstart").value;
+            const ranks = {
+                normal: [1, 1, 1, 1],
+                tough: [1.75, 1.25, 1, 1],
+                elite: [1.75, 1.25, 1.9, 1],
+                champion: [1.75, 1.25, 1.9, 1.28],
+                boss: [2, 2, 2, 2],
+            };
+            var rankhealth = 1
+            var rankdam = 1
+            var rankallstats = 1
+            var ranklevelbonus = 1
+            for (const [rank, rankbonus] of Object.entries(ranks)) {
+                if (rankin === rank) {
+                    rankhealth *= rankbonus[0]
+                    rankdam *= rankbonus[1]
+                    rankallstats *= rankbonus[2]
+                    ranklevelbonus *= rankbonus[3]
+                };
+            };
             // Stat formulas
-            const stamina = (0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus + racestam;
-            const strength = (1.5 + (0.05 * level)) * body + soulcon + profbonus + racestr;
-            const agility = (0.5 + (0.015 * level)) * body + soulcon + profbonus + racedex;
-            const wisdom = (0.5 + (0.015 * level)) * mind + soulcon + profbonus + racewis;
-            const intellect = (1.5 + (0.05 * level)) * mind + soulcon + profbonus + raceint;
-            const basehealth = (0.15 * level + 14) * level * (1 + 0.011 * soul);
-            const totalhealth = basehealth + (5 * stamina);
+            const stamina = ((0.5 + (0.015 * (level * ranklevelbonus))) * (mind + body) + soulcon + profbonus + racestam) * rankallstats;
+            const strength = (1.5 + (0.05 * (level * ranklevelbonus)) * body + soulcon + profbonus + racestr) * rankallstats;
+            const agility = (0.5 + (0.015 * (level * ranklevelbonus)) * body + soulcon + profbonus + racedex) * rankallstats;
+            const wisdom = (0.5 + (0.015 * (level * ranklevelbonus)) * mind + soulcon + profbonus + racewis) * rankallstats;
+            const intellect = (1.5 + (0.05 * (level * ranklevelbonus)) * mind + soulcon + profbonus + raceint) * rankallstats;
+            const basehealth = (0.15 * (level * ranklevelbonus) + 14) * (level * ranklevelbonus) * (1 + 0.011 * soul);
+            const totalhealth = (basehealth + (5 * stamina)) * rankhealth;
             const basemana = (0.08 * level + 7) * level * (1 + 0.015 * mind);
             const totalmana = basemana + (5 * wisdom);
             // Attack and spell formulas
             const bAD = (0.4 + 0.002 * level) * level + (0.06 * strength);
             const mAD = (bAD) * (1 + (0.05 * body)) * (0.41 * speed);
-            const atdam = (mAD + damage) + (0.22 * agility);
+            const atdam = ((mAD + damage) + (0.22 * agility)) * rankdam;
             const bSP = (0.4 + 0.002 * level) * level + (0.05 * intellect);
             const mSP = (bSP) * (1 + (0.05 * mind)) * (0.41 * speed);
-            const spdam = (mSP + wepdamage) + (0.38 * wisdom);
+            const spdam = ((mSP + wepdamage) + (0.38 * wisdom)) * rankdam;
             // Space for item formulas
             const attributes = ["strength", "stamina", "agility", "intellect", "wisdom", "level", "exp", "totalhealth", "totalmana", "baseattack", "modattack", "attackdam", "basespell", "modspell", "spelldam", "profbon"];
             const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
@@ -607,8 +627,6 @@
             const suffixFormatters = [dstats(strength, 2), dstats(stamina, 2), dstats(agility, 2), dstats(intellect, 2), dstats(wisdom, 2), "", dstats(xp, 2), dstats(totalhealth, 2), dstats(totalmana, 2), datk(bAD, 3), datk(mAD, 3), datk(atdam, 3), datk(bSP, 3), datk(mSP, 3), datk(spdam, 3), datk(profbonus, 3)];
 
             // Output logic for fully parsable result
-            console.log("Dtats XP:" + dstats(xp));
-            console.log(xp)
             blank(divvy("error"));
             for (let i = 0; i < attributes.length; i++) {
                   const div = divvy(attributes[i]);
@@ -712,23 +730,45 @@
                     racewis2 *= racebonus2[4]
                 };
             };
+
+            // Rank handling for player 2
+            const rankin2 = divvy("rankstart2").value;
+            const ranks2 = {
+                normal2: [1, 1, 1, 1],
+                tough2: [1.75, 1.25, 1, 1],
+                elite2: [1.75, 1.25, 1.9, 1],
+                champion2: [1.75, 1.25, 1.9, 1.28],
+                boss2: [2, 2, 2, 2],
+            };
+            var rankhealth2 = 1
+            var rankdam2 = 1
+            var rankallstats2 = 1
+            var ranklevelbonus2 = 1
+            for (const [rank2, rankbonus2] of Object.entries(ranks2)) {
+                if (rankin2 === rank2) {
+                    rankhealth2 *= rankbonus2[0]
+                    rankdam2 *= rankbonus2[1]
+                    rankallstats2 *= rankbonus2[2]
+                    ranklevelbonus2 *= rankbonus2[3]
+                };
+            };
             // Stat formulas
-            const stamina2 = (0.5 + (0.015 * level2)) * (mind2 + body2) + soulcon2 + profbonus2 + racestam2;
-            const strength2 = (1.5 + (0.05 * level2)) * body2 + soulcon2 + profbonus2 + racestr2;
-            const agility2 = (0.5 + (0.015 * level2)) * body2 + soulcon2 + profbonus2 + racedex2;
-            const wisdom2 = (0.5 + (0.015 * level2)) * mind2 + soulcon2 + profbonus2 + racewis2;
-            const intellect2 = (1.5 + (0.05 * level2)) * mind2 + soulcon2 + profbonus2 + raceint2;
-            const basehealth2 = (0.15 * level2 + 14) * level2 * (1 + 0.011 * soul2);
-            const totalhealth2 = basehealth2 + (5 * stamina2);
+            const stamina2 = ((0.5 + (0.015 * (level2 * ranklevelbonus2))) * (mind2 + body2) + soulcon2 + profbonus2 + racestam2) * rankallstats2;
+            const strength2 = (1.5 + (0.05 * (level2 * ranklevelbonus2)) * body2 + soulcon2 + profbonus2 + racestr2) * rankallstats2;
+            const agility2 = (0.5 + (0.015 * (level2 * ranklevelbonus2)) * body2 + soulcon2 + profbonus2 + racedex2) * rankallstats2;
+            const wisdom2 = (0.5 + (0.015 * (level2 * ranklevelbonus2)) * mind2 + soulcon2 + profbonus2 + racewis2) * rankallstats2;
+            const intellect2 = (1.5 + (0.05 * (level2 * ranklevelbonus2)) * mind2 + soulcon2 + profbonus2 + raceint2) * rankallstats2;
+            const basehealth2 = (0.15 * (level2 * ranklevelbonus2) + 14) * (level2 * ranklevelbonus2) * (1 + 0.011 * soul2);
+            const totalhealth2 = (basehealth2 + (5 * stamina2) * rankhealth2);
             const basemana2 = (0.08 * level2 + 7) * level2 * (1 + 0.015 * mind2);
             const totalmana2 = basemana2 + (5 * wisdom2);
             // Attack and spell formulas
             const bAD2 = (0.4 + 0.002 * level2) * level2 + (0.06 * strength2);
             const mAD2 = (bAD2) * (1 + (0.05 * body2)) * (0.41 * speed2);
-            const atdam2 = (mAD2 + damage2) + (0.22 * agility2);
+            const atdam2 = ((mAD2 + damage2) + (0.22 * agility2)) * rankdam2;
             const bSP2 = (0.4 + 0.002 * level2) * level2 + (0.05 * intellect2);
             const mSP2 = (bSP2) * (1 + (0.05 * mind2)) * (0.41 * speed2);
-            const spdam2 = (mSP2 + wepdamage2) + (0.38 * wisdom2);
+            const spdam2 = ((mSP2 + wepdamage2) + (0.38 * wisdom2)) * rankdam2;
             // Expandable arrays for filling out results
             const attributes = ["strength2", "stamina2", "agility2", "intellect2", "wisdom2", "level2", "exp2", "totalhealth2", "totalmana2", "baseattack2", "modattack2", "attackdam2", "basespell2", "modspell2", "spelldam2", "profbon2"];
             const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
