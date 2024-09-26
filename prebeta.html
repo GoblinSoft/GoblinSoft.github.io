@@ -88,7 +88,7 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Pre-Beta 4.0</title>
+    <title>GoblinSoft Calculamator Pre-Beta 5.0</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
@@ -139,6 +139,11 @@
                 <option value="elite">Elite **</option>
                 <option value="champion">Champion ***</option>
                 <option value="boss">Boss X</option>
+            </select>
+                <label style="color:lightslategrey;">Monster?</label>
+        <select name="monstercheck" id="monstercheck">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
             </select>
     </div>
     <!-- Player 1 item input div -->
@@ -216,6 +221,11 @@
                 <option value="champion2">Champion ***</option>
                 <option value="boss2">Boss X</option>
             </select>
+                <label style="color:lightslategrey;">Monster?</label>
+        <select name="monstercheck2" id="monstercheck2">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select>
     </div>
     <!-- Clear Player Input div float -->
         <div class="clearfloat"></div>
@@ -234,7 +244,7 @@
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </select>
-    <br>
+            <br>
     <!-- Main functionality (Calculamate submission) -->
     <button id="button" class="button" onclick="calculamation()">OK</button><br>
 </div>
@@ -287,7 +297,7 @@
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
-        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 4.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 5.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
     </div>
 </body>
 <script type="text/javascript">
@@ -536,7 +546,11 @@
             const prof = parseNumber(profin);
             // Level and allstat multipliers
             const level = mind + body + soul + prof;
-            const xp = (level * level * level) * (1 + (0.02 * level));
+            if (divvy("monstercheck").value == 0) {
+            var xp = (level * level * level) * (1 + (0.02 * level));  
+            } else {
+            var xp = level * (1 + (0.01 * level));
+            };
             const soulcon = (1 + (0.03 * level)) * soul;
             const profbonus = (0.7 + (0.02 * level)) * prof;
             // Check race and apply appropriate modifiers
@@ -558,8 +572,11 @@
                 fairy: [0.65, 0.6, 1.1, 1.45, 1.45],
                 none: [1, 1, 1, 1, 1],
             };
-            const pbasestat = (6 + (0.3 + (0.007 * level)) * level);
-            const mbasestat = (2 + (0.3 + (0.007 * level)) * level);
+            if (divvy("monstercheck").value == 0) {
+            var pbasestat = (6 + (0.3 + (0.007 * level)) * level);
+        } else {
+            var pbasestat = (2 + (0.3 + (0.007 * level)) * level);
+        };
             var racestam = pbasestat;
             var racestr = pbasestat;
             var racedex = pbasestat;
@@ -686,7 +703,11 @@
             const prof2 = parseNumber(profin2);
             // Level and allstat multipliers
             const level2 = mind2 + body2 + soul2 + prof2;
-            var xp2 = (level2 * level2 * level2) * (1 + (0.02 * level2));
+           if (divvy("monstercheck2").value == 0) {
+            var xp2 = (level2 * level2 * level2) * (1 + (0.02 * level2));  
+            } else {
+            var xp2 = level2 * (1 + (0.01 * level2));
+            };
             const soulcon2 = (1 + (0.03 * level2)) * soul2;
             const profbonus2 = (0.7 + (0.02 * level2)) * prof2;
             const racelist2 = {
@@ -707,8 +728,11 @@
                 fairy2: [0.65, 0.6, 1.1, 1.45, 1.45],
                 none2: [1, 1, 1, 1, 1],
             };
-            const pbasestat2 = (6 + (0.3 + (0.007 * level2)) * level2);
-            const mbasestat2 = (2 + (0.3 + (0.007 * level2)) * level2);
+            if (divvy("monstercheck2").value == 0) {
+            var pbasestat2 = (6 + (0.3 + (0.007 * level2)) * level2);
+        } else {
+            var pbasestat2 = (2 + (0.3 + (0.007 * level2)) * level2);
+        };
             var racestam2 = pbasestat2;
             var racestr2 = pbasestat2;
             var racedex2 = pbasestat2;
