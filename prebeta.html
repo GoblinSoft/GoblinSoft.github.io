@@ -88,7 +88,7 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Pre-Beta 5.0</title>
+    <title>GoblinSoft Calculamator Pre-Beta 7.0</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
@@ -142,8 +142,8 @@
                 <option value="boss">Boss X</option>
             </select>
             <br>
-                <label style="color:lightslategrey;">Monster?</label>
-        <select name="monstercheck" id="monstercheck">
+        <label style="color:lightslategrey;">Monster?</label>
+            <select name="monstercheck" id="monstercheck">
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </select>
@@ -195,28 +195,28 @@
         <label for="racestart2">Race:</label>
             <select name="racestart2" id="racestart2">
                 <optgroup label="Player Races">
-                <option value="humanP2">Human</option>
-                <option value="dwarfP2">Dwarf</option>
-                <option value="gnomeP2">Gnome</option>
-                <option value="elfP2">Elf</option>
-            </optgroup>
-                            <optgroup label="Monster Races">
-                <option value="human2">Human</option>
-                <option value="dwarf2">Dwarf</option>
-                <option value="gnome2">Gnome</option>
-                <option value="elf2">Elf</option>
-                <option value="goblin2">Goblin</option>
-                <option value="ratman2">Ratman</option>
-                <option value="dogman2">Dogman</option>
-                <option value="pigman2">Pigman</option>
-                <option value="fairy2">Fairy</option>
-                <option value="giant2">Giant</option>
-                <option value="minotaur2">Minotaur</option>
-                <option value="none2">None</option>
-            </optgroup>
+                    <option value="humanP2">Human</option>
+                    <option value="dwarfP2">Dwarf</option>
+                    <option value="gnomeP2">Gnome</option>
+                    <option value="elfP2">Elf</option>
+                </optgroup>
+                <optgroup label="Monster Races">
+                    <option value="human2">Human</option>
+                    <option value="dwarf2">Dwarf</option>
+                    <option value="gnome2">Gnome</option>
+                    <option value="elf2">Elf</option>
+                    <option value="goblin2">Goblin</option>
+                    <option value="ratman2">Ratman</option>
+                    <option value="dogman2">Dogman</option>
+                    <option value="pigman2">Pigman</option>
+                    <option value="fairy2">Fairy</option>
+                    <option value="giant2">Giant</option>
+                    <option value="minotaur2">Minotaur</option>
+                    <option value="none2">None</option>
+                </optgroup>
             </select>
             <br>
-                    <label for="rankstart2">Rank:</label>  
+        <label for="rankstart2">Rank:</label>  
             <select name="rankstart2" id="rankstart2">
                 <option value="normal2">Normal</option>
                 <option value="tough2">Tough *</option>
@@ -225,33 +225,33 @@
                 <option value="boss2">Boss X</option>
             </select>
             <br>
-                <label style="color:lightslategrey;">Monster?</label>
-        <select name="monstercheck2" id="monstercheck2">
+        <label style="color:lightslategrey;">Monster?</label>
+            <select name="monstercheck2" id="monstercheck2">
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </select>
     </div>
     <!-- Clear Player Input div float -->
-        <div class="clearfloat"></div>
+    <div class="clearfloat"></div>
     <!-- Multiple entity (player) option -->
     <div class="testingman">
-        <div id ="2pcheck" style="display:inline-block;">
-    <label style="color:lightslategrey;">2P?</label>
-        <select name="2p" id="2p" onchange="showDivOnChange(this)">
-            <option value="0">No</option>
-            <option value="1">Yes</option>
-        </select>
-    </div>
-            <!-- Player 1 item checker -->
-        <label style="color:lightslategrey;">Item?</label>
-            <select name="itemcheck" id="itemcheck" onchange="showItemsOnChange(this, p1item)">
+    <div id ="2pcheck" style="display:inline-block;">
+        <label style="color:lightslategrey;">2P?</label>
+            <select name="2p" id="2p" onchange="showDivOnChange(this)">
                 <option value="0">No</option>
                 <option value="1">Yes</option>
             </select>
-            <br>
+    </div>
+    <!-- Player 1 item checker -->
+    <label style="color:lightslategrey;">Item?</label>
+        <select name="itemcheck" id="itemcheck" onchange="showItemsOnChange(this, p1item)">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select>
+    <br>
     <!-- Main functionality (Calculamate submission) -->
     <button id="button" class="button" onclick="calculamation()">OK</button><br>
-</div>
+    </div>
     <!-- Player 1 Results div -->
     <div class="results resultdivs" id="results" style="display:none">
         <p id="error"></p>
@@ -301,13 +301,12 @@
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
-        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 5.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 7.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
     </div>
 </body>
 <script type="text/javascript">
     // Define acceptable characters for error handling
     var ErrorGoblin = /[^\d,km.]/;
-
     let itemStrength = 0; // Initialize to 0
     let itemStamina = 0;  // Initialize to 0
 
@@ -452,10 +451,10 @@
       return parseFloat(value);
     };
 
-            // Blanking subfunction
-        function blank(div) {
-            div.innerHTML = "";
-        };
+    // Blanking subfunction
+    function blank(div) {
+        div.innerHTML = "";
+    };
 
     // Rounds stats and converts to string
     function rounder(stat) {
@@ -540,6 +539,27 @@
                 blank(divvy(levelerrorarray[i]));
             }
         } else {
+            // Rank handling
+            const rankin = divvy("rankstart").value;
+            const ranks = {
+                normal: [1, 1, 1, 1],
+                tough: [1.75, 1.25, 1, 1],
+                elite: [1.75, 1.25, 1.9, 1],
+                champion: [1.75, 1.25, 1.9, 1.55],
+                boss: [2, 2, 2, 2],
+            };
+            var rankhealth = 1
+            var rankdam = 1
+            var rankallstats = 1
+            var ranklevelbonus = 1
+            for (const [rank, rankbonus] of Object.entries(ranks)) {
+                if (rankin === rank) {
+                    rankhealth *= rankbonus[0]
+                    rankdam *= rankbonus[1]
+                    rankallstats *= rankbonus[2]
+                    ranklevelbonus *= rankbonus[3]
+                };
+            };
             // Input constants utilizing parseNumber for colloquial notation cleaning and calculation purposes
             const mind = parseNumber(mindin);
             const body = parseNumber(bodyin);
@@ -549,7 +569,7 @@
             const wepdamage = parseNumber (wspellin);
             const prof = parseNumber(profin);
             // Level and allstat multipliers
-            const level = mind + body + soul + prof;
+            const level = (mind + body + soul + prof) * ranklevelbonus;
             if (divvy("monstercheck").value == 0) {
             var xp = (level * level * level) * (1 + (0.02 * level));  
             } else {
@@ -575,7 +595,7 @@
                 minotaur: [1.4, 1.4, 0.9, 0.7, 0.7],
                 fairy: [0.65, 0.6, 1.1, 1.45, 1.45],
                 none: [1, 1, 1, 1, 1],
-            };
+            };            
             if (divvy("monstercheck").value == 0) {
             var pbasestat = (6 + (0.3 + (0.007 * level)) * level);
         } else {
@@ -595,44 +615,23 @@
                     racewis *= racebonus[4]
                 };
             };
-            // Rank handling
-            const rankin = divvy("rankstart").value;
-            const ranks = {
-                normal: [1, 1, 1, 1],
-                tough: [1.75, 1.25, 1, 1],
-                elite: [1.75, 1.25, 1.9, 1],
-                champion: [1.75, 1.25, 1.9, 1.28],
-                boss: [2, 2, 2, 2],
-            };
-            var rankhealth = 1
-            var rankdam = 1
-            var rankallstats = 1
-            var ranklevelbonus = 1
-            for (const [rank, rankbonus] of Object.entries(ranks)) {
-                if (rankin === rank) {
-                    rankhealth *= rankbonus[0]
-                    rankdam *= rankbonus[1]
-                    rankallstats *= rankbonus[2]
-                    ranklevelbonus *= rankbonus[3]
-                };
-            };
             // Stat formulas
-            const stamina = ((0.5 + (0.015 * (level * ranklevelbonus))) * (mind + body) + soulcon + profbonus + racestam) * rankallstats;
-            const strength = (1.5 + (0.05 * (level * ranklevelbonus)) * body + soulcon + profbonus + racestr) * rankallstats;
-            const agility = (0.5 + (0.015 * (level * ranklevelbonus)) * body + soulcon + profbonus + racedex) * rankallstats;
-            const wisdom = (0.5 + (0.015 * (level * ranklevelbonus)) * mind + soulcon + profbonus + racewis) * rankallstats;
-            const intellect = (1.5 + (0.05 * (level * ranklevelbonus)) * mind + soulcon + profbonus + raceint) * rankallstats;
-            const basehealth = (0.15 * (level * ranklevelbonus) + 14) * (level * ranklevelbonus) * (1 + 0.011 * soul);
+            const stamina = ((0.5 + (0.015 * level)) * (mind + body) + soulcon + profbonus + racestam) * rankallstats;
+            const strength = (1.5 + (0.05 * level) * body  + soulcon + profbonus + racestr) * rankallstats;
+            const agility = (0.5 + (0.015 * level) * body + soulcon + profbonus + racedex) * rankallstats;
+            const wisdom = (0.5 + (0.015 * level) * mind + soulcon + profbonus + racewis) * rankallstats;
+            const intellect = (1.5 + (0.05 * level) * mind + soulcon + profbonus + raceint) * rankallstats;
+            const basehealth = (((0.15 * level) + 14) * level) * (1 + 0.0025 * soul * ranklevelbonus);
             const totalhealth = (basehealth + (5 * stamina)) * rankhealth;
             const basemana = (0.08 * level + 7) * level * (1 + 0.015 * mind);
             const totalmana = basemana + (5 * wisdom);
             // Attack and spell formulas
-            const bAD = (0.4 + 0.002 * level) * level + (0.06 * strength);
-            const mAD = (bAD) * (1 + (0.05 * body)) * (0.41 * speed);
-            const atdam = ((mAD + damage) + (0.22 * agility)) * rankdam;
-            const bSP = (0.4 + 0.002 * level) * level + (0.05 * intellect);
-            const mSP = (bSP) * (1 + (0.05 * mind)) * (0.41 * speed);
-            const spdam = ((mSP + wepdamage) + (0.38 * wisdom)) * rankdam;
+            const bAD = (0.35 + 0.0018 * level) * level + (0.22 * strength);
+            const mAD = (bAD) * (1 + (0.025 * body * ranklevelbonus)) * (0.41 * speed);
+            const atdam = ((mAD + damage) + (0.36 * agility)) * rankdam;
+            const bSP = (0.31 + 0.0018 * level) * level + (0.18 * intellect);
+            const mSP = (bSP) * (1 + (0.025 * mind * ranklevelbonus)) * (0.41 * speed);
+            const spdam = ((mSP + wepdamage) + (0.54 * wisdom)) * rankdam;
             // Space for item formulas
             const attributes = ["strength", "stamina", "agility", "intellect", "wisdom", "level", "exp", "totalhealth", "totalmana", "baseattack", "modattack", "attackdam", "basespell", "modspell", "spelldam", "profbon"];
             const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
@@ -696,7 +695,27 @@
             }
 
         } else {
-
+            // Rank handling for player 2
+            const rankin2 = divvy("rankstart2").value;
+            const ranks2 = {
+                normal2: [1, 1, 1, 1],
+                tough2: [1.75, 1.25, 1, 1],
+                elite2: [1.75, 1.25, 1.9, 1],
+                champion2: [1.75, 1.25, 1.9, 1.55],
+                boss2: [2, 2, 2, 2],
+            };
+            var rankhealth2 = 1
+            var rankdam2 = 1
+            var rankallstats2 = 1
+            var ranklevelbonus2 = 1
+            for (const [rank2, rankbonus2] of Object.entries(ranks2)) {
+                if (rankin2 === rank2) {
+                    rankhealth2 *= rankbonus2[0]
+                    rankdam2 *= rankbonus2[1]
+                    rankallstats2 *= rankbonus2[2]
+                    ranklevelbonus2 *= rankbonus2[3]
+                };
+            };           
             // Input constants utilizing parseNumber for colloquial notation cleaning and calculation purposes
             const mind2 = parseNumber(mindin2);
             const body2 = parseNumber(bodyin2);
@@ -706,7 +725,7 @@
             const wepdamage2 = parseNumber(wspellin2);
             const prof2 = parseNumber(profin2);
             // Level and allstat multipliers
-            const level2 = mind2 + body2 + soul2 + prof2;
+            const level2 = (mind2 + body2 + soul2 + prof2) * ranklevelbonus2;
            if (divvy("monstercheck2").value == 0) {
             var xp2 = (level2 * level2 * level2) * (1 + (0.02 * level2));  
             } else {
@@ -751,46 +770,24 @@
                     raceint2 *= racebonus2[3]
                     racewis2 *= racebonus2[4]
                 };
-            };
-
-            // Rank handling for player 2
-            const rankin2 = divvy("rankstart2").value;
-            const ranks2 = {
-                normal2: [1, 1, 1, 1],
-                tough2: [1.75, 1.25, 1, 1],
-                elite2: [1.75, 1.25, 1.9, 1],
-                champion2: [1.75, 1.25, 1.9, 1.28],
-                boss2: [2, 2, 2, 2],
-            };
-            var rankhealth2 = 1
-            var rankdam2 = 1
-            var rankallstats2 = 1
-            var ranklevelbonus2 = 1
-            for (const [rank2, rankbonus2] of Object.entries(ranks2)) {
-                if (rankin2 === rank2) {
-                    rankhealth2 *= rankbonus2[0]
-                    rankdam2 *= rankbonus2[1]
-                    rankallstats2 *= rankbonus2[2]
-                    ranklevelbonus2 *= rankbonus2[3]
-                };
-            };
+            }; 
             // Stat formulas
-            const stamina2 = ((0.5 + (0.015 * (level2 * ranklevelbonus2))) * (mind2 + body2) + soulcon2 + profbonus2 + racestam2) * rankallstats2;
-            const strength2 = (1.5 + (0.05 * (level2 * ranklevelbonus2)) * body2 + soulcon2 + profbonus2 + racestr2) * rankallstats2;
-            const agility2 = (0.5 + (0.015 * (level2 * ranklevelbonus2)) * body2 + soulcon2 + profbonus2 + racedex2) * rankallstats2;
-            const wisdom2 = (0.5 + (0.015 * (level2 * ranklevelbonus2)) * mind2 + soulcon2 + profbonus2 + racewis2) * rankallstats2;
-            const intellect2 = (1.5 + (0.05 * (level2 * ranklevelbonus2)) * mind2 + soulcon2 + profbonus2 + raceint2) * rankallstats2;
-            const basehealth2 = (0.15 * (level2 * ranklevelbonus2) + 14) * (level2 * ranklevelbonus2) * (1 + 0.011 * soul2);
-            const totalhealth2 = (basehealth2 + (5 * stamina2) * rankhealth2);
-            const basemana2 = (0.08 * level2 + 7) * level2 * (1 + 0.015 * mind2);
+            const stamina2 = ((0.5 + (0.015 * level2)) * (mind2 + body2) + soulcon2 + profbonus2 + racestam2) * rankallstats2;
+            const strength2 = (1.5 + (0.05 * level2) * body2 + soulcon2 + profbonus2 + racestr2) * rankallstats2;
+            const agility2 = (0.5 + (0.015 * level2) * body2 + soulcon2 + profbonus2 + racedex2) * rankallstats2;
+            const wisdom2 = (0.5 + (0.015 * level2) * mind2 + soulcon2 + profbonus2 + racewis2) * rankallstats2;
+            const intellect2 = (1.5 + (0.05 * level2) * mind2 + soulcon2 + profbonus2 + raceint2) * rankallstats2;
+            const basehealth2 = (((0.15 * level2) + 14) * level2) * (1 + 0.0025 * soul2 * ranklevelbonus2);
+            const totalhealth2 = (basehealth2 + (5 * stamina2)) * rankhealth2;
+            const basemana2 = (0.08 * level2 + 7) * level2 * (1 + 0.015 * mind2)
             const totalmana2 = basemana2 + (5 * wisdom2);
             // Attack and spell formulas
-            const bAD2 = (0.4 + 0.002 * level2) * level2 + (0.06 * strength2);
-            const mAD2 = (bAD2) * (1 + (0.05 * body2)) * (0.41 * speed2);
-            const atdam2 = ((mAD2 + damage2) + (0.22 * agility2)) * rankdam2;
-            const bSP2 = (0.4 + 0.002 * level2) * level2 + (0.05 * intellect2);
-            const mSP2 = (bSP2) * (1 + (0.05 * mind2)) * (0.41 * speed2);
-            const spdam2 = ((mSP2 + wepdamage2) + (0.38 * wisdom2)) * rankdam2;
+            const bAD2 = (0.35 + 0.0018 * level2) * level2 + (0.22 * strength2);
+            const mAD2 = (bAD2) * (1 + (0.025 * body2 * ranklevelbonus2)) * (0.41 * speed2);
+            const atdam2 = ((mAD2 + damage2) + (0.36 * agility2)) * rankdam2;
+            const bSP2 = (0.31 + 0.0018 * level2) * level2 + (0.18 * intellect2);
+            const mSP2 = (bSP2) * (1 + (0.025 * mind2 * ranklevelbonus2)) * (0.41 * speed2);
+            const spdam2 = ((mSP2 + wepdamage2) + (0.54 * wisdom2)) * rankdam2;
             // Expandable arrays for filling out results
             const attributes = ["strength2", "stamina2", "agility2", "intellect2", "wisdom2", "level2", "exp2", "totalhealth2", "totalmana2", "baseattack2", "modattack2", "attackdam2", "basespell2", "modspell2", "spelldam2", "profbon2"];
             const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
