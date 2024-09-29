@@ -88,7 +88,7 @@
     }
 </style>
 <head>
-    <title>GoblinSoft Calculamator Pre-Beta 7.0</title>
+    <title>GoblinSoft Calculamator Pre-Beta 8.0</title>
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
     <script src="jquery-3.7.1.min.js"></script>
 </head>
@@ -134,13 +134,17 @@
             </select>
             <br>
         <label for="rankstart">Rank:</label>  
-            <select name="rankstart" id="rankstart">
+            <select name="rankstart" id="rankstart" onchange="showBossMod()">
                 <option value="normal">Normal</option>
                 <option value="tough">Tough *</option>
                 <option value="elite">Elite **</option>
                 <option value="champion">Champion ***</option>
                 <option value="boss">Boss X</option>
             </select>
+            <div id="bossmod" style="display:none;">
+            <label for="bossPlayers"> Players to kill:
+            <input type="text" id="bossPlayers" autocomplete="off" value="1">
+            </div>
             <br>
         <label style="color:lightslategrey;">Monster?</label>
             <select name="monstercheck" id="monstercheck">
@@ -217,13 +221,17 @@
             </select>
             <br>
         <label for="rankstart2">Rank:</label>  
-            <select name="rankstart2" id="rankstart2">
+            <select name="rankstart2" id="rankstart2" onchange="showBossMod2()">
                 <option value="normal2">Normal</option>
                 <option value="tough2">Tough *</option>
                 <option value="elite2">Elite **</option>
                 <option value="champion2">Champion ***</option>
                 <option value="boss2">Boss X</option>
             </select>
+            <div id="bossmod2" style="display:none;">
+            <label for="bossPlayers2"> Players to kill:
+            <input type="text" id="bossPlayers2" autocomplete="off" value="1">
+            </div>
             <br>
         <label style="color:lightslategrey;">Monster?</label>
             <select name="monstercheck2" id="monstercheck2">
@@ -301,7 +309,7 @@
     </div>
     <!-- GoblinSoft watermark, copyright information, and Calculamator version number -->
     <div class="fgmark">
-        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 7.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
+        <label for="fginfo" style="color:lightslategrey;">Calculamater Pre-Beta 8.0 © 2024 GoblinSoft [Fuck Ethan] <img src="favicon.ico" /></label>
     </div>
 </body>
 <script type="text/javascript">
@@ -321,6 +329,12 @@
         divvy("itemcheck").value = 0;
         divvy("itemslot").value = "none";
         divvy("itemtype").value = "none";
+        divvy("monstercheck").value = 0;
+        divvy("monstercheck2").value = 0;
+        divvy("rankstart").value = "normal";
+        divvy("rankstart2").value = "normal2";
+        divvy("racestart").value = "humanP";
+        divvy("racestart2").value = "humanP2";
     };
 
     // EventListener to allow user to press Enter key anywhere on page for form submission
@@ -351,6 +365,21 @@
         });
     };
 
+    function showBossMod() {
+        if (divvy("rankstart").value == "boss") {
+            divvy("bossmod").style.display = "inline-block";
+        } else {
+            divvy("bossmod").style.display = "none";
+        }
+    };
+
+    function showBossMod2() {
+        if (divvy("rankstart2").value == "boss2") {
+            divvy("bossmod2").style.display = "inline-block";
+        } else {
+            divvy("bossmod2").style.display = "none";
+        }
+    };
     // Show and hide player 2 divs on player state change
     function showDivOnChange(select) {
         const p2haslevel = divvy("level2").innerHTML != "";
@@ -622,7 +651,7 @@
             const wisdom = (0.5 + (0.015 * level) * mind + soulcon + profbonus + racewis) * rankallstats;
             const intellect = (1.5 + (0.05 * level) * mind + soulcon + profbonus + raceint) * rankallstats;
             const basehealth = (((0.15 * level) + 14) * level) * (1 + 0.0025 * soul * ranklevelbonus);
-            const totalhealth = (basehealth + (5 * stamina)) * rankhealth;
+            const totalhealth = ((basehealth + (5 * stamina)) * rankhealth) * (divvy("bossPlayers").value <= 1 ? 1 : divvy("bossPlayers").value);
             const basemana = (0.08 * level + 7) * level * (1 + 0.015 * mind);
             const totalmana = basemana + (5 * wisdom);
             // Attack and spell formulas
@@ -634,7 +663,7 @@
             const spdam = ((mSP + wepdamage) + (0.54 * wisdom)) * rankdam;
             // Space for item formulas
             const attributes = ["strength", "stamina", "agility", "intellect", "wisdom", "level", "exp", "totalhealth", "totalmana", "baseattack", "modattack", "attackdam", "basespell", "modspell", "spelldam", "profbon"];
-            const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
+            const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", divvy("monstercheck").value == 1 ? "Monster Experience" : "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
             const colors = ["lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "green", "blue", "red", "red", "red", "blue", "blue", "blue", "aquamarine"];
             const values = [strength, stamina, agility, intellect, wisdom, level, xp, totalhealth, totalmana, bAD, mAD, atdam, bSP, mSP, spdam, profbonus];
             const formatters = [rounder, rounder, rounder, rounder, rounder, null, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder];
@@ -778,7 +807,7 @@
             const wisdom2 = (0.5 + (0.015 * level2) * mind2 + soulcon2 + profbonus2 + racewis2) * rankallstats2;
             const intellect2 = (1.5 + (0.05 * level2) * mind2 + soulcon2 + profbonus2 + raceint2) * rankallstats2;
             const basehealth2 = (((0.15 * level2) + 14) * level2) * (1 + 0.0025 * soul2 * ranklevelbonus2);
-            const totalhealth2 = (basehealth2 + (5 * stamina2)) * rankhealth2;
+            const totalhealth2 = ((basehealth2 + (5 * stamina2)) * rankhealth2) * (divvy("bossPlayers2").value <= 1 ? 1 : divvy("bossPlayers2").value);
             const basemana2 = (0.08 * level2 + 7) * level2 * (1 + 0.015 * mind2)
             const totalmana2 = basemana2 + (5 * wisdom2);
             // Attack and spell formulas
@@ -790,7 +819,7 @@
             const spdam2 = ((mSP2 + wepdamage2) + (0.54 * wisdom2)) * rankdam2;
             // Expandable arrays for filling out results
             const attributes = ["strength2", "stamina2", "agility2", "intellect2", "wisdom2", "level2", "exp2", "totalhealth2", "totalmana2", "baseattack2", "modattack2", "attackdam2", "basespell2", "modspell2", "spelldam2", "profbon2"];
-            const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
+            const labels = ["Strength", "Stamina", "Agility", "Intellect", "Wisdom", "Level", divvy("monstercheck2").value == 1 ? "Monster Experience" : "Experience", "Total Health", "Total Mana", "Base Attack Damage (bAD)", "Modified Attack Damage (mAD)", "Attack Damage (AD)", "Base Spell Damage (bSP)", "Modified Spell Damage (mSP)", "Spell Damage (SP)", "Profession Bonus"];
             const colors = ["lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "lightslategrey", "green", "blue", "red", "red", "red", "blue", "blue", "blue", "aquamarine"];
             const values = [strength2, stamina2, agility2, intellect2, wisdom2, level2, xp2, totalhealth2, totalmana2, bAD2, mAD2, atdam2, bSP2, mSP2, spdam2, profbonus2];
             const formatters = [rounder, rounder, rounder, rounder, rounder, null, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder, rounder];
